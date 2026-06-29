@@ -1,0 +1,178 @@
+<!DOCTYPE html><html lang="ja"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ToDesk 遅延テスト + 帯域幅換算ツール — ネットワーク往復遅延(RTT)を測定し、リモート操作の画質を見積もり</title>
+<meta name="description" content="公共エンドポイントへのネットワーク往復遅延(RTT)とジッターをブラウザで測定し、リモート操作の滑らかさで判定。帯域幅の単位換算と、ToDesk リモート操作に必要な帯域・到達解像度の見積もりも。クライアント側で即利用、オープンソース。基準値は Microsoft リモートデスクトップ公式と ToDesk 公式から。">
+<link rel="canonical" href="https://amirsakala.github.io/ja/">
+<link rel="alternate" hreflang="zh-Hans" href="https://amirsakala.github.io/">
+<link rel="alternate" hreflang="en" href="https://amirsakala.github.io/en/">
+<link rel="alternate" hreflang="ja" href="https://amirsakala.github.io/ja/">
+<link rel="alternate" hreflang="zh-Hant" href="https://amirsakala.github.io/zh-tw/">
+<link rel="alternate" hreflang="id" href="https://amirsakala.github.io/id/">
+<link rel="alternate" hreflang="th" href="https://amirsakala.github.io/th/">
+<link rel="alternate" hreflang="vi" href="https://amirsakala.github.io/vi/">
+<link rel="alternate" hreflang="ms" href="https://amirsakala.github.io/ms/">
+<link rel="alternate" hreflang="fil" href="https://amirsakala.github.io/fil/">
+<link rel="alternate" hreflang="km" href="https://amirsakala.github.io/km/">
+<link rel="alternate" hreflang="lo" href="https://amirsakala.github.io/lo/">
+<link rel="alternate" hreflang="my" href="https://amirsakala.github.io/my/">
+<link rel="alternate" hreflang="x-default" href="https://amirsakala.github.io/">
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@graph": [
+  {
+   "@type": "WebApplication",
+   "name": "ToDesk 遅延テスト + 帯域幅換算ツール",
+   "url": "https://amirsakala.github.io/ja/",
+   "applicationCategory": "UtilitiesApplication",
+   "operatingSystem": "Web browser",
+   "inLanguage": "ja",
+   "description": "公共エンドポイントへのネットワーク往復遅延(RTT)とジッターをブラウザで測定し、リモート操作の滑らかさで判定。帯域幅の単位換算と、ToDesk リモート操作に必要な帯域・到達解像度の見積もりも。クライアント側で即利用、オープンソース。基準値は Microsoft リモートデスクトップ公式と ToDesk 公式から。",
+   "isAccessibleForFree": true,
+   "browserRequirements": "Requires JavaScript",
+   "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+   },
+   "author": {
+    "@type": "Person",
+    "name": "罗宇",
+    "url": "https://amirsakala.github.io/about-editor/"
+   }
+  },
+  {
+   "@type": "FAQPage",
+   "inLanguage": "ja",
+   "url": "https://amirsakala.github.io/ja/",
+   "mainEntity": [
+    {
+     "@type": "Question",
+     "name": "リモート操作の遅延はどのくらいが普通？",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "目安として：RTT が 50ms 未満ならほぼ瞬時、100ms 未満が推奨範囲、100–150ms は使えるが遅れを感じ、150ms 超は明らかにカクつき、200ms 以上はほぼ使えません。Microsoft は強い操作/支援技術では RTT ≤20ms が最良としています。"
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "ToDesk のリモート操作にはどれくらいの帯域が必要？",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Microsoft 公式の推奨（30fps）では 720p で約 3 Mbps、1080p で約 5 Mbps、4K で約 15 Mbps。最近のリモートは適応エンコードで実際はより低いことが多いです。"
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "遅延と帯域、どちらが重要？",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "インタラクティブなリモートでは遅延がより重要です。帯域が足りても遅延/ジッターが高ければカクつきます。Microsoft の動的ビットレートは RTT が高いと画質を下げて滑らかさを保ちます。"
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "この遅延テストは何を測っている？",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "ブラウザが公共エンドポイント（Cloudflare、Google など）へのネットワーク往復を測ります——リモート操作の「ネットワーク区間」の代理値です。実際の遅延には取得・エンコード/デコード・表示の時間も加わります。"
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "帯域は大きいのになぜカクつく？",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "多くは遅延・ジッター・損失で、帯域ではありません。リモートは RTT と安定性に敏感で、平均が低くてもジッターが大きいと体感は悪化します。"
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "ToDesk の最高画質は？",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "公式サイトは最高 8K、360 FPS、4:4:4 トゥルーカラー・ロスレス（AV1 / ZeroSync エンジン）と表明しています。対応プランと十分な帯域が必要です。"
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "1080p の動画はリモートで帯域をどれくらい使う？",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Microsoft の例では、半画面の 30fps 動画は既定で約 8.5–9.5 Mbps ですが、H.264/AVC-444 なら約 2.5–2.8 Mbps。コーデックの影響は大きいです。"
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Mbps と MB/s の換算は？",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "1 MB/s = 8 Mbps、1 Mbps = 0.125 MB/s。本ページの換算ツールが各単位へ自動換算します。"
+     }
+    }
+   ]
+  }
+ ]
+}
+</script>
+<link rel="stylesheet" href="/style.css"></head>
+<body><div class="wrap"><main>
+<nav class="lang">Language: <a href="/">简体中文</a> · <a href="/en/">English</a> · <strong>日本語</strong> · <a href="/zh-tw/">繁體中文</a> · <a href="/id/">Bahasa Indonesia</a> · <a href="/th/">ไทย</a> · <a href="/vi/">Tiếng Việt</a> · <a href="/ms/">Bahasa Melayu</a> · <a href="/fil/">Filipino</a> · <a href="/km/">ភាសាខ្មែរ</a> · <a href="/lo/">ພາສາລາວ</a> · <a href="/my/">မြန်မာ</a></nav>
+<h1>ToDesk 遅延テスト + 帯域幅換算ツール</h1>
+<figure class="i4png"><picture><source type="image/webp" srcset="/img/cover_ja.webp"><img src="/img/cover_ja.png" alt="ToDesk 遅延テストと帯域幅換算ツールの図" fetchpriority="high" width="1120" height="630" style="width:100%;height:auto;border-radius:12px;border:1px solid #eee"></picture><figcaption>図1：ToDesk 遅延テスト + 帯域幅換算（RTT を測定 · 帯域と画質を見積もり）</figcaption></figure>
+<p class="intro">リモート操作が滑らかかどうかは主に 2 つで決まります：<strong>ネットワーク往復遅延(RTT)</strong> と <strong>使える帯域幅</strong>。下の 2 つのツールはどちらもブラウザ内で動作します——① 複数の公共エンドポイントへの RTT とジッターを測り、リモート操作の滑らかさを判定、② 帯域幅の単位を換算し、その帯域でどの解像度まで出せるかを見積もります。基準値は Microsoft リモートデスクトップ公式ドキュメントと ToDesk 公式仕様より（末尾の出典参照）。</p>
+<section class="tool"><h2>ツール①：ネットワーク往復(Ping)テスト</h2>
+<p>ボタンを押すと、ブラウザが各公共エンドポイントへ数回リクエストを送り往復時間を測ります。エンドポイントごとの<strong>最良 RTT</strong>（実際の往復に近い）を採用し、下の遅延表でリモート操作の滑らかさを判定します。</p>
+<button id="lat-go">遅延テストを開始</button>
+<div id="lat-out"></div>
+<p class="note">注：測るのは公共エンドポイントへの<strong>ネットワーク往復</strong>で、リモート操作の「ネットワーク区間」の代理値です。実際のリモート操作遅延には取得・エンコード/デコード・表示の時間も加わります。結果は回線とエンドポイントまでの距離に左右されます。</p></section>
+<section class="tool"><h2>ツール②：帯域幅換算 + 画質見積もり</h2>
+<p>帯域幅の数値を入れて単位を選ぶと、よく使う単位に換算し、Microsoft リモートデスクトップ公式の推奨に照らして、その帯域が 30fps でどの解像度まで出せそうかを見積もります。</p>
+<div class="bwrow"><input id="bw-in" type="number" min="0" step="any" placeholder="数値を入力（例：20）" autocomplete="off"><select id="bw-unit"><option>Mbps</option><option>Gbps</option><option>Kbps</option><option>MB/s</option><option>KB/s</option></select><button id="bw-go">換算 + 見積もり</button></div>
+<div id="bw-out"></div></section>
+<h2>リモート操作の遅延の見方（遅延表）</h2>
+<p>インタラクティブなリモート操作は帯域よりも遅延に敏感です。Microsoft は強い操作/支援技術の場面では RTT ≤20ms が最良としています。下表はその基準と業界の経験を合わせた遅延表です。</p>
+<figure><svg viewBox="0 0 700 250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="リモート操作の遅延と帯域の区分対照図" style="width:100%;height:auto;border:1px solid #eee;border-radius:12px;background:#fff">
+<text x="20" y="30" font-family="system-ui,Arial" font-size="16" font-weight="700" fill="#1d1d1f">リモート操作 遅延の判断フロー</text>
+<rect x="20" y="48" width="200" height="48" rx="10" fill="#111"/><text x="120" y="78" text-anchor="middle" font-family="system-ui,Arial" font-size="14" fill="#fff">往復 RTT を測定</text>
+<path d="M220 72 H262" stroke="#999" stroke-width="2" fill="none" marker-end="url(#ar)"/>
+<rect x="262" y="36" width="418" height="46" rx="10" fill="#ecfdf5" stroke="#bbf7e0"/><text x="278" y="64" font-family="system-ui,Arial" font-size="13" fill="#047857">&lt;100ms：滑らか、高画質を狙える</text>
+<rect x="262" y="92" width="418" height="46" rx="10" fill="#eef4ff" stroke="#cfe0ff"/><text x="278" y="120" font-family="system-ui,Arial" font-size="13" fill="#1d4ed8">100–150ms：使える、近いノード推奨</text>
+<rect x="262" y="148" width="418" height="46" rx="10" fill="#fef2f2" stroke="#fecaca"/><text x="278" y="176" font-family="system-ui,Arial" font-size="13" fill="#b91c1c">&gt;150ms：カクつき、まず回線を</text>
+<path d="M120 96 V120 H262" stroke="#10b981" stroke-width="2" fill="none" marker-end="url(#ar)"/>
+<path d="M120 120 V172 H262" stroke="#999" stroke-width="1.5" fill="none" marker-end="url(#ar)"/>
+<defs><marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0 0 L6 3 L0 6 z" fill="#999"/></marker></defs>
+</svg><figcaption>図2：リモート操作がカクつく？まず遅延(RTT)と帯域を確認して対処</figcaption></figure>
+<table><tr><th>区分</th><th>往復 RTT</th><th>リモート操作の体感</th><th>対処</th></tr><tr><td><b>最良</b></td><td class="mono">< 50 ms</td><td>ほぼ瞬時、リモートがローカルのよう</td><td>ネットワーク区間に弱点なし。高解像度/高フレームを狙えます。</td></tr><tr><td><b>良好</b></td><td class="mono">50–100 ms</td><td>推奨範囲内、日常のリモートは滑らか</td><td>わずかな残像が出る程度で問題なし。</td></tr><tr><td><b>可</b></td><td class="mono">100–150 ms</td><td>入力/ドラッグに体感できる遅れ</td><td>軽作業向け。近いエンドポイントで安定。</td></tr><tr><td><b>やや難</b></td><td class="mono">150–200 ms</td><td>明らかにカクつき、追従が悪い</td><td>有線/近いノードへ。ジッターと損失を確認。</td></tr><tr><td><b>不可</b></td><td class="mono">≥ 200 ms</td><td>ほぼ使えず、長時間は疲れる</td><td>まず回線を：有線、近い中継、または有料ノード。</td></tr></table>
+<h2>帯域幅はどれくらい必要か（目標解像度別）</h2>
+<p>下表は Microsoft リモートデスクトップ公式の解像度別推奨帯域です（30fps、損失<0.1%）。最近のリモート操作（ToDesk など）は H.264/AVC-444 や AV1 の適応ビットレートを使うため、実際はこれより低いことが多いです（Microsoft の例：Web 閲覧は 6 Mbps から約 1 Mbps に低下）。</p>
+<figure><svg viewBox="0 0 700 250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="ToDesk 遅延テストと帯域幅換算ツールの図" style="width:100%;height:auto;border:1px solid #eee;border-radius:12px;background:#fff">
+<text x="20" y="34" font-family="system-ui,Arial" font-size="16" font-weight="700" fill="#1d1d1f">帯域 → 目標解像度（Microsoft @30fps 基準）</text>
+<text x="20" y="88" font-family="system-ui,Arial" font-size="13" fill="#334155">720p</text><rect x="120" y="70" width="92" height="26" rx="6" fill="#bfdbfe"/><text x="222" y="88" font-family="ui-monospace,monospace" font-size="13" fill="#0f172a">3 Mbps</text>
+<text x="20" y="134" font-family="system-ui,Arial" font-size="13" fill="#334155">1080p</text><rect x="120" y="116" width="153" height="26" rx="6" fill="#93c5fd"/><text x="283" y="134" font-family="ui-monospace,monospace" font-size="13" fill="#0f172a">5 Mbps</text>
+<text x="20" y="180" font-family="system-ui,Arial" font-size="13" fill="#334155">4K</text><rect x="120" y="162" width="460" height="26" rx="6" fill="#1d4ed8"/><text x="590" y="180" font-family="ui-monospace,monospace" font-size="13" fill="#0f172a">15 Mbps</text>
+<text x="20" y="232" font-family="system-ui,Arial" font-size="11" fill="#94a3b8">Microsoft Remote Desktop · @30fps · &lt;0.1% loss</text>
+</svg><figcaption>帯域 → 目標解像度（Microsoft @30fps 基準）</figcaption></figure>
+<figure class="i4png"><picture><source type="image/webp" srcset="/img/board_ja.webp"><img src="/img/board_ja.png" alt="リモート操作の遅延と帯域の区分対照図" loading="lazy" width="1120" height="630" style="width:100%;height:auto;border-radius:12px;border:1px solid #eee"></picture><figcaption>図2：リモート操作がカクつく？まず遅延(RTT)と帯域を確認して対処</figcaption></figure>
+<table><tr><th>推奨帯域</th><th>目標解像度（@30fps）</th><th>用途</th></tr><tr><td class="mono"><b>≥ 1.5 Mbps</b></td><td>1024×768</td><td>テキスト/軽作業のリモート（Microsoft Light）</td></tr><tr><td class="mono"><b>≥ 3 Mbps</b></td><td>1280×720（720p）</td><td>一般的なリモートデスクトップ</td></tr><tr><td class="mono"><b>≥ 5 Mbps</b></td><td>1920×1080（1080p）</td><td>主流の HD リモート操作</td></tr><tr><td class="mono"><b>≥ 15 Mbps</b></td><td>3840×2160（4K）</td><td>高解像度/高フレーム、動画（Microsoft Power）</td></tr></table>
+<section id="data2026" class="i4data"><h2>2026 リモート操作 帯域幅の見積もり（目標画質別）</h2>
+<p>Microsoft 公式の解像度→帯域表を基準に、最近の適応コーデック（H.264/AVC-444、AV1；ToDesk は帯域効率 30%–50% 向上と表明）で外挿し、2026 年に多い実際の帯域の目安を示します。</p>
+<table><tr><th>目標画質</th><th>Microsoft RDP 基準</th><th>2026 適応見積もり</th><th>備考</th></tr><tr><td><b>720p（@30fps）</b></td><td class="mono">3 Mbps</td><td class="mono">約 1.5–2 Mbps</td><td>H.264/AV1 適応</td></tr><tr><td><b>1080p（@30fps）</b></td><td class="mono">5 Mbps</td><td class="mono">約 2.5–3.5 Mbps</td><td>主流の HD</td></tr><tr><td><b>1080p60（高フレーム）</b></td><td class="mono">約 8–10 Mbps</td><td class="mono">約 5–7 Mbps</td><td>動きの多い映像</td></tr><tr><td><b>4K（@30fps）</b></td><td class="mono">15 Mbps</td><td class="mono">約 8–12 Mbps</td><td>4:4:4 / AV1</td></tr></table>
+<p class="note"><em>見積もり・一次実測ではありません。基準 = Microsoft リモートデスクトップ公式表（@30fps）。2026 見積もりは最近の適応エンコードで外挿した概算で、実際は画面の動き・損失・コーデックで変動します。</em></p></section>
+<h2>よくある質問</h2>
+<details class="faq"><summary>リモート操作の遅延はどのくらいが普通？</summary><div>目安として：RTT が 50ms 未満ならほぼ瞬時、100ms 未満が推奨範囲、100–150ms は使えるが遅れを感じ、150ms 超は明らかにカクつき、200ms 以上はほぼ使えません。Microsoft は強い操作/支援技術では RTT ≤20ms が最良としています。</div></details>
+<details class="faq"><summary>ToDesk のリモート操作にはどれくらいの帯域が必要？</summary><div>Microsoft 公式の推奨（30fps）では 720p で約 3 Mbps、1080p で約 5 Mbps、4K で約 15 Mbps。最近のリモートは適応エンコードで実際はより低いことが多いです。</div></details>
+<details class="faq"><summary>遅延と帯域、どちらが重要？</summary><div>インタラクティブなリモートでは遅延がより重要です。帯域が足りても遅延/ジッターが高ければカクつきます。Microsoft の動的ビットレートは RTT が高いと画質を下げて滑らかさを保ちます。</div></details>
+<details class="faq"><summary>この遅延テストは何を測っている？</summary><div>ブラウザが公共エンドポイント（Cloudflare、Google など）へのネットワーク往復を測ります——リモート操作の「ネットワーク区間」の代理値です。実際の遅延には取得・エンコード/デコード・表示の時間も加わります。</div></details>
+<details class="faq"><summary>帯域は大きいのになぜカクつく？</summary><div>多くは遅延・ジッター・損失で、帯域ではありません。リモートは RTT と安定性に敏感で、平均が低くてもジッターが大きいと体感は悪化します。</div></details>
+<details class="faq"><summary>ToDesk の最高画質は？</summary><div>公式サイトは最高 8K、360 FPS、4:4:4 トゥルーカラー・ロスレス（AV1 / ZeroSync エンジン）と表明しています。対応プランと十分な帯域が必要です。</div></details>
+<details class="faq"><summary>1080p の動画はリモートで帯域をどれくらい使う？</summary><div>Microsoft の例では、半画面の 30fps 動画は既定で約 8.5–9.5 Mbps ですが、H.264/AVC-444 なら約 2.5–2.8 Mbps。コーデックの影響は大きいです。</div></details>
+<details class="faq"><summary>Mbps と MB/s の換算は？</summary><div>1 MB/s = 8 Mbps、1 Mbps = 0.125 MB/s。本ページの換算ツールが各単位へ自動換算します。</div></details>
+
+<h2>実際の場面で素早く判断</h2>
+<ul class="scenes"><li>入力やウィンドウのドラッグに遅れがあるが使える：RTT はおおむね 100–150ms。近いエンドポイントや有線で 100ms 未満に戻ることが多いです。</li><li>画面がぼやけ、止めると鮮明になる：帯域不足で適応的に画質が下がっています。換算ツールで画質区分を確認し、必要なら目標解像度を下げます。</li><li>RTT は高くないのに不安定：ジッターを重視——平均が低くてもジッターが大きいと体感は悪化。Wi-Fi 干渉、5GHz か有線へ。</li><li>越境のリモートが特にカクつく：通常の公衆回線は遠回りで RTT も損失も高い。近い中継や製品のグローバルノードで大きく改善します。</li><li>4K で帯域は足りるのにフレーム落ち：高解像度/高フレームはエンコード/デコードの計算力にも敏感で、帯域だけの問題ではありません。1080p やフレーム低下を試します。</li></ul>
+<div class="related"><h2>関連</h2><ul><li><a href="https://todeskremote.com/download/">ToDesk リモート操作 · ダウンロード</a></li><li><a href="https://learn.microsoft.com/en-us/windows-server/remote/remote-desktop-services/network-guidance" rel="nofollow">Microsoft リモートデスクトップ · ネットワーク指針（帯域）</a></li><li><a href="https://learn.microsoft.com/en-us/azure/virtual-desktop/rdp-bandwidth" rel="nofollow">Microsoft Azure RDP 帯域要件（場面/コーデック）</a></li><li><a href="https://www.todesk.com/" rel="nofollow">ToDesk 公式サイト（製品仕様）</a></li></ul></div>
+</main>
+<footer>帯域/解像度の基準は Microsoft リモートデスクトップ公式（Network guidelines / Azure Virtual Desktop RDP bandwidth）、ToDesk 仕様は公式サイトより。遅延表は Microsoft の RTT≤20ms を含む業界経験帯の相互確認です。本ページのツールと見積もりは参考用で一次実測ではありません。<br>整理/Editor：<a href="/about-editor/">罗宇</a> · MIT License · <a href="/about-editor/">about</a></footer>
+</div>
+<script src="/data_ja.js"></script><script src="/app.js"></script></body></html>
