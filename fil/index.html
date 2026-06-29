@@ -1,0 +1,178 @@
+<!DOCTYPE html><html lang="fil"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ToDesk Latency Test + Bandwidth Calculator — sukatin ang network RTT, tantyahin ang kalidad ng remote-control</title>
+<meta name="description" content="Sukatin ang iyong network round-trip latency (RTT) at jitter sa mga pampublikong endpoint, na niraranggo ayon sa remote-control smoothness; kasama ang isang bandwidth converter na tinatantya ang bandwidth at resolution na kailangan ng isang remote session ng ToDesk. Client-side, instant, open source. Mga baseline mula sa Microsoft Remote Desktop docs at ToDesk.">
+<link rel="canonical" href="https://amirsakala.github.io/fil/">
+<link rel="alternate" hreflang="zh-Hans" href="https://amirsakala.github.io/">
+<link rel="alternate" hreflang="en" href="https://amirsakala.github.io/en/">
+<link rel="alternate" hreflang="ja" href="https://amirsakala.github.io/ja/">
+<link rel="alternate" hreflang="zh-Hant" href="https://amirsakala.github.io/zh-tw/">
+<link rel="alternate" hreflang="id" href="https://amirsakala.github.io/id/">
+<link rel="alternate" hreflang="th" href="https://amirsakala.github.io/th/">
+<link rel="alternate" hreflang="vi" href="https://amirsakala.github.io/vi/">
+<link rel="alternate" hreflang="ms" href="https://amirsakala.github.io/ms/">
+<link rel="alternate" hreflang="fil" href="https://amirsakala.github.io/fil/">
+<link rel="alternate" hreflang="km" href="https://amirsakala.github.io/km/">
+<link rel="alternate" hreflang="lo" href="https://amirsakala.github.io/lo/">
+<link rel="alternate" hreflang="my" href="https://amirsakala.github.io/my/">
+<link rel="alternate" hreflang="x-default" href="https://amirsakala.github.io/">
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@graph": [
+  {
+   "@type": "WebApplication",
+   "name": "ToDesk Latency Test + Bandwidth Calculator",
+   "url": "https://amirsakala.github.io/fil/",
+   "applicationCategory": "UtilitiesApplication",
+   "operatingSystem": "Web browser",
+   "inLanguage": "fil",
+   "description": "Sukatin ang iyong network round-trip latency (RTT) at jitter sa mga pampublikong endpoint, na niraranggo ayon sa remote-control smoothness; kasama ang isang bandwidth converter na tinatantya ang bandwidth at resolution na kailangan ng isang remote session ng ToDesk. Client-side, instant, open source. Mga baseline mula sa Microsoft Remote Desktop docs at ToDesk.",
+   "isAccessibleForFree": true,
+   "browserRequirements": "Requires JavaScript",
+   "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+   },
+   "author": {
+    "@type": "Person",
+    "name": "罗宇",
+    "url": "https://amirsakala.github.io/about-editor/"
+   }
+  },
+  {
+   "@type": "FAQPage",
+   "inLanguage": "fil",
+   "url": "https://amirsakala.github.io/fil/",
+   "mainEntity": [
+    {
+     "@type": "Question",
+     "name": "Anong latency ang itinuturing na normal para sa remote control?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Bilang panuntunan ng thumb: Ang RTT na wala pang 50ms ay parang malapit-instant, wala pang 100ms ang inirerekomendang hanay, 100–150ms ay magagamit ngunit sa tingin mo ang lag, higit sa 150ms ay malinaw na pabagu-bago, at 200ms o higit pa ay halos hindi na magagamit. Napansin din ng Microsoft na ang mga napaka-interactive/assistive na sitwasyon ay gustong RTT ≤20ms para sa pinakamagandang karanasan."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Halos gaano karaming bandwidth ang kailangan ng remote control ng ToDesk?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Alinsunod sa opisyal na rekomendasyon ng Remote Desktop ng Microsoft (30fps): humigit-kumulang 3 Mbps para sa 720p, 5 Mbps para sa 1080p at 15 Mbps para sa 4K. Gumagamit ang modernong remote control ng adaptive encoding, kaya kadalasang mas mababa ang mga tunay na pangangailangan."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Alin ang mas mahalaga, latency o bandwidth?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Para sa interactive na remote control, mas mahalaga ang latency: kahit na may sapat na bandwidth, mataas pa rin ang latency/jitter. Ang dynamic na bitrate ng Microsoft ay talagang nagpapababa ng kalidad kapag mataas ang RTT upang mapanatiling maayos ang mga bagay."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Ano ba talaga ang sinusukat ng latency test na ito?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Sinusukat ng iyong browser ang network round trip sa mga pampublikong endpoint (Cloudflare, Google, atbp.) — isang proxy para sa network leg ng remote control. Ang tunay na remote-control latency ay nagdaragdag din ng capture, encode/decode at oras ng pagpapakita."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Bakit laggy pa rin kapag mataas ang bandwidth ko?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Kadalasan ito ay latency, jitter o packet loss, hindi bandwidth. Ang remote control ay sensitibo sa RTT at katatagan; masakit ang mataas na jitter kaysa sa mataas na average."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Ano ang pinakamataas na kalidad na maaabot ng ToDesk?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Ang opisyal na site nito ay naghahabol ng hanggang 8K, 360 FPS at 4:4:4 true-color lossless (AV1 codec / ZeroSync engine), dahil sa tamang plano at sapat na bandwidth."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Gaano karaming bandwidth ang kinukuha ng 1080p video sa remote control?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Halimbawa ng Microsoft: ang isang half-screen na 30fps na video ay humigit-kumulang 8.5–9.5 Mbps bilang default, ngunit humigit-kumulang 2.5–2.8 Mbps lang na may H.264/AVC-444 — malaki ang pagkakaiba ng codec."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Paano ko iko-convert ang Mbps at MB/s?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "1 MB/s = 8 Mbps, at 1 Mbps = 0.125 MB/s. Awtomatikong ginagawa ito ng bandwidth converter sa page na ito para sa lahat ng karaniwang unit."
+     }
+    }
+   ]
+  }
+ ]
+}
+</script>
+<link rel="stylesheet" href="/style.css"></head>
+<body><div class="wrap"><main>
+<nav class="lang">Language: <a href="/">简体中文</a> · <a href="/en/">English</a> · <a href="/ja/">日本語</a> · <a href="/zh-tw/">繁體中文</a> · <a href="/id/">Bahasa Indonesia</a> · <a href="/th/">ไทย</a> · <a href="/vi/">Tiếng Việt</a> · <a href="/ms/">Bahasa Melayu</a> · <strong>Filipino</strong> · <a href="/km/">ភាសាខ្មែរ</a> · <a href="/lo/">ພາສາລາວ</a> · <a href="/my/">မြန်မာ</a></nav>
+<h1>ToDesk Latency Test + Bandwidth Calculator</h1>
+<figure class="i4png"><picture><source type="image/webp" srcset="/img/cover_fil.webp"><img src="/img/cover_fil.png" alt="ToDesk latency test at bandwidth calculator tool illustration" fetchpriority="high" width="1120" height="630" style="width:100%;height:auto;border-radius:12px;border:1px solid #eee"></picture><figcaption>Fig 1: ToDesk latency test + bandwidth calculator (sukatin ang RTT · tantiyahin ang bandwidth at kalidad)</figcaption></figure>
+<p class="intro">Kung maayos man ang remote control ay nakasalalay sa dalawang bagay: <strong>network round-trip latency (RTT)</strong> at <strong>available bandwidth</strong>. Ang parehong mga tool sa ibaba ay tumatakbo nang lokal sa iyong browser — ① sukatin ang RTT at jitter sa ilang mga pampublikong endpoint at i-rank ang remote-control smoothness; ② i-convert ang mga unit ng bandwidth at tantyahin ang resolution na maaaring i-drive ng isang partikular na bandwidth. Ang mga baseline ay nagmumula sa opisyal na Remote Desktop docs ng Microsoft at mga spec ng ToDesk (tingnan ang mga source sa ibaba).</p>
+<section class="tool"><h2>Tool 1: network round-trip (Ping) test</h2>
+<p>Pindutin ang button at magpapadala ang iyong browser ng ilang kahilingan sa bawat pampublikong endpoint at mga oras ng round trip. Kinukuha namin ang <strong>pinakamahusay na RTT</strong> sa bawat endpoint (pinakamalapit sa tunay na network round trip) at nire-rate namin ang malayuang kontrol na kinis gamit ang mga latency tier sa ibaba.</p>
+<button id="lat-go">Simulan ang latency test</button>
+<div id="lat-out"></div>
+<p class="note">Tandaan: ito ay sumusukat sa <strong>network round trip</strong> sa mga pampublikong endpoint — isang proxy para sa network leg ng remote control. Ang tunay na remote-control latency ay nagdaragdag din ng capture, encode/decode at oras ng pagpapakita. Ang mga resulta ay depende sa iyong network at endpoint na distansya.</p></section>
+<section class="tool"><h2>Tool 2: bandwidth converter + pagtatantya ng kalidad</h2>
+<p>Maglagay ng halaga ng bandwidth, pumili ng unit, at magko-convert ito sa mga karaniwang unit at — gamit ang mga opisyal na rekomendasyon sa Remote Desktop ng Microsoft — tinatantya kung anong resolution ang maaaring humimok ng bandwidth na ito sa 30fps.</p>
+<div class="bwrow"><input id="bw-in" type="number" min="0" step="any" placeholder="Maglagay ng value, hal. 20" autocomplete="off"><select id="bw-unit"><option>Mbps</option><option>Gbps</option><option>Kbps</option><option>MB/s</option><option>KB/s</option></select><button id="bw-go">I-convert + pagtatantya</button></div>
+<div id="bw-out"></div></section>
+<h2>Paano basahin ang remote-control latency (mga tier)</h2>
+<p>Ang interactive na remote control ay mas sensitibo sa latency kaysa sa bandwidth. Sinabi ng Microsoft na ang mga napaka-interactive / pantulong na sitwasyon ay gustong RTT ≤20ms para sa pinakamagandang karanasan. Pinagsasama ng talahanayan sa ibaba ang anchor na iyon sa karanasan sa industriya — hanapin ang iyong tier.</p>
+<figure><svg viewBox="0 0 700 250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Ilustrasyon ng remote-control latency at bandwidth tier chart" style="width:100%;height:auto;border:1px solid #eee;border-radius:12px;background:#fff">
+<text x="20" y="30" font-family="system-ui,Arial" font-size="16" font-weight="700" fill="#1d1d1f">Daloy ng desisyon ng remote-control latency</text>
+<rect x="20" y="48" width="200" height="48" rx="10" fill="#111"/><text x="120" y="78" text-anchor="middle" font-family="system-ui,Arial" font-size="14" fill="#fff">Sukatin ang round-trip na RTT</text>
+<path d="M220 72 H262" stroke="#999" stroke-width="2" fill="none" marker-end="url(#ar)"/>
+<rect x="262" y="36" width="418" height="46" rx="10" fill="#ecfdf5" stroke="#bbf7e0"/><text x="278" y="64" font-family="system-ui,Arial" font-size="13" fill="#047857">&lt;100ms: makinis, itulak ang mataas na kalidad</text>
+<rect x="262" y="92" width="418" height="46" rx="10" fill="#eef4ff" stroke="#cfe0ff"/><text x="278" y="120" font-family="system-ui,Arial" font-size="13" fill="#1d4ed8">100–150ms: magagamit, mas gusto ang mas malapit na node</text>
+<rect x="262" y="148" width="418" height="46" rx="10" fill="#fef2f2" stroke="#fecaca"/><text x="278" y="176" font-family="system-ui,Arial" font-size="13" fill="#b91c1c">&gt;150ms: laggy, ayusin muna ang network</text>
+<path d="M120 96 V120 H262" stroke="#10b981" stroke-width="2" fill="none" marker-end="url(#ar)"/>
+<path d="M120 120 V172 H262" stroke="#999" stroke-width="1.5" fill="none" marker-end="url(#ar)"/>
+<defs><marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0 0 L6 3 L0 6 z" fill="#999"/></marker></defs>
+</svg><figcaption>Fig 2: Laggy remote control? Suriin muna ang latency (RTT) at bandwidth, pagkatapos ay ayusin ang dahilan</figcaption></figure>
+<table><tr><th>Tier</th><th>Round-trip na RTT</th><th>Karanasan sa remote control</th><th>Ano ang gagawin</th></tr><tr><td><b>Magaling</b></td><td class="mono">< 50 ms</td><td>Ang malapit-instant, remote control ay parang lokal</td><td>Walang mahinang link sa binti ng network; maaari mong itulak ang mataas na resolution/frame rate.</td></tr><tr><td><b>Mabuti</b></td><td class="mono">50–100 ms</td><td>Sa loob ng inirerekomendang hanay, makinis araw-araw</td><td>Paminsan-minsan ay bahagyang pahid, walang seryoso.</td></tr><tr><td><b>Patas</b></td><td class="mono">100–150 ms</td><td>Kapansin-pansing lag kapag nagta-type/nag-drag</td><td>Fine para sa magaan na trabaho; nakakatulong ang mas malapit na endpoint.</td></tr><tr><td><b>Laggy</b></td><td class="mono">150–200 ms</td><td>Malinaw na pabagu-bago, mahinang pagsubaybay</td><td>Lumipat sa wired / isang mas malapit na node; suriin ang jitter at packet loss.</td></tr><tr><td><b>mahirap</b></td><td class="mono">≥ 200 ms</td><td>Halos hindi na magamit, nakakapagod sa paglipas ng panahon</td><td>Ayusin muna ang network: wired, isang mas malapit na relay, o isang bayad na node.</td></tr></table>
+<h2>Magkano ang bandwidth (ayon sa target na resolution)</h2>
+<p>Ang talahanayan sa ibaba ay ang opisyal na per-resolution na rekomendasyon ng bandwidth ng Microsoft (30fps, <0.1% na pagkawala). Ang modernong remote control (ToDesk at iba pa) ay gumagamit ng H.264/AVC-444 at AV1 adaptive bitrate, kaya ang mga tunay na pangangailangan ay kadalasang mas mababa (halimbawa ng Microsoft: bumababa ang web browsing mula 6 Mbps hanggang humigit-kumulang 1 Mbps).</p>
+<figure><svg viewBox="0 0 700 250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="ToDesk latency test at bandwidth calculator tool illustration" style="width:100%;height:auto;border:1px solid #eee;border-radius:12px;background:#fff">
+<text x="20" y="34" font-family="system-ui,Arial" font-size="16" font-weight="700" fill="#1d1d1f">Bandwidth → target na resolution (Microsoft @30fps baseline)</text>
+<text x="20" y="88" font-family="system-ui,Arial" font-size="13" fill="#334155">720p</text><rect x="120" y="70" width="92" height="26" rx="6" fill="#bfdbfe"/><text x="222" y="88" font-family="ui-monospace,monospace" font-size="13" fill="#0f172a">3 Mbps</text>
+<text x="20" y="134" font-family="system-ui,Arial" font-size="13" fill="#334155">1080p</text><rect x="120" y="116" width="153" height="26" rx="6" fill="#93c5fd"/><text x="283" y="134" font-family="ui-monospace,monospace" font-size="13" fill="#0f172a">5 Mbps</text>
+<text x="20" y="180" font-family="system-ui,Arial" font-size="13" fill="#334155">4K</text><rect x="120" y="162" width="460" height="26" rx="6" fill="#1d4ed8"/><text x="590" y="180" font-family="ui-monospace,monospace" font-size="13" fill="#0f172a">15 Mbps</text>
+<text x="20" y="232" font-family="system-ui,Arial" font-size="11" fill="#94a3b8">Microsoft Remote Desktop · @30fps · &lt;0.1% loss</text>
+</svg><figcaption>Bandwidth → target na resolution (Microsoft @30fps baseline)</figcaption></figure>
+<figure class="i4png"><picture><source type="image/webp" srcset="/img/board_fil.webp"><img src="/img/board_fil.png" alt="Ilustrasyon ng remote-control latency at bandwidth tier chart" loading="lazy" width="1120" height="630" style="width:100%;height:auto;border-radius:12px;border:1px solid #eee"></picture><figcaption>Fig 2: Laggy remote control? Suriin muna ang latency (RTT) at bandwidth, pagkatapos ay ayusin ang dahilan</figcaption></figure>
+<table><tr><th>Inirerekomenda ang bandwidth</th><th>Target na resolution (@30fps)</th><th>Use case</th></tr><tr><td class="mono"><b>≥ 1.5 Mbps</b></td><td>1024×768</td><td>Text / light remote work (Microsoft Light)</td></tr><tr><td class="mono"><b>≥ 3 Mbps</b></td><td>1280×720 (720p)</td><td>Pangkalahatang remote na desktop</td></tr><tr><td class="mono"><b>≥ 5 Mbps</b></td><td>1920×1080 (1080p)</td><td>Mainstream HD remote control</td></tr><tr><td class="mono"><b>≥ 15 Mbps</b></td><td>3840×2160 (4K)</td><td>Mataas na res/frame rate, video (Microsoft Power)</td></tr></table>
+<section id="data2026" class="i4data"><h2>2026 remote-control na pagtatantya ng bandwidth (ayon sa target na kalidad)</h2>
+<p>Gamit ang opisyal na resolution ng Microsoft →bandwidth table bilang baseline, extrapolated na may modernong adaptive codecs (H.264/AVC-444, AV1; ToDesk claims 30%–50% mas mahusay na bandwidth efficiency) upang magbigay ng mga tipikal na real-world figure para sa 2026.</p>
+<table><tr><th>Target na kalidad</th><th>Microsoft RDP baseline</th><th>2026 adaptive na pagtatantya</th><th>Mga Tala</th></tr><tr><td><b>720p (@30fps)</b></td><td class="mono">3 Mbps</td><td class="mono">mga 1.5–2 Mbps</td><td>H.264/AV1 adaptive</td></tr><tr><td><b>1080p (@30fps)</b></td><td class="mono">5 Mbps</td><td class="mono">mga 2.5–3.5 Mbps</td><td>Mainstream na HD</td></tr><tr><td><b>1080p60 (mataas na fps)</b></td><td class="mono">mga 8–10 Mbps</td><td class="mono">mga 5–7 Mbps</td><td>High-motion na nilalaman</td></tr><tr><td><b>4K (@30fps)</b></td><td class="mono">15 Mbps</td><td class="mono">mga 8–12 Mbps</td><td>4:4:4 / AV1</td></tr></table>
+<p class="note"><em>Tantyahin, hindi ang pagsukat ng first-party. Baseline = opisyal na talahanayan ng Remote Desktop ng Microsoft (@30fps); ang 2026 na pagtatantya ay nag-e-extrapolate sa modernong adaptive encoding at isang magaspang na pagkakasunud-sunod ng magnitude lamang — ang tunay na bandwidth ay nag-iiba sa on-screen na paggalaw, packet loss at codec.</em></p></section>
+<h2>Mga madalas itanong</h2>
+<details class="faq"><summary>Anong latency ang itinuturing na normal para sa remote control?</summary><div>Bilang panuntunan ng thumb: Ang RTT na wala pang 50ms ay parang malapit-instant, wala pang 100ms ang inirerekomendang hanay, 100–150ms ay magagamit ngunit sa tingin mo ang lag, higit sa 150ms ay malinaw na pabagu-bago, at 200ms o higit pa ay halos hindi na magagamit. Napansin din ng Microsoft na ang mga napaka-interactive/assistive na sitwasyon ay gustong RTT ≤20ms para sa pinakamagandang karanasan.</div></details>
+<details class="faq"><summary>Halos gaano karaming bandwidth ang kailangan ng remote control ng ToDesk?</summary><div>Alinsunod sa opisyal na rekomendasyon ng Remote Desktop ng Microsoft (30fps): humigit-kumulang 3 Mbps para sa 720p, 5 Mbps para sa 1080p at 15 Mbps para sa 4K. Gumagamit ang modernong remote control ng adaptive encoding, kaya kadalasang mas mababa ang mga tunay na pangangailangan.</div></details>
+<details class="faq"><summary>Alin ang mas mahalaga, latency o bandwidth?</summary><div>Para sa interactive na remote control, mas mahalaga ang latency: kahit na may sapat na bandwidth, mataas pa rin ang latency/jitter. Ang dynamic na bitrate ng Microsoft ay talagang nagpapababa ng kalidad kapag mataas ang RTT upang mapanatiling maayos ang mga bagay.</div></details>
+<details class="faq"><summary>Ano ba talaga ang sinusukat ng latency test na ito?</summary><div>Sinusukat ng iyong browser ang network round trip sa mga pampublikong endpoint (Cloudflare, Google, atbp.) — isang proxy para sa network leg ng remote control. Ang tunay na remote-control latency ay nagdaragdag din ng capture, encode/decode at oras ng pagpapakita.</div></details>
+<details class="faq"><summary>Bakit laggy pa rin kapag mataas ang bandwidth ko?</summary><div>Kadalasan ito ay latency, jitter o packet loss, hindi bandwidth. Ang remote control ay sensitibo sa RTT at katatagan; masakit ang mataas na jitter kaysa sa mataas na average.</div></details>
+<details class="faq"><summary>Ano ang pinakamataas na kalidad na maaabot ng ToDesk?</summary><div>Ang opisyal na site nito ay naghahabol ng hanggang 8K, 360 FPS at 4:4:4 true-color lossless (AV1 codec / ZeroSync engine), dahil sa tamang plano at sapat na bandwidth.</div></details>
+<details class="faq"><summary>Gaano karaming bandwidth ang kinukuha ng 1080p video sa remote control?</summary><div>Halimbawa ng Microsoft: ang isang half-screen na 30fps na video ay humigit-kumulang 8.5–9.5 Mbps bilang default, ngunit humigit-kumulang 2.5–2.8 Mbps lang na may H.264/AVC-444 — malaki ang pagkakaiba ng codec.</div></details>
+<details class="faq"><summary>Paano ko iko-convert ang Mbps at MB/s?</summary><div>1 MB/s = 8 Mbps, at 1 Mbps = 0.125 MB/s. Awtomatikong ginagawa ito ng bandwidth converter sa page na ito para sa lahat ng karaniwang unit.</div></details>
+
+<h2>Mabilis na real-world triage</h2>
+<ul class="scenes"><li>Ang pag-type at pag-drag ng mga bintana ay nahuhuli ngunit magagamit: Karaniwang 100–150ms ang RTT; ang isang mas malapit na endpoint o isang wired na koneksyon ay madalas na humihila pabalik sa ilalim ng 100ms.</li><li>Malabo ang larawan at tumatalas lamang pagkatapos mong ihinto ang paglipat: ang limitadong bandwidth ay nag-trigger ng adaptive downscaling; suriin ang bandwidth converter laban sa mga tier ng kalidad at babaan ang target na resolution kung kinakailangan.</li><li>Hindi mataas ang RTT ngunit dumarating at aalis: tumuon sa jitter — masakit ang mataas na jitter kaysa sa mataas na average; tingnan ang interference ng Wi-Fi, lumipat sa 5GHz o wired.</li><li>Ang cross-border remote control ay napaka-laggy: ang mga ordinaryong pampublikong pagruruta ay mga detour, kaya ang RTT at packet loss ay parehong mataas; Malaki ang naitutulong ng mas malapit na relay o mga pandaigdigang node ng produkto.</li><li>Ang 4K remote control ay may sapat na bandwidth ngunit bumababa ng mga frame: ang mataas na res/frame rate ay nagbubuwis din ng pag-encode/pag-decode ng compute, hindi lamang ng bandwidth; subukan ang 1080p o mas mababang frame rate.</li></ul>
+<div class="related"><h2>Kaugnay</h2><ul><li><a href="https://todeskremote.com/download/">Remote control ng ToDesk · I-download</a></li><li><a href="https://learn.microsoft.com/en-us/windows-server/remote/remote-desktop-services/network-guidance" rel="nofollow">Microsoft Remote Desktop · mga alituntunin sa network (bandwidth)</a></li><li><a href="https://learn.microsoft.com/en-us/azure/virtual-desktop/rdp-bandwidth" rel="nofollow">Mga kinakailangan sa bandwidth ng Microsoft Azure RDP (mga senaryo/codec)</a></li><li><a href="https://www.todesk.com/" rel="nofollow">Opisyal na site ng ToDesk (mga detalye ng produkto)</a></li></ul></div>
+</main>
+<footer>Bandwidth/resolution baselines mula sa opisyal na Remote Desktop docs ng Microsoft (Network guidelines / Azure Virtual Desktop RDP bandwidth); Mga spec ng ToDesk mula sa opisyal na site nito. Ang mga latency tier ay isang banda ng karanasan sa industriya na cross-checked gamit ang RTT≤20ms anchor ng Microsoft. Ang mga tool at pagtatantya dito ay para sa sanggunian lamang, hindi first-party na pagsukat.<br>整理/Editor：<a href="/about-editor/">罗宇</a> · MIT License · <a href="/about-editor/">about</a></footer>
+</div>
+<script src="/data_fil.js"></script><script src="/app.js"></script></body></html>
