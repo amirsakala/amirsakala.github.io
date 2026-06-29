@@ -1,0 +1,178 @@
+<!DOCTYPE html><html lang="zh-Hant"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ToDesk 遠端控制延遲測試 + 頻寬換算器 — 線上測網路往返延遲、估算遠控畫質</title>
+<meta name="description" content="線上測你到公共節點的網路往返延遲（RTT）與抖動，按遠端控制流暢度分檔；頻寬單位換算器估算 ToDesk 遠控所需頻寬與可達畫質。純客戶端、開啟即用、開源。資料基線取自微軟遠端桌面官方文件與 ToDesk 官網。">
+<link rel="canonical" href="https://amirsakala.github.io/zh-tw/">
+<link rel="alternate" hreflang="zh-Hans" href="https://amirsakala.github.io/">
+<link rel="alternate" hreflang="en" href="https://amirsakala.github.io/en/">
+<link rel="alternate" hreflang="ja" href="https://amirsakala.github.io/ja/">
+<link rel="alternate" hreflang="zh-Hant" href="https://amirsakala.github.io/zh-tw/">
+<link rel="alternate" hreflang="id" href="https://amirsakala.github.io/id/">
+<link rel="alternate" hreflang="th" href="https://amirsakala.github.io/th/">
+<link rel="alternate" hreflang="vi" href="https://amirsakala.github.io/vi/">
+<link rel="alternate" hreflang="ms" href="https://amirsakala.github.io/ms/">
+<link rel="alternate" hreflang="fil" href="https://amirsakala.github.io/fil/">
+<link rel="alternate" hreflang="km" href="https://amirsakala.github.io/km/">
+<link rel="alternate" hreflang="lo" href="https://amirsakala.github.io/lo/">
+<link rel="alternate" hreflang="my" href="https://amirsakala.github.io/my/">
+<link rel="alternate" hreflang="x-default" href="https://amirsakala.github.io/">
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@graph": [
+  {
+   "@type": "WebApplication",
+   "name": "ToDesk 遠端控制延遲測試 + 頻寬換算器",
+   "url": "https://amirsakala.github.io/zh-tw/",
+   "applicationCategory": "UtilitiesApplication",
+   "operatingSystem": "Web browser",
+   "inLanguage": "zh-Hant",
+   "description": "線上測你到公共節點的網路往返延遲（RTT）與抖動，按遠端控制流暢度分檔；頻寬單位換算器估算 ToDesk 遠控所需頻寬與可達畫質。純客戶端、開啟即用、開源。資料基線取自微軟遠端桌面官方文件與 ToDesk 官網。",
+   "isAccessibleForFree": true,
+   "browserRequirements": "Requires JavaScript",
+   "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+   },
+   "author": {
+    "@type": "Person",
+    "name": "罗宇",
+    "url": "https://amirsakala.github.io/about-editor/"
+   }
+  },
+  {
+   "@type": "FAQPage",
+   "inLanguage": "zh-Hant",
+   "url": "https://amirsakala.github.io/zh-tw/",
+   "mainEntity": [
+    {
+     "@type": "Question",
+     "name": "遠端控制延遲多少算正常？",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "經驗上：RTT 低於 50ms 近乎即時，低於 100ms 推薦範圍內，100–150ms 可用但能感到遲滯，超過 150ms 明顯示卡頓，達到或超過 200ms 幾乎不可用。微軟還指出強互動/輔助場景 RTT ≤20ms 體驗最佳。"
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "ToDesk 遠控大概需要多大頻寬？",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "按微軟遠端桌面官方推薦（30fps）：720p 約 3 Mbps、1080p 約 5 Mbps、4K 約 15 Mbps。現代遠控用自適應編碼，實際常更低。"
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "延遲和頻寬哪個更重要？",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "互動遠控裡延遲更關鍵：頻寬夠了，延遲/抖動高一樣卡。微軟的動態位元速率會在 RTT 高時主動降畫質來保流暢。"
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "這個延遲測試測的是什麼？",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "瀏覽器測你到公共節點（Cloudflare、Google 等）的網路往返，是遠控「網路腿」的代理量；真實遠控延遲還要加裝置採集、編解碼與顯示時延。"
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "為什麼我頻寬很大還是卡？",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "多半是延遲、抖動或丟包，不是頻寬。遠控對 RTT 和穩定性很敏感，抖動大比平均高更毀體驗。"
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "ToDesk 最高能到什麼畫質？",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "官網稱最高 8K、360 FPS、4:4:4 真彩無損（AV1 編碼 / ZeroSync 傳輸引擎），需相應版本與足夠頻寬。"
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "1080p 影片在遠控裡要多少頻寬？",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "微軟示例：半屏 30fps 影片預設約 8.5–9.5 Mbps，啟用 H.264/AVC-444 後僅約 2.5–2.8 Mbps，可見編碼影響很大。"
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Mbps 和 MB/s 怎麼換算？",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "1 MB/s = 8 Mbps，1 Mbps = 0.125 MB/s。本頁頻寬換算器會自動換算到各常用單位。"
+     }
+    }
+   ]
+  }
+ ]
+}
+</script>
+<link rel="stylesheet" href="/style.css"></head>
+<body><div class="wrap"><main>
+<nav class="lang">Language: <a href="/">简体中文</a> · <a href="/en/">English</a> · <a href="/ja/">日本語</a> · <strong>繁體中文</strong> · <a href="/id/">Bahasa Indonesia</a> · <a href="/th/">ไทย</a> · <a href="/vi/">Tiếng Việt</a> · <a href="/ms/">Bahasa Melayu</a> · <a href="/fil/">Filipino</a> · <a href="/km/">ភាសាខ្មែរ</a> · <a href="/lo/">ພາສາລາວ</a> · <a href="/my/">မြန်မာ</a></nav>
+<h1>ToDesk 遠端控制延遲測試 + 頻寬換算器</h1>
+<figure class="i4png"><picture><source type="image/webp" srcset="/img/cover_tw.webp"><img src="/img/cover_tw.png" alt="ToDesk 遠端控制延遲測試與頻寬換算器工具示意圖" fetchpriority="high" width="1120" height="630" style="width:100%;height:auto;border-radius:12px;border:1px solid #eee"></picture><figcaption>圖1：ToDesk 遠控延遲測試 + 頻寬換算器（測 RTT · 估算頻寬與畫質）</figcaption></figure>
+<p class="intro">遠端控制卡不卡，關鍵看兩件事：<strong>網路往返延遲（RTT）</strong> 和 <strong>可用頻寬</strong>。下面兩個小工具都在你瀏覽器本地執行——① 測你到多個公共節點的往返延遲與抖動，按遠控流暢度分檔；② 頻寬單位換算並估算給定頻寬能跑多高畫質。資料基線取自微軟遠端桌面官方文件與 ToDesk 官網規格（見文末來源）。</p>
+<section class="tool"><h2>工具①：網路往返延遲（Ping）測試</h2>
+<p>點下面按鈕，瀏覽器會向幾個公共節點各發若干次請求，測往返時間。取每個端點的<strong>最佳 RTT</strong>（更接近真實網路往返），並按下方時延檔給出遠控流暢度判斷。</p>
+<button id="lat-go">開始測試延遲</button>
+<div id="lat-out"></div>
+<p class="note">說明：測的是你到公共端點的<strong>網路往返</strong>，是遠控「網路腿」的代理量；真實遠控延遲還要加上裝置採集、編碼/解碼與顯示時延。結果受當前網路與端點距離影響。</p></section>
+<section class="tool"><h2>工具②：頻寬換算器 + 畫質估算</h2>
+<p>輸入一個頻寬數值、選單位，自動換算到常用單位，並對照微軟遠端桌面官方推薦，估算這個頻寬在 30fps 下大約能跑到什麼解析度。</p>
+<div class="bwrow"><input id="bw-in" type="number" min="0" step="any" placeholder="輸入數值，例如 20" autocomplete="off"><select id="bw-unit"><option>Mbps</option><option>Gbps</option><option>Kbps</option><option>MB/s</option><option>KB/s</option></select><button id="bw-go">換算 + 估算</button></div>
+<div id="bw-out"></div></section>
+<h2>遠端控制延遲怎麼看（時延檔）</h2>
+<p>互動式遠控對延遲比對頻寬更敏感。微軟指出強互動/輔助場景 RTT ≤20ms 體驗最佳；下表是綜合微軟錨點與行業經驗的遠控時延檔，照檔對號入座。</p>
+<figure><svg viewBox="0 0 700 250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="遠控延遲與頻寬分檔對照示意圖" style="width:100%;height:auto;border:1px solid #eee;border-radius:12px;background:#fff">
+<text x="20" y="30" font-family="system-ui,Arial" font-size="16" font-weight="700" fill="#1d1d1f">遠控延遲決策流程</text>
+<rect x="20" y="48" width="200" height="48" rx="10" fill="#111"/><text x="120" y="78" text-anchor="middle" font-family="system-ui,Arial" font-size="14" fill="#fff">測往返 RTT</text>
+<path d="M220 72 H262" stroke="#999" stroke-width="2" fill="none" marker-end="url(#ar)"/>
+<rect x="262" y="36" width="418" height="46" rx="10" fill="#ecfdf5" stroke="#bbf7e0"/><text x="278" y="64" font-family="system-ui,Arial" font-size="13" fill="#047857">&lt;100ms：順滑，可衝高畫質</text>
+<rect x="262" y="92" width="418" height="46" rx="10" fill="#eef4ff" stroke="#cfe0ff"/><text x="278" y="120" font-family="system-ui,Arial" font-size="13" fill="#1d4ed8">100–150ms：可用，宜就近節點</text>
+<rect x="262" y="148" width="418" height="46" rx="10" fill="#fef2f2" stroke="#fecaca"/><text x="278" y="176" font-family="system-ui,Arial" font-size="13" fill="#b91c1c">&gt;150ms：卡，先修網路</text>
+<path d="M120 96 V120 H262" stroke="#10b981" stroke-width="2" fill="none" marker-end="url(#ar)"/>
+<path d="M120 120 V172 H262" stroke="#999" stroke-width="1.5" fill="none" marker-end="url(#ar)"/>
+<defs><marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0 0 L6 3 L0 6 z" fill="#999"/></marker></defs>
+</svg><figcaption>圖2：遠控卡不卡？先看延遲（RTT）與頻寬，分檔對症下藥</figcaption></figure>
+<table><tr><th>檔位</th><th>往返 RTT</th><th>遠控體驗</th><th>建議</th></tr><tr><td><b>極佳</b></td><td class="mono">< 50 ms</td><td>近乎即時，遠控如本地</td><td>網路腿無短板，可衝高分高幀。</td></tr><tr><td><b>良好</b></td><td class="mono">50–100 ms</td><td>推薦範圍內，日常遠控順滑</td><td>偶有輕微拖影，問題不大。</td></tr><tr><td><b>可用</b></td><td class="mono">100–150 ms</td><td>可感延遲，打字/拖拽有遲滯</td><td>適合輕辦公；換就近節點更穩。</td></tr><tr><td><b>偏卡</b></td><td class="mono">150–200 ms</td><td>明顯示卡頓，跟手差</td><td>換有線/就近節點，排查抖動與丟包。</td></tr><tr><td><b>差</b></td><td class="mono">≥ 200 ms</td><td>幾乎不可用，久用疲勞</td><td>優先解決網路：有線、就近中轉或付費節點。</td></tr></table>
+<h2>遠控頻寬要多少（按目標畫質）</h2>
+<p>下表是微軟遠端桌面官方按解析度給出的推薦頻寬（30fps、丟包<0.1%）。現代遠控（ToDesk 等）用 H.264/AVC-444、AV1 自適應位元速率，實際常低於此（微軟示例：網頁瀏覽可從 6 Mbps 降到約 1 Mbps）。</p>
+<figure><svg viewBox="0 0 700 250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="ToDesk 遠端控制延遲測試與頻寬換算器工具示意圖" style="width:100%;height:auto;border:1px solid #eee;border-radius:12px;background:#fff">
+<text x="20" y="34" font-family="system-ui,Arial" font-size="16" font-weight="700" fill="#1d1d1f">頻寬 → 目標畫質（微軟 @30fps 基線）</text>
+<text x="20" y="88" font-family="system-ui,Arial" font-size="13" fill="#334155">720p</text><rect x="120" y="70" width="92" height="26" rx="6" fill="#bfdbfe"/><text x="222" y="88" font-family="ui-monospace,monospace" font-size="13" fill="#0f172a">3 Mbps</text>
+<text x="20" y="134" font-family="system-ui,Arial" font-size="13" fill="#334155">1080p</text><rect x="120" y="116" width="153" height="26" rx="6" fill="#93c5fd"/><text x="283" y="134" font-family="ui-monospace,monospace" font-size="13" fill="#0f172a">5 Mbps</text>
+<text x="20" y="180" font-family="system-ui,Arial" font-size="13" fill="#334155">4K</text><rect x="120" y="162" width="460" height="26" rx="6" fill="#1d4ed8"/><text x="590" y="180" font-family="ui-monospace,monospace" font-size="13" fill="#0f172a">15 Mbps</text>
+<text x="20" y="232" font-family="system-ui,Arial" font-size="11" fill="#94a3b8">Microsoft Remote Desktop · @30fps · &lt;0.1% loss</text>
+</svg><figcaption>頻寬 → 目標畫質（微軟 @30fps 基線）</figcaption></figure>
+<figure class="i4png"><picture><source type="image/webp" srcset="/img/board_tw.webp"><img src="/img/board_tw.png" alt="遠控延遲與頻寬分檔對照示意圖" loading="lazy" width="1120" height="630" style="width:100%;height:auto;border-radius:12px;border:1px solid #eee"></picture><figcaption>圖2：遠控卡不卡？先看延遲（RTT）與頻寬，分檔對症下藥</figcaption></figure>
+<table><tr><th>推薦頻寬</th><th>目標解析度（@30fps）</th><th>適用場景</th></tr><tr><td class="mono"><b>≥ 1.5 Mbps</b></td><td>1024×768</td><td>文字/輕辦公遠控（微軟 Light 檔）</td></tr><tr><td class="mono"><b>≥ 3 Mbps</b></td><td>1280×720（720p）</td><td>一般遠端桌面</td></tr><tr><td class="mono"><b>≥ 5 Mbps</b></td><td>1920×1080（1080p）</td><td>主流高畫質遠控</td></tr><tr><td class="mono"><b>≥ 15 Mbps</b></td><td>3840×2160（4K）</td><td>高分高幀 / 影片（微軟 Power 檔）</td></tr></table>
+<section id="data2026" class="i4data"><h2>2026 遠控頻寬估算（按目標畫質）</h2>
+<p>以微軟官方解析度→頻寬表為基線，疊加現代自適應編碼（H.264/AVC-444、AV1；ToDesk 稱頻寬利用率提升 30%–50%）外推，給出 2026 年常見的實際頻寬量級。</p>
+<table><tr><th>目標畫質</th><th>微軟 RDP 基線</th><th>2026 自適應估算</th><th>說明</th></tr><tr><td><b>720p（@30fps）</b></td><td class="mono">3 Mbps</td><td class="mono">約 1.5–2 Mbps</td><td>H.264/AV1 自適應</td></tr><tr><td><b>1080p（@30fps）</b></td><td class="mono">5 Mbps</td><td class="mono">約 2.5–3.5 Mbps</td><td>主流高畫質遠控</td></tr><tr><td><b>1080p60（高幀）</b></td><td class="mono">約 8–10 Mbps</td><td class="mono">約 5–7 Mbps</td><td>高動態畫面</td></tr><tr><td><b>4K（@30fps）</b></td><td class="mono">15 Mbps</td><td class="mono">約 8–12 Mbps</td><td>4:4:4 / AV1</td></tr></table>
+<p class="note"><em>估算·非一手實測。基線 = 微軟遠端桌面官方表（@30fps）；2026 估算 = 在基線上按現代自適應編碼外推，僅供量級參考，實際隨畫面動態、丟包與編碼而變。</em></p></section>
+<h2>常見問題</h2>
+<details class="faq"><summary>遠端控制延遲多少算正常？</summary><div>經驗上：RTT 低於 50ms 近乎即時，低於 100ms 推薦範圍內，100–150ms 可用但能感到遲滯，超過 150ms 明顯示卡頓，達到或超過 200ms 幾乎不可用。微軟還指出強互動/輔助場景 RTT ≤20ms 體驗最佳。</div></details>
+<details class="faq"><summary>ToDesk 遠控大概需要多大頻寬？</summary><div>按微軟遠端桌面官方推薦（30fps）：720p 約 3 Mbps、1080p 約 5 Mbps、4K 約 15 Mbps。現代遠控用自適應編碼，實際常更低。</div></details>
+<details class="faq"><summary>延遲和頻寬哪個更重要？</summary><div>互動遠控裡延遲更關鍵：頻寬夠了，延遲/抖動高一樣卡。微軟的動態位元速率會在 RTT 高時主動降畫質來保流暢。</div></details>
+<details class="faq"><summary>這個延遲測試測的是什麼？</summary><div>瀏覽器測你到公共節點（Cloudflare、Google 等）的網路往返，是遠控「網路腿」的代理量；真實遠控延遲還要加裝置採集、編解碼與顯示時延。</div></details>
+<details class="faq"><summary>為什麼我頻寬很大還是卡？</summary><div>多半是延遲、抖動或丟包，不是頻寬。遠控對 RTT 和穩定性很敏感，抖動大比平均高更毀體驗。</div></details>
+<details class="faq"><summary>ToDesk 最高能到什麼畫質？</summary><div>官網稱最高 8K、360 FPS、4:4:4 真彩無損（AV1 編碼 / ZeroSync 傳輸引擎），需相應版本與足夠頻寬。</div></details>
+<details class="faq"><summary>1080p 影片在遠控裡要多少頻寬？</summary><div>微軟示例：半屏 30fps 影片預設約 8.5–9.5 Mbps，啟用 H.264/AVC-444 後僅約 2.5–2.8 Mbps，可見編碼影響很大。</div></details>
+<details class="faq"><summary>Mbps 和 MB/s 怎麼換算？</summary><div>1 MB/s = 8 Mbps，1 Mbps = 0.125 MB/s。本頁頻寬換算器會自動換算到各常用單位。</div></details>
+
+<h2>真實場景速判</h2>
+<ul class="scenes"><li>打字、拖視窗有遲滯但還能用：RTT 多在 100–150ms，換就近節點或有線網常能拉回 100ms 內。</li><li>畫面糊、動一下才變清晰：頻寬受限觸發自適應降質；用頻寬換算器對照畫質檔，必要時降目標解析度。</li><li>RTT 不高但時好時壞：重點看抖動（jitter）——抖動大比平均高更毀體驗，查 Wi-Fi 干擾、換 5GHz 或有線。</li><li>跨境遠控特別卡：普通公網繞路、RTT 與丟包都高；就近中轉或產品的全球節點能顯著改善。</li><li>4K 遠控頻寬夠卻掉幀：高分高幀對編解碼算力也敏感，不只是頻寬；試 1080p 或降幀。</li></ul>
+<div class="related"><h2>相關</h2><ul><li><a href="https://todeskremote.com/download/">ToDesk 遠端控制 · 下載</a></li><li><a href="https://learn.microsoft.com/en-us/windows-server/remote/remote-desktop-services/network-guidance" rel="nofollow">微軟遠端桌面 · 網路指南（頻寬推薦）</a></li><li><a href="https://learn.microsoft.com/en-us/azure/virtual-desktop/rdp-bandwidth" rel="nofollow">微軟 Azure RDP 頻寬要求（場景/編碼）</a></li><li><a href="https://www.todesk.com/" rel="nofollow">ToDesk 官網（產品規格）</a></li></ul></div>
+</main>
+<footer>頻寬/解析度基線取自微軟遠端桌面官方文件（Network guidelines / Azure Virtual Desktop RDP bandwidth）；ToDesk 規格取自官網。時延檔為行業經驗帶（含微軟 RTT≤20ms 錨點）互證。本頁工具與估算僅供參考、非一手實測，硬體/網路問題以實測為準。<br>整理/Editor：<a href="/about-editor/">罗宇</a> · MIT License · <a href="/about-editor/">about</a></footer>
+</div>
+<script src="/data_tw.js"></script><script src="/app.js"></script></body></html>
