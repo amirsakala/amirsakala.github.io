@@ -1,0 +1,178 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ToDesk Latency Test + Bandwidth Calculator — measure network RTT, estimate remote-control quality</title>
+<meta name="description" content="Measure your network round-trip latency (RTT) and jitter to public endpoints, ranked by remote-control smoothness; plus a bandwidth converter that estimates the bandwidth and resolution a ToDesk remote session needs. Client-side, instant, open source. Baselines from Microsoft Remote Desktop docs and ToDesk.">
+<link rel="canonical" href="https://amirsakala.github.io/en/">
+<link rel="alternate" hreflang="zh-Hans" href="https://amirsakala.github.io/">
+<link rel="alternate" hreflang="en" href="https://amirsakala.github.io/en/">
+<link rel="alternate" hreflang="ja" href="https://amirsakala.github.io/ja/">
+<link rel="alternate" hreflang="zh-Hant" href="https://amirsakala.github.io/zh-tw/">
+<link rel="alternate" hreflang="id" href="https://amirsakala.github.io/id/">
+<link rel="alternate" hreflang="th" href="https://amirsakala.github.io/th/">
+<link rel="alternate" hreflang="vi" href="https://amirsakala.github.io/vi/">
+<link rel="alternate" hreflang="ms" href="https://amirsakala.github.io/ms/">
+<link rel="alternate" hreflang="fil" href="https://amirsakala.github.io/fil/">
+<link rel="alternate" hreflang="km" href="https://amirsakala.github.io/km/">
+<link rel="alternate" hreflang="lo" href="https://amirsakala.github.io/lo/">
+<link rel="alternate" hreflang="my" href="https://amirsakala.github.io/my/">
+<link rel="alternate" hreflang="x-default" href="https://amirsakala.github.io/">
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@graph": [
+  {
+   "@type": "WebApplication",
+   "name": "ToDesk Latency Test + Bandwidth Calculator",
+   "url": "https://amirsakala.github.io/en/",
+   "applicationCategory": "UtilitiesApplication",
+   "operatingSystem": "Web browser",
+   "inLanguage": "en",
+   "description": "Measure your network round-trip latency (RTT) and jitter to public endpoints, ranked by remote-control smoothness; plus a bandwidth converter that estimates the bandwidth and resolution a ToDesk remote session needs. Client-side, instant, open source. Baselines from Microsoft Remote Desktop docs and ToDesk.",
+   "isAccessibleForFree": true,
+   "browserRequirements": "Requires JavaScript",
+   "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+   },
+   "author": {
+    "@type": "Person",
+    "name": "罗宇",
+    "url": "https://amirsakala.github.io/about-editor/"
+   }
+  },
+  {
+   "@type": "FAQPage",
+   "inLanguage": "en",
+   "url": "https://amirsakala.github.io/en/",
+   "mainEntity": [
+    {
+     "@type": "Question",
+     "name": "What latency counts as normal for remote control?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "As a rule of thumb: RTT under 50ms feels near-instant, under 100ms is the recommended range, 100–150ms is usable but you feel the lag, over 150ms is clearly choppy, and 200ms or more is nearly unusable. Microsoft also notes that highly interactive/assistive scenarios want RTT ≤20ms for the best experience."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Roughly how much bandwidth does ToDesk remote control need?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Per Microsoft's official Remote Desktop recommendation (30fps): about 3 Mbps for 720p, 5 Mbps for 1080p and 15 Mbps for 4K. Modern remote control uses adaptive encoding, so real needs are often lower."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Which matters more, latency or bandwidth?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "For interactive remote control, latency matters more: even with enough bandwidth, high latency/jitter still feels laggy. Microsoft's dynamic bitrate actually lowers quality when RTT is high to keep things smooth."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "What does this latency test actually measure?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Your browser measures the network round trip to public endpoints (Cloudflare, Google, etc.) — a proxy for the network leg of remote control. Real remote-control latency also adds capture, encode/decode and display time."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Why is it still laggy when my bandwidth is high?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Usually it's latency, jitter or packet loss, not bandwidth. Remote control is sensitive to RTT and stability; high jitter hurts more than a high average."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "What's the highest quality ToDesk can reach?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Its official site claims up to 8K, 360 FPS and 4:4:4 true-color lossless (AV1 codec / ZeroSync engine), given the right plan and enough bandwidth."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "How much bandwidth does 1080p video take over remote control?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Microsoft's example: a half-screen 30fps video is about 8.5–9.5 Mbps by default, but only about 2.5–2.8 Mbps with H.264/AVC-444 — the codec makes a big difference."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "How do I convert Mbps and MB/s?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "1 MB/s = 8 Mbps, and 1 Mbps = 0.125 MB/s. The bandwidth converter on this page does it for all common units automatically."
+     }
+    }
+   ]
+  }
+ ]
+}
+</script>
+<link rel="stylesheet" href="/style.css"></head>
+<body><div class="wrap"><main>
+<nav class="lang">Language: <a href="/">简体中文</a> · <strong>English</strong> · <a href="/ja/">日本語</a> · <a href="/zh-tw/">繁體中文</a> · <a href="/id/">Bahasa Indonesia</a> · <a href="/th/">ไทย</a> · <a href="/vi/">Tiếng Việt</a> · <a href="/ms/">Bahasa Melayu</a> · <a href="/fil/">Filipino</a> · <a href="/km/">ភាសាខ្មែរ</a> · <a href="/lo/">ພາສາລາວ</a> · <a href="/my/">မြန်မာ</a></nav>
+<h1>ToDesk Latency Test + Bandwidth Calculator</h1>
+<figure class="i4png"><picture><source type="image/webp" srcset="/img/cover_en.webp"><img src="/img/cover_en.png" alt="ToDesk latency test and bandwidth calculator tool illustration" fetchpriority="high" width="1120" height="630" style="width:100%;height:auto;border-radius:12px;border:1px solid #eee"></picture><figcaption>Fig 1: ToDesk latency test + bandwidth calculator (measure RTT · estimate bandwidth &amp; quality)</figcaption></figure>
+<p class="intro">Whether remote control feels smooth comes down to two things: <strong>network round-trip latency (RTT)</strong> and <strong>available bandwidth</strong>. Both tools below run locally in your browser — ① measure RTT and jitter to several public endpoints and rank remote-control smoothness; ② convert bandwidth units and estimate the resolution a given bandwidth can drive. Baselines come from Microsoft's official Remote Desktop docs and ToDesk's specs (see sources at the bottom).</p>
+<section class="tool"><h2>Tool 1: network round-trip (Ping) test</h2>
+<p>Press the button and your browser sends a few requests to each public endpoint and times the round trip. We take the <strong>best RTT</strong> per endpoint (closest to the real network round trip) and rate remote-control smoothness using the latency tiers below.</p>
+<button id="lat-go">Start latency test</button>
+<div id="lat-out"></div>
+<p class="note">Note: this measures the <strong>network round trip</strong> to public endpoints — a proxy for the network leg of remote control. Real remote-control latency also adds capture, encode/decode and display time. Results depend on your network and endpoint distance.</p></section>
+<section class="tool"><h2>Tool 2: bandwidth converter + quality estimate</h2>
+<p>Enter a bandwidth value, pick a unit, and it converts to common units and — using Microsoft's official Remote Desktop recommendations — estimates roughly what resolution this bandwidth can drive at 30fps.</p>
+<div class="bwrow"><input id="bw-in" type="number" min="0" step="any" placeholder="Enter a value, e.g. 20" autocomplete="off"><select id="bw-unit"><option>Mbps</option><option>Gbps</option><option>Kbps</option><option>MB/s</option><option>KB/s</option></select><button id="bw-go">Convert + estimate</button></div>
+<div id="bw-out"></div></section>
+<h2>How to read remote-control latency (tiers)</h2>
+<p>Interactive remote control is more sensitive to latency than to bandwidth. Microsoft notes that highly interactive / assistive scenarios want RTT ≤20ms for the best experience. The table below combines that anchor with industry experience — find your tier.</p>
+<figure><svg viewBox="0 0 700 250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Remote-control latency and bandwidth tier chart illustration" style="width:100%;height:auto;border:1px solid #eee;border-radius:12px;background:#fff">
+<text x="20" y="30" font-family="system-ui,Arial" font-size="16" font-weight="700" fill="#1d1d1f">Remote-control latency decision flow</text>
+<rect x="20" y="48" width="200" height="48" rx="10" fill="#111"/><text x="120" y="78" text-anchor="middle" font-family="system-ui,Arial" font-size="14" fill="#fff">Measure round-trip RTT</text>
+<path d="M220 72 H262" stroke="#999" stroke-width="2" fill="none" marker-end="url(#ar)"/>
+<rect x="262" y="36" width="418" height="46" rx="10" fill="#ecfdf5" stroke="#bbf7e0"/><text x="278" y="64" font-family="system-ui,Arial" font-size="13" fill="#047857">&lt;100ms: smooth, push high quality</text>
+<rect x="262" y="92" width="418" height="46" rx="10" fill="#eef4ff" stroke="#cfe0ff"/><text x="278" y="120" font-family="system-ui,Arial" font-size="13" fill="#1d4ed8">100–150ms: usable, prefer a nearer node</text>
+<rect x="262" y="148" width="418" height="46" rx="10" fill="#fef2f2" stroke="#fecaca"/><text x="278" y="176" font-family="system-ui,Arial" font-size="13" fill="#b91c1c">&gt;150ms: laggy, fix the network first</text>
+<path d="M120 96 V120 H262" stroke="#10b981" stroke-width="2" fill="none" marker-end="url(#ar)"/>
+<path d="M120 120 V172 H262" stroke="#999" stroke-width="1.5" fill="none" marker-end="url(#ar)"/>
+<defs><marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0 0 L6 3 L0 6 z" fill="#999"/></marker></defs>
+</svg><figcaption>Fig 2: Laggy remote control? Check latency (RTT) and bandwidth first, then fix the cause</figcaption></figure>
+<table><tr><th>Tier</th><th>Round-trip RTT</th><th>Remote-control experience</th><th>What to do</th></tr><tr><td><b>Excellent</b></td><td class="mono">< 50 ms</td><td>Near-instant, remote control feels local</td><td>No weak link on the network leg; you can push high resolution/frame rate.</td></tr><tr><td><b>Good</b></td><td class="mono">50–100 ms</td><td>Within the recommended range, smooth day-to-day</td><td>Occasional slight smearing, nothing serious.</td></tr><tr><td><b>Fair</b></td><td class="mono">100–150 ms</td><td>Noticeable lag when typing/dragging</td><td>Fine for light work; a nearer endpoint helps.</td></tr><tr><td><b>Laggy</b></td><td class="mono">150–200 ms</td><td>Clearly choppy, poor tracking</td><td>Switch to wired / a nearer node; check jitter and packet loss.</td></tr><tr><td><b>Poor</b></td><td class="mono">≥ 200 ms</td><td>Nearly unusable, tiring over time</td><td>Fix the network first: wired, a nearer relay, or a paid node.</td></tr></table>
+<h2>How much bandwidth (by target resolution)</h2>
+<p>The table below is Microsoft's official per-resolution bandwidth recommendation (30fps, <0.1% loss). Modern remote control (ToDesk and others) uses H.264/AVC-444 and AV1 adaptive bitrate, so real needs are often lower (Microsoft's example: web browsing drops from 6 Mbps to about 1 Mbps).</p>
+<figure><svg viewBox="0 0 700 250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="ToDesk latency test and bandwidth calculator tool illustration" style="width:100%;height:auto;border:1px solid #eee;border-radius:12px;background:#fff">
+<text x="20" y="34" font-family="system-ui,Arial" font-size="16" font-weight="700" fill="#1d1d1f">Bandwidth → target resolution (Microsoft @30fps baseline)</text>
+<text x="20" y="88" font-family="system-ui,Arial" font-size="13" fill="#334155">720p</text><rect x="120" y="70" width="92" height="26" rx="6" fill="#bfdbfe"/><text x="222" y="88" font-family="ui-monospace,monospace" font-size="13" fill="#0f172a">3 Mbps</text>
+<text x="20" y="134" font-family="system-ui,Arial" font-size="13" fill="#334155">1080p</text><rect x="120" y="116" width="153" height="26" rx="6" fill="#93c5fd"/><text x="283" y="134" font-family="ui-monospace,monospace" font-size="13" fill="#0f172a">5 Mbps</text>
+<text x="20" y="180" font-family="system-ui,Arial" font-size="13" fill="#334155">4K</text><rect x="120" y="162" width="460" height="26" rx="6" fill="#1d4ed8"/><text x="590" y="180" font-family="ui-monospace,monospace" font-size="13" fill="#0f172a">15 Mbps</text>
+<text x="20" y="232" font-family="system-ui,Arial" font-size="11" fill="#94a3b8">Microsoft Remote Desktop · @30fps · &lt;0.1% loss</text>
+</svg><figcaption>Bandwidth → target resolution (Microsoft @30fps baseline)</figcaption></figure>
+<figure class="i4png"><picture><source type="image/webp" srcset="/img/board_en.webp"><img src="/img/board_en.png" alt="Remote-control latency and bandwidth tier chart illustration" loading="lazy" width="1120" height="630" style="width:100%;height:auto;border-radius:12px;border:1px solid #eee"></picture><figcaption>Fig 2: Laggy remote control? Check latency (RTT) and bandwidth first, then fix the cause</figcaption></figure>
+<table><tr><th>Recommended bandwidth</th><th>Target resolution (@30fps)</th><th>Use case</th></tr><tr><td class="mono"><b>≥ 1.5 Mbps</b></td><td>1024×768</td><td>Text / light remote work (Microsoft Light)</td></tr><tr><td class="mono"><b>≥ 3 Mbps</b></td><td>1280×720 (720p)</td><td>General remote desktop</td></tr><tr><td class="mono"><b>≥ 5 Mbps</b></td><td>1920×1080 (1080p)</td><td>Mainstream HD remote control</td></tr><tr><td class="mono"><b>≥ 15 Mbps</b></td><td>3840×2160 (4K)</td><td>High res/frame rate, video (Microsoft Power)</td></tr></table>
+<section id="data2026" class="i4data"><h2>2026 remote-control bandwidth estimate (by target quality)</h2>
+<p>Using Microsoft's official resolution→bandwidth table as the baseline, extrapolated with modern adaptive codecs (H.264/AVC-444, AV1; ToDesk claims 30%–50% better bandwidth efficiency) to give typical real-world figures for 2026.</p>
+<table><tr><th>Target quality</th><th>Microsoft RDP baseline</th><th>2026 adaptive estimate</th><th>Notes</th></tr><tr><td><b>720p (@30fps)</b></td><td class="mono">3 Mbps</td><td class="mono">about 1.5–2 Mbps</td><td>H.264/AV1 adaptive</td></tr><tr><td><b>1080p (@30fps)</b></td><td class="mono">5 Mbps</td><td class="mono">about 2.5–3.5 Mbps</td><td>Mainstream HD</td></tr><tr><td><b>1080p60 (high fps)</b></td><td class="mono">about 8–10 Mbps</td><td class="mono">about 5–7 Mbps</td><td>High-motion content</td></tr><tr><td><b>4K (@30fps)</b></td><td class="mono">15 Mbps</td><td class="mono">about 8–12 Mbps</td><td>4:4:4 / AV1</td></tr></table>
+<p class="note"><em>Estimate, not first-party measurement. Baseline = Microsoft's official Remote Desktop table (@30fps); the 2026 estimate extrapolates with modern adaptive encoding and is a rough order of magnitude only — real bandwidth varies with on-screen motion, packet loss and codec.</em></p></section>
+<h2>Frequently asked questions</h2>
+<details class="faq"><summary>What latency counts as normal for remote control?</summary><div>As a rule of thumb: RTT under 50ms feels near-instant, under 100ms is the recommended range, 100–150ms is usable but you feel the lag, over 150ms is clearly choppy, and 200ms or more is nearly unusable. Microsoft also notes that highly interactive/assistive scenarios want RTT ≤20ms for the best experience.</div></details>
+<details class="faq"><summary>Roughly how much bandwidth does ToDesk remote control need?</summary><div>Per Microsoft's official Remote Desktop recommendation (30fps): about 3 Mbps for 720p, 5 Mbps for 1080p and 15 Mbps for 4K. Modern remote control uses adaptive encoding, so real needs are often lower.</div></details>
+<details class="faq"><summary>Which matters more, latency or bandwidth?</summary><div>For interactive remote control, latency matters more: even with enough bandwidth, high latency/jitter still feels laggy. Microsoft's dynamic bitrate actually lowers quality when RTT is high to keep things smooth.</div></details>
+<details class="faq"><summary>What does this latency test actually measure?</summary><div>Your browser measures the network round trip to public endpoints (Cloudflare, Google, etc.) — a proxy for the network leg of remote control. Real remote-control latency also adds capture, encode/decode and display time.</div></details>
+<details class="faq"><summary>Why is it still laggy when my bandwidth is high?</summary><div>Usually it's latency, jitter or packet loss, not bandwidth. Remote control is sensitive to RTT and stability; high jitter hurts more than a high average.</div></details>
+<details class="faq"><summary>What's the highest quality ToDesk can reach?</summary><div>Its official site claims up to 8K, 360 FPS and 4:4:4 true-color lossless (AV1 codec / ZeroSync engine), given the right plan and enough bandwidth.</div></details>
+<details class="faq"><summary>How much bandwidth does 1080p video take over remote control?</summary><div>Microsoft's example: a half-screen 30fps video is about 8.5–9.5 Mbps by default, but only about 2.5–2.8 Mbps with H.264/AVC-444 — the codec makes a big difference.</div></details>
+<details class="faq"><summary>How do I convert Mbps and MB/s?</summary><div>1 MB/s = 8 Mbps, and 1 Mbps = 0.125 MB/s. The bandwidth converter on this page does it for all common units automatically.</div></details>
+
+<h2>Quick real-world triage</h2>
+<ul class="scenes"><li>Typing and dragging windows lags but is usable: RTT is usually 100–150ms; a nearer endpoint or a wired connection often pulls it back under 100ms.</li><li>Picture is blurry and only sharpens after you stop moving: limited bandwidth triggered adaptive downscaling; check the bandwidth converter against the quality tiers and lower the target resolution if needed.</li><li>RTT isn't high but it comes and goes: focus on jitter — high jitter hurts more than a high average; check Wi-Fi interference, switch to 5GHz or wired.</li><li>Cross-border remote control is very laggy: ordinary public routing detours, so RTT and packet loss are both high; a nearer relay or the product's global nodes help a lot.</li><li>4K remote control has enough bandwidth but drops frames: high res/frame rate also taxes encode/decode compute, not just bandwidth; try 1080p or a lower frame rate.</li></ul>
+<div class="related"><h2>Related</h2><ul><li><a href="https://todeskremote.com/download/">ToDesk remote control · Download</a></li><li><a href="https://learn.microsoft.com/en-us/windows-server/remote/remote-desktop-services/network-guidance" rel="nofollow">Microsoft Remote Desktop · network guidelines (bandwidth)</a></li><li><a href="https://learn.microsoft.com/en-us/azure/virtual-desktop/rdp-bandwidth" rel="nofollow">Microsoft Azure RDP bandwidth requirements (scenarios/codecs)</a></li><li><a href="https://www.todesk.com/" rel="nofollow">ToDesk official site (product specs)</a></li></ul></div>
+</main>
+<footer>Bandwidth/resolution baselines from Microsoft's official Remote Desktop docs (Network guidelines / Azure Virtual Desktop RDP bandwidth); ToDesk specs from its official site. Latency tiers are an industry experience band cross-checked with Microsoft's RTT≤20ms anchor. The tools and estimates here are for reference only, not first-party measurement.<br>整理/Editor：<a href="/about-editor/">罗宇</a> · MIT License · <a href="/about-editor/">about</a></footer>
+</div>
+<script src="/data_en.js"></script><script src="/app.js"></script></body></html>
