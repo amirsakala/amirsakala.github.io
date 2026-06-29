@@ -1,0 +1,178 @@
+<!DOCTYPE html><html lang="lo"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ToDesk Latency Test + ເຄື່ອງຄິດເລກແບນວິດ — ວັດແທກເຄືອຂ່າຍ RTT, ປະເມີນຄຸນນະພາບການຄວບຄຸມໄລຍະໄກ</title>
+<meta name="description" content="ວັດແທກຄວາມໜຽວໄປມາຂອງເຄືອຂ່າຍຂອງທ່ານ (RTT) ແລະສັ່ນສະເທືອນໄປຫາຈຸດສິ້ນສຸດສາທາລະນະ, ຈັດລໍາດັບໂດຍຄວາມລຽບງ່າຍຂອງການຄວບຄຸມໄລຍະໄກ; ບວກກັບຕົວແປງແບນວິດທີ່ຄາດຄະເນແບນວິດແລະຄວາມລະອຽດທີ່ ToDesk remote session ຕ້ອງການ. ດ້ານລູກຄ້າ, ທັນທີ, ແຫຼ່ງເປີດ. ຂໍ້ມູນພື້ນຖານຈາກ Microsoft Remote Desktop docs ແລະ ToDesk.">
+<link rel="canonical" href="https://amirsakala.github.io/lo/">
+<link rel="alternate" hreflang="zh-Hans" href="https://amirsakala.github.io/">
+<link rel="alternate" hreflang="en" href="https://amirsakala.github.io/en/">
+<link rel="alternate" hreflang="ja" href="https://amirsakala.github.io/ja/">
+<link rel="alternate" hreflang="zh-Hant" href="https://amirsakala.github.io/zh-tw/">
+<link rel="alternate" hreflang="id" href="https://amirsakala.github.io/id/">
+<link rel="alternate" hreflang="th" href="https://amirsakala.github.io/th/">
+<link rel="alternate" hreflang="vi" href="https://amirsakala.github.io/vi/">
+<link rel="alternate" hreflang="ms" href="https://amirsakala.github.io/ms/">
+<link rel="alternate" hreflang="fil" href="https://amirsakala.github.io/fil/">
+<link rel="alternate" hreflang="km" href="https://amirsakala.github.io/km/">
+<link rel="alternate" hreflang="lo" href="https://amirsakala.github.io/lo/">
+<link rel="alternate" hreflang="my" href="https://amirsakala.github.io/my/">
+<link rel="alternate" hreflang="x-default" href="https://amirsakala.github.io/">
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@graph": [
+  {
+   "@type": "WebApplication",
+   "name": "ToDesk Latency Test + ເຄື່ອງຄິດເລກແບນວິດ",
+   "url": "https://amirsakala.github.io/lo/",
+   "applicationCategory": "UtilitiesApplication",
+   "operatingSystem": "Web browser",
+   "inLanguage": "lo",
+   "description": "ວັດແທກຄວາມໜຽວໄປມາຂອງເຄືອຂ່າຍຂອງທ່ານ (RTT) ແລະສັ່ນສະເທືອນໄປຫາຈຸດສິ້ນສຸດສາທາລະນະ, ຈັດລໍາດັບໂດຍຄວາມລຽບງ່າຍຂອງການຄວບຄຸມໄລຍະໄກ; ບວກກັບຕົວແປງແບນວິດທີ່ຄາດຄະເນແບນວິດແລະຄວາມລະອຽດທີ່ ToDesk remote session ຕ້ອງການ. ດ້ານລູກຄ້າ, ທັນທີ, ແຫຼ່ງເປີດ. ຂໍ້ມູນພື້ນຖານຈາກ Microsoft Remote Desktop docs ແລະ ToDesk.",
+   "isAccessibleForFree": true,
+   "browserRequirements": "Requires JavaScript",
+   "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+   },
+   "author": {
+    "@type": "Person",
+    "name": "罗宇",
+    "url": "https://amirsakala.github.io/about-editor/"
+   }
+  },
+  {
+   "@type": "FAQPage",
+   "inLanguage": "lo",
+   "url": "https://amirsakala.github.io/lo/",
+   "mainEntity": [
+    {
+     "@type": "Question",
+     "name": "ເວລາແຝງໃດທີ່ນັບເປັນປົກກະຕິສໍາລັບການຄວບຄຸມທາງໄກ?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "ຕາມກົດລະບຽບ: RTT ຕ່ໍາກວ່າ 50ms ຮູ້ສຶກວ່າຢູ່ໃກ້ກັບທັນທີ, ພາຍໃຕ້ 100ms ແມ່ນໄລຍະທີ່ແນະນໍາ, 100-150ms ແມ່ນສາມາດໃຊ້ໄດ້ແຕ່ທ່ານຮູ້ສຶກວ່າຄວາມຊັກຊ້າ, ຫຼາຍກວ່າ 150ms ແມ່ນຊ້າຢ່າງຊັດເຈນ, ແລະ 200ms ຫຼືຫຼາຍກວ່ານັ້ນເກືອບໃຊ້ບໍ່ໄດ້. Microsoft ຍັງສັງເກດວ່າສະຖານະການໂຕ້ຕອບ / ການຊ່ວຍເຫຼືອສູງຕ້ອງການ RTT ≤20ms ສໍາລັບປະສົບການທີ່ດີທີ່ສຸດ."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "ການຄວບຄຸມໄລຍະໄກ ToDesk ຕ້ອງການແບນວິດຫຼາຍປານໃດ?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "ຕາມຄໍາແນະນໍາຢ່າງເປັນທາງການຂອງ Microsoft Remote Desktop (30fps): ປະມານ 3 Mbps ສໍາລັບ 720p, 5 Mbps ສໍາລັບ 1080p ແລະ 15 Mbps ສໍາລັບ 4K. ການຄວບຄຸມໄລຍະໄກທີ່ທັນສະໄຫມໃຊ້ການເຂົ້າລະຫັດແບບປັບຕົວ, ດັ່ງນັ້ນຄວາມຕ້ອງການທີ່ແທ້ຈິງມັກຈະຕ່ໍາ."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "ອັນໃດສຳຄັນກວ່າ, ຄວາມແຝງ ຫຼືແບນວິດ?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "ສໍາລັບການຄວບຄຸມໄລຍະໄກແບບໂຕ້ຕອບ, ເວລາ latency ມີຄວາມສໍາຄັນຫຼາຍ: ເຖິງແມ່ນວ່າມີແບນວິດພຽງພໍ, latency / jitter ສູງຍັງມີຄວາມຮູ້ສຶກຊ້າ. ອັດຕາບິດແບບເຄື່ອນໄຫວຂອງ Microsoft ຕົວຈິງເຮັດໃຫ້ຄຸນນະພາບຕໍ່າລົງເມື່ອ RTT ສູງເພື່ອຮັກສາສິ່ງທີ່ລຽບງ່າຍ."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "ການທົດສອບ latency ນີ້ວັດແທກອັນໃດແທ້?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "ບຼາວເຊີຂອງທ່ານວັດແທກການເດີນທາງໄປມາຂອງເຄືອຂ່າຍໄປຫາຈຸດສິ້ນສຸດສາທາລະນະ (Cloudflare, Google, ແລະອື່ນໆ) — ຕົວແທນຂອງເຄືອຂ່າຍຄວບຄຸມໄລຍະໄກ. latency ການຄວບຄຸມໄລຍະໄກທີ່ແທ້ຈິງຍັງເພີ່ມການຈັບພາບ, ການເຂົ້າລະຫັດ / ຖອດລະຫັດແລະເວລາສະແດງ."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "ເປັນຫຍັງມັນຍັງຊັກຊ້າເມື່ອແບນວິດຂອງຂ້ອຍສູງ?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "ປົກກະຕິແລ້ວມັນເປັນການ latency, jitter ຫຼືການສູນເສຍແພັກເກັດ, ບໍ່ແມ່ນແບນວິດ. ການຄວບຄຸມໄລຍະໄກແມ່ນມີຄວາມອ່ອນໄຫວຕໍ່ກັບ RTT ແລະຄວາມຫມັ້ນຄົງ; jitter ສູງເຈັບປວດຫຼາຍກ່ວາສະເລ່ຍສູງ."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "ToDesk ຄຸນນະພາບສູງສຸດແມ່ນຫຍັງທີ່ສາມາດບັນລຸໄດ້?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "ເວັບໄຊທ໌ທາງການຂອງມັນອ້າງເຖິງ 8K, 360 FPS ແລະ 4: 4: 4 true-color lossless (AV1 codec / ZeroSync engine), ໂດຍໃຫ້ແຜນການທີ່ຖືກຕ້ອງແລະແບນວິດພຽງພໍ."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "ວິ​ດີ​ໂອ 1080p ແບນ​ວິດ​ຫຼາຍ​ປານ​ໃດ​ເອົາ​ການ​ຄວບ​ຄຸມ​ໄລ​ຍະ​ໄກ​?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "ຕົວຢ່າງຂອງ Microsoft: ວິດີໂອ 30fps ເຄິ່ງໜ້າຈໍແມ່ນປະມານ 8.5–9.5 Mbps ຕາມຄ່າເລີ່ມຕົ້ນ, ແຕ່ມີພຽງປະມານ 2.5–2.8 Mbps ກັບ H.264/AVC-444 — ຕົວແປງສັນຍານສ້າງຄວາມແຕກຕ່າງອັນໃຫຍ່ຫຼວງ."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "ຂ້ອຍຈະແປງ Mbps ແລະ MB/s ໄດ້ແນວໃດ?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "1 MB/s = 8 Mbps, ແລະ 1 Mbps = 0.125 MB/s. ຕົວແປງແບນວິດໃນຫນ້ານີ້ເຮັດມັນສໍາລັບຫນ່ວຍງານທົ່ວໄປທັງຫມົດໂດຍອັດຕະໂນມັດ."
+     }
+    }
+   ]
+  }
+ ]
+}
+</script>
+<link rel="stylesheet" href="/style.css"></head>
+<body><div class="wrap"><main>
+<nav class="lang">Language: <a href="/">简体中文</a> · <a href="/en/">English</a> · <a href="/ja/">日本語</a> · <a href="/zh-tw/">繁體中文</a> · <a href="/id/">Bahasa Indonesia</a> · <a href="/th/">ไทย</a> · <a href="/vi/">Tiếng Việt</a> · <a href="/ms/">Bahasa Melayu</a> · <a href="/fil/">Filipino</a> · <a href="/km/">ភាសាខ្មែរ</a> · <strong>ພາສາລາວ</strong> · <a href="/my/">မြန်မာ</a></nav>
+<h1>ToDesk Latency Test + ເຄື່ອງຄິດເລກແບນວິດ</h1>
+<figure class="i4png"><picture><source type="image/webp" srcset="/img/cover_lo.webp"><img src="/img/cover_lo.png" alt="ການທົດສອບຄວາມເລັ່ງເວລາຂອງ ToDesk ແລະເຄື່ອງຄິດເລກແບນວິດ" fetchpriority="high" width="1120" height="630" style="width:100%;height:auto;border-radius:12px;border:1px solid #eee"></picture><figcaption>Fig 1: ToDesk latency test + ເຄື່ອງຄິດເລກແບນວິດ (ວັດແທກ RTT · ຄາດຄະເນແບນວິດ &amp; ຄຸນນະພາບ)</figcaption></figure>
+<p class="intro">ບໍ່ວ່າການຄວບຄຸມທາງໄກຈະຮູ້ສຶກລຽບງ່າຍຢູ່ສອງຢ່າງຄື: <strong>ການຕອບສະໜອງການໄປມາຂອງເຄືອຂ່າຍ (RTT)</strong> ແລະ <strong>ແບນວິດທີ່ສາມາດໃຊ້ໄດ້</strong>. ເຄື່ອງ​ມື​ທັງ​ສອງ​ຂ້າງ​ລຸ່ມ​ນີ້​ດໍາ​ເນີນ​ການ​ໃນ​ທ້ອງ​ຖິ່ນ​ໃນ​ຕົວ​ທ່ອງ​ເວັບ​ຂອງ​ທ່ານ — ①​ການ​ວັດ​ແທກ RTT ແລະ jitter ກັບ​ຈຸດ​ສຸດ​ສາ​ທາ​ລະ​ນະ​ຈໍາ​ນວນ​ຫນຶ່ງ​ແລະ​ຈັດ​ອັນ​ດັບ​ຄວາມ​ສະ​ດວກ​ການ​ຄວບ​ຄຸມ​ຫ່າງ​ໄກ​ສອກ​ຫຼີກ​; ②​ແປງ​ຫົວ​ຫນ່ວຍ​ແບນ​ວິດ​ແລະ​ຄາດ​ຄະ​ເນ​ຄວາມ​ລະ​ອຽດ​ຂອງ​ແບນ​ວິດ​ທີ່​ໄດ້​ຮັບ​ການ​ຂັບ​ໄດ້​. ພື້ນຖານມາຈາກເອກະສານ Remote Desktop ຢ່າງເປັນທາງການຂອງ Microsoft ແລະຂໍ້ມູນຈໍາເພາະຂອງ ToDesk (ເບິ່ງແຫຼ່ງຂໍ້ມູນຢູ່ດ້ານລຸ່ມ).</p>
+<section class="tool"><h2>ເຄື່ອງ​ມື 1​: ການ​ທົດ​ສອບ​ການ​ໄປ​ກັບ​ເຄືອ​ຂ່າຍ (Ping​)​</h2>
+<p>ກົດປຸ່ມແລະຕົວທ່ອງເວັບຂອງທ່ານຈະສົ່ງຄໍາຮ້ອງຂໍຈໍານວນຫນ້ອຍໄປຫາແຕ່ລະຈຸດສິ້ນສຸດສາທາລະນະແລະເວລາຂອງການເດີນທາງ. ພວກເຮົາເອົາ <strong>RTT ທີ່ດີທີ່ສຸດ</strong> ຕໍ່ຈຸດສິ້ນສຸດ (ໃກ້ທີ່ສຸດກັບການເດີນທາງໄປມາຂອງເຄືອຂ່າຍທີ່ແທ້ຈິງ) ແລະໃຫ້ຄະແນນຄວາມລຽບງ່າຍຂອງການຄວບຄຸມໄລຍະໄກໂດຍໃຊ້ລະດັບການຕອບສະໜອງຂ້າງລຸ່ມນີ້.</p>
+<button id="lat-go">ເລີ່ມການທົດສອບການຕອບສະໜອງ</button>
+<div id="lat-out"></div>
+<p class="note">ໝາຍເຫດ: ອັນນີ້ວັດແທກ <strong>ການເດີນທາງໄປມາຂອງເຄືອຂ່າຍ</strong> ໄປຫາຈຸດສິ້ນສຸດສາທາລະນະ — ຕົວແທນສຳລັບຂາເຄືອຂ່າຍຂອງການຄວບຄຸມທາງໄກ. latency ການຄວບຄຸມໄລຍະໄກທີ່ແທ້ຈິງຍັງເພີ່ມການຈັບພາບ, ການເຂົ້າລະຫັດ / ຖອດລະຫັດແລະເວລາສະແດງ. ຜົນໄດ້ຮັບແມ່ນຂຶ້ນກັບເຄືອຂ່າຍ ແລະໄລຍະທາງປາຍທາງຂອງທ່ານ.</p></section>
+<section class="tool"><h2>ເຄື່ອງມື 2: ຕົວແປງແບນວິດ + ການຄາດຄະເນຄຸນນະພາບ</h2>
+<p>ໃສ່ຄ່າແບນວິດ, ເລືອກຫົວໜ່ວຍໃດໜຶ່ງ, ແລະມັນປ່ຽນເປັນຫົວໜ່ວຍທົ່ວໄປ ແລະ — ໂດຍການນຳໃຊ້ຄຳແນະນຳທາງໄກຂອງເດັສທັອບທີ່ເປັນທາງການຂອງ Microsoft — ຄາດຄະເນວ່າຄວາມລະອຽດຂອງແບນວິດນີ້ສາມາດຂັບໄດ້ຢູ່ທີ່ 30fps.</p>
+<div class="bwrow"><input id="bw-in" type="number" min="0" step="any" placeholder="ໃສ່ຄ່າ, ຕົວຢ່າງ: 20" autocomplete="off"><select id="bw-unit"><option>Mbps</option><option>Gbps</option><option>Kbps</option><option>MB/s</option><option>KB/s</option></select><button id="bw-go">ແປງ + ຄາດຄະເນ</button></div>
+<div id="bw-out"></div></section>
+<h2>ວິທີການອ່ານ latency ຄວບຄຸມໄລຍະໄກ (tiers)</h2>
+<p>ການຄວບຄຸມໄລຍະໄກແບບໂຕ້ຕອບແມ່ນມີຄວາມອ່ອນໄຫວຕໍ່ກັບເວລາ latency ຫຼາຍກ່ວາແບນວິດ. Microsoft ສັງເກດວ່າສະຖານະການທີ່ມີການໂຕ້ຕອບ / ການຊ່ວຍເຫຼືອສູງຕ້ອງການ RTT ≤20ms ສໍາລັບປະສົບການທີ່ດີທີ່ສຸດ. ຕາຕະລາງຂ້າງລຸ່ມນີ້ລວມເອົາສະມໍນັ້ນກັບປະສົບການອຸດສາຫະກໍາ - ຊອກຫາລະດັບຂອງທ່ານ.</p>
+<figure><svg viewBox="0 0 700 250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="latency ຄວບຄຸມໄລຍະໄກ ແລະຮູບສະແດງຕາຕະລາງລະດັບແບນວິດ" style="width:100%;height:auto;border:1px solid #eee;border-radius:12px;background:#fff">
+<text x="20" y="30" font-family="system-ui,Arial" font-size="16" font-weight="700" fill="#1d1d1f">ກະແສການຕັດສິນໃຈ latency ຄວບຄຸມໄລຍະໄກ</text>
+<rect x="20" y="48" width="200" height="48" rx="10" fill="#111"/><text x="120" y="78" text-anchor="middle" font-family="system-ui,Arial" font-size="14" fill="#fff">ວັດແທກ RTT ໄປກັບ</text>
+<path d="M220 72 H262" stroke="#999" stroke-width="2" fill="none" marker-end="url(#ar)"/>
+<rect x="262" y="36" width="418" height="46" rx="10" fill="#ecfdf5" stroke="#bbf7e0"/><text x="278" y="64" font-family="system-ui,Arial" font-size="13" fill="#047857">&lt;100ms: ກ້ຽງ, ຍູ້ຄຸນນະພາບສູງ</text>
+<rect x="262" y="92" width="418" height="46" rx="10" fill="#eef4ff" stroke="#cfe0ff"/><text x="278" y="120" font-family="system-ui,Arial" font-size="13" fill="#1d4ed8">100–150ms: ສາມາດໃຊ້ໄດ້, ມັກ node ທີ່ໃກ້ກວ່າ</text>
+<rect x="262" y="148" width="418" height="46" rx="10" fill="#fef2f2" stroke="#fecaca"/><text x="278" y="176" font-family="system-ui,Arial" font-size="13" fill="#b91c1c">&gt; 150ms: laggy, ແກ້ໄຂເຄືອຂ່າຍກ່ອນ</text>
+<path d="M120 96 V120 H262" stroke="#10b981" stroke-width="2" fill="none" marker-end="url(#ar)"/>
+<path d="M120 120 V172 H262" stroke="#999" stroke-width="1.5" fill="none" marker-end="url(#ar)"/>
+<defs><marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0 0 L6 3 L0 6 z" fill="#999"/></marker></defs>
+</svg><figcaption>Fig 2: ການຄວບຄຸມໄລຍະໄກ Laggy? ກວດເບິ່ງຄວາມລ່າຊ້າ (RTT) ແລະແບນວິດກ່ອນ, ຫຼັງຈາກນັ້ນແກ້ໄຂສາເຫດ</figcaption></figure>
+<table><tr><th>ຊັ້ນ</th><th>ໄປກັບ RTT</th><th>ປະສົບການການຄວບຄຸມໄລຍະໄກ</th><th>ຈະເຮັດແນວໃດ</th></tr><tr><td><b>ເລີດ</b></td><td class="mono">< 50 ms</td><td>ການ​ຄວບ​ຄຸມ​ຫ່າງ​ໄກ​ສອກ​ຫຼີກ​ຢູ່​ໃກ້​ກັບ​ທັນ​ທີ​, ຮູ້​ສຶກ​ວ່າ​ຢູ່​ໃນ​ທ້ອງ​ຖິ່ນ​</td><td>ບໍ່ມີການເຊື່ອມຕໍ່ທີ່ອ່ອນແອຢູ່ໃນຂາເຄືອຂ່າຍ; ທ່ານ​ສາ​ມາດ​ຊຸກ​ດັນ​ໃຫ້​ຄວາມ​ລະ​ອຽດ​ສູງ / ອັດ​ຕາ​ເຟຣມ​.</td></tr><tr><td><b>ດີ</b></td><td class="mono">50–100 ms</td><td>ພາຍໃນຂອບເຂດທີ່ແນະນໍາ, ກ້ຽງມື້ຕໍ່ມື້</td><td>ເປັນບາງໂອກາດ smearing ເລັກນ້ອຍ, ບໍ່ມີຫຍັງຮ້າຍແຮງ.</td></tr><tr><td><b>ຍຸດຕິທຳ</b></td><td class="mono">100–150 ms</td><td>ຄວາມຊັກຊ້າທີ່ສັງເກດເຫັນໃນເວລາພິມ/ລາກ</td><td>ການປັບໄຫມສໍາລັບວຽກງານແສງສະຫວ່າງ; ຈຸດສິ້ນສຸດທີ່ໃກ້ກວ່າຈະຊ່ວຍໄດ້.</td></tr><tr><td><b>ຂີ້ຄ້ານ</b></td><td class="mono">150–200 ms</td><td>ຢ່າງຈະແຈ້ງ, ຕິດຕາມບໍ່ດີ</td><td>ສະຫຼັບໄປໃຊ້ສາຍ / a nearer node; ກວດເບິ່ງ jitter ແລະການສູນເສຍແພັກເກັດ.</td></tr><tr><td><b>ທຸກຍາກ</b></td><td class="mono">≥ 200 ms</td><td>ເກືອບໃຊ້ບໍ່ໄດ້, ເມື່ອຍຕາມເວລາ</td><td>ແກ້ໄຂເຄືອຂ່າຍກ່ອນ: ມີສາຍ, relay ທີ່ໃກ້ກວ່າ, ຫຼື node ຈ່າຍ.</td></tr></table>
+<h2>ແບນວິດເທົ່າໃດ (ຕາມຄວາມລະອຽດເປົ້າໝາຍ)</h2>
+<p>ຕາຕະລາງຂ້າງລຸ່ມນີ້ແມ່ນການແນະນໍາແບນວິດຕໍ່ການແກ້ໄຂຢ່າງເປັນທາງການຂອງ Microsoft (30fps, <0.1% ການສູນເສຍ). ການຄວບຄຸມໄລຍະໄກທີ່ທັນສະໄຫມ (ToDesk ແລະອື່ນໆ) ໃຊ້ອັດຕາບິດແບບປັບຕົວ H.264/AVC-444 ແລະ AV1, ດັ່ງນັ້ນຄວາມຕ້ອງການທີ່ແທ້ຈິງມັກຈະຕ່ໍາ (ຕົວຢ່າງຂອງ Microsoft: ການທ່ອງເວັບຫຼຸດລົງຈາກ 6 Mbps ໄປປະມານ 1 Mbps).</p>
+<figure><svg viewBox="0 0 700 250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="ການທົດສອບຄວາມເລັ່ງເວລາຂອງ ToDesk ແລະເຄື່ອງຄິດເລກແບນວິດ" style="width:100%;height:auto;border:1px solid #eee;border-radius:12px;background:#fff">
+<text x="20" y="34" font-family="system-ui,Arial" font-size="16" font-weight="700" fill="#1d1d1f">ແບນວິດ → ຄວາມລະອຽດເປົ້າໝາຍ (Microsoft @30fps baseline)</text>
+<text x="20" y="88" font-family="system-ui,Arial" font-size="13" fill="#334155">720p</text><rect x="120" y="70" width="92" height="26" rx="6" fill="#bfdbfe"/><text x="222" y="88" font-family="ui-monospace,monospace" font-size="13" fill="#0f172a">3 Mbps</text>
+<text x="20" y="134" font-family="system-ui,Arial" font-size="13" fill="#334155">1080p</text><rect x="120" y="116" width="153" height="26" rx="6" fill="#93c5fd"/><text x="283" y="134" font-family="ui-monospace,monospace" font-size="13" fill="#0f172a">5 Mbps</text>
+<text x="20" y="180" font-family="system-ui,Arial" font-size="13" fill="#334155">4K</text><rect x="120" y="162" width="460" height="26" rx="6" fill="#1d4ed8"/><text x="590" y="180" font-family="ui-monospace,monospace" font-size="13" fill="#0f172a">15 Mbps</text>
+<text x="20" y="232" font-family="system-ui,Arial" font-size="11" fill="#94a3b8">Microsoft Remote Desktop · @30fps · &lt;0.1% loss</text>
+</svg><figcaption>ແບນວິດ → ຄວາມລະອຽດເປົ້າໝາຍ (Microsoft @30fps baseline)</figcaption></figure>
+<figure class="i4png"><picture><source type="image/webp" srcset="/img/board_lo.webp"><img src="/img/board_lo.png" alt="latency ຄວບຄຸມໄລຍະໄກ ແລະຮູບສະແດງຕາຕະລາງລະດັບແບນວິດ" loading="lazy" width="1120" height="630" style="width:100%;height:auto;border-radius:12px;border:1px solid #eee"></picture><figcaption>Fig 2: ການຄວບຄຸມໄລຍະໄກ Laggy? ກວດເບິ່ງຄວາມລ່າຊ້າ (RTT) ແລະແບນວິດກ່ອນ, ຫຼັງຈາກນັ້ນແກ້ໄຂສາເຫດ</figcaption></figure>
+<table><tr><th>ແບນວິດທີ່ແນະນໍາ</th><th>ຄວາມລະອຽດເປົ້າໝາຍ (@30fps)</th><th>ໃຊ້ກໍລະນີ</th></tr><tr><td class="mono"><b>≥ 1.5 Mbps</b></td><td>1024×768</td><td>ຂໍ້ຄວາມ / ແສງສະຫວ່າງເຮັດວຽກຫ່າງໄກສອກຫຼີກ (Microsoft Light)</td></tr><tr><td class="mono"><b>≥ 3 Mbps</b></td><td>1280×720 (720p)</td><td>ເດັສທັອບທາງໄກທົ່ວໄປ</td></tr><tr><td class="mono"><b>≥ 5 Mbps</b></td><td>1920×1080 (1080p)</td><td>ການຄວບຄຸມໄລຍະໄກ HD ຫຼັກ</td></tr><tr><td class="mono"><b>≥ 15 Mbps</b></td><td>3840×2160 (4K)</td><td>ອັດ​ຕາ​ການ res/frame ສູງ, ວິ​ດີ​ໂອ (Microsoft Power)</td></tr></table>
+<section id="data2026" class="i4data"><h2>2026 ການ​ຄາດ​ຄະ​ເນ​ແບນ​ວິດ​ການ​ຄວບ​ຄຸມ​ໄລ​ຍະ​ໄກ (ໂດຍ​ຄຸນ​ນະ​ພາບ​ເປົ້າ​ຫມາຍ​)</h2>
+<p>ການນໍາໃຊ້ຄວາມລະອຽດທີ່ເປັນທາງການຂອງ Microsoft →ຕາຕະລາງແບນວິດເປັນພື້ນຖານ, ເພີ່ມເຕີມດ້ວຍຕົວແປງສັນຍານການປັບຕົວທີ່ທັນສະໄຫມ (H.264/AVC-444, AV1; ToDesk ອ້າງວ່າປະສິດທິພາບແບນວິດທີ່ດີຂຶ້ນ 30%–50%) ເພື່ອໃຫ້ຕົວເລກທີ່ແທ້ຈິງທົ່ວໄປສໍາລັບປີ 2026.</p>
+<table><tr><th>ຄຸນະພາບເປົ້າຫມາຍ</th><th>Microsoft RDP ພື້ນຖານ</th><th>2026 ການ​ຄາດ​ຄະ​ເນ​ການ​ປັບ​ຕົວ​</th><th>ບັນທຶກ</th></tr><tr><td><b>720p (@30fps)</b></td><td class="mono">3 Mbps</td><td class="mono">ປະມານ 1.5-2 Mbps</td><td>H.264/AV1 ປັບ</td></tr><tr><td><b>1080p (@30fps)</b></td><td class="mono">5 Mbps</td><td class="mono">ປະມານ 2.5–3.5 Mbps</td><td>ກະແສຫຼັກ HD</td></tr><tr><td><b>1080p60 (fps ສູງ)</b></td><td class="mono">ປະມານ 8-10 Mbps</td><td class="mono">ປະມານ 5-7 Mbps</td><td>ເນື້ອໃນການເຄື່ອນໄຫວສູງ</td></tr><tr><td><b>4K (@30fps)</b></td><td class="mono">15 Mbps</td><td class="mono">ປະມານ 8-12 Mbps</td><td>4:4:4 / AV1</td></tr></table>
+<p class="note"><em>ການຄາດຄະເນ, ບໍ່ແມ່ນການວັດແທກຂອງບຸກຄົນທໍາອິດ. Baseline = ຕາຕະລາງ Remote Desktop ຢ່າງເປັນທາງການຂອງ Microsoft (@30fps); ການຄາດຄະເນຂອງ 2026 extrapolates ດ້ວຍການເຂົ້າລະຫັດແບບປັບຕົວທັນສະ ໄໝ ແລະເປັນຄໍາສັ່ງທີ່ຫຍາບຄາຍຂອງຂະຫນາດເທົ່ານັ້ນ - ແບນວິດທີ່ແທ້ຈິງແຕກຕ່າງກັນກັບການເຄື່ອນໄຫວໃນຫນ້າຈໍ, ການສູນເສຍແພັກເກັດແລະຕົວແປງສັນຍານ.</em></p></section>
+<h2>ຄຳຖາມທີ່ມັກຖາມເລື້ອຍໆ</h2>
+<details class="faq"><summary>ເວລາແຝງໃດທີ່ນັບເປັນປົກກະຕິສໍາລັບການຄວບຄຸມທາງໄກ?</summary><div>ຕາມກົດລະບຽບ: RTT ຕ່ໍາກວ່າ 50ms ຮູ້ສຶກວ່າຢູ່ໃກ້ກັບທັນທີ, ພາຍໃຕ້ 100ms ແມ່ນໄລຍະທີ່ແນະນໍາ, 100-150ms ແມ່ນສາມາດໃຊ້ໄດ້ແຕ່ທ່ານຮູ້ສຶກວ່າຄວາມຊັກຊ້າ, ຫຼາຍກວ່າ 150ms ແມ່ນຊ້າຢ່າງຊັດເຈນ, ແລະ 200ms ຫຼືຫຼາຍກວ່ານັ້ນເກືອບໃຊ້ບໍ່ໄດ້. Microsoft ຍັງສັງເກດວ່າສະຖານະການໂຕ້ຕອບ / ການຊ່ວຍເຫຼືອສູງຕ້ອງການ RTT ≤20ms ສໍາລັບປະສົບການທີ່ດີທີ່ສຸດ.</div></details>
+<details class="faq"><summary>ການຄວບຄຸມໄລຍະໄກ ToDesk ຕ້ອງການແບນວິດຫຼາຍປານໃດ?</summary><div>ຕາມຄໍາແນະນໍາຢ່າງເປັນທາງການຂອງ Microsoft Remote Desktop (30fps): ປະມານ 3 Mbps ສໍາລັບ 720p, 5 Mbps ສໍາລັບ 1080p ແລະ 15 Mbps ສໍາລັບ 4K. ການຄວບຄຸມໄລຍະໄກທີ່ທັນສະໄຫມໃຊ້ການເຂົ້າລະຫັດແບບປັບຕົວ, ດັ່ງນັ້ນຄວາມຕ້ອງການທີ່ແທ້ຈິງມັກຈະຕ່ໍາ.</div></details>
+<details class="faq"><summary>ອັນໃດສຳຄັນກວ່າ, ຄວາມແຝງ ຫຼືແບນວິດ?</summary><div>ສໍາລັບການຄວບຄຸມໄລຍະໄກແບບໂຕ້ຕອບ, ເວລາ latency ມີຄວາມສໍາຄັນຫຼາຍ: ເຖິງແມ່ນວ່າມີແບນວິດພຽງພໍ, latency / jitter ສູງຍັງມີຄວາມຮູ້ສຶກຊ້າ. ອັດຕາບິດແບບເຄື່ອນໄຫວຂອງ Microsoft ຕົວຈິງເຮັດໃຫ້ຄຸນນະພາບຕໍ່າລົງເມື່ອ RTT ສູງເພື່ອຮັກສາສິ່ງທີ່ລຽບງ່າຍ.</div></details>
+<details class="faq"><summary>ການທົດສອບ latency ນີ້ວັດແທກອັນໃດແທ້?</summary><div>ບຼາວເຊີຂອງທ່ານວັດແທກການເດີນທາງໄປມາຂອງເຄືອຂ່າຍໄປຫາຈຸດສິ້ນສຸດສາທາລະນະ (Cloudflare, Google, ແລະອື່ນໆ) — ຕົວແທນຂອງເຄືອຂ່າຍຄວບຄຸມໄລຍະໄກ. latency ການຄວບຄຸມໄລຍະໄກທີ່ແທ້ຈິງຍັງເພີ່ມການຈັບພາບ, ການເຂົ້າລະຫັດ / ຖອດລະຫັດແລະເວລາສະແດງ.</div></details>
+<details class="faq"><summary>ເປັນຫຍັງມັນຍັງຊັກຊ້າເມື່ອແບນວິດຂອງຂ້ອຍສູງ?</summary><div>ປົກກະຕິແລ້ວມັນເປັນການ latency, jitter ຫຼືການສູນເສຍແພັກເກັດ, ບໍ່ແມ່ນແບນວິດ. ການຄວບຄຸມໄລຍະໄກແມ່ນມີຄວາມອ່ອນໄຫວຕໍ່ກັບ RTT ແລະຄວາມຫມັ້ນຄົງ; jitter ສູງເຈັບປວດຫຼາຍກ່ວາສະເລ່ຍສູງ.</div></details>
+<details class="faq"><summary>ToDesk ຄຸນນະພາບສູງສຸດແມ່ນຫຍັງທີ່ສາມາດບັນລຸໄດ້?</summary><div>ເວັບໄຊທ໌ທາງການຂອງມັນອ້າງເຖິງ 8K, 360 FPS ແລະ 4: 4: 4 true-color lossless (AV1 codec / ZeroSync engine), ໂດຍໃຫ້ແຜນການທີ່ຖືກຕ້ອງແລະແບນວິດພຽງພໍ.</div></details>
+<details class="faq"><summary>ວິ​ດີ​ໂອ 1080p ແບນ​ວິດ​ຫຼາຍ​ປານ​ໃດ​ເອົາ​ການ​ຄວບ​ຄຸມ​ໄລ​ຍະ​ໄກ​?</summary><div>ຕົວຢ່າງຂອງ Microsoft: ວິດີໂອ 30fps ເຄິ່ງໜ້າຈໍແມ່ນປະມານ 8.5–9.5 Mbps ຕາມຄ່າເລີ່ມຕົ້ນ, ແຕ່ມີພຽງປະມານ 2.5–2.8 Mbps ກັບ H.264/AVC-444 — ຕົວແປງສັນຍານສ້າງຄວາມແຕກຕ່າງອັນໃຫຍ່ຫຼວງ.</div></details>
+<details class="faq"><summary>ຂ້ອຍຈະແປງ Mbps ແລະ MB/s ໄດ້ແນວໃດ?</summary><div>1 MB/s = 8 Mbps, ແລະ 1 Mbps = 0.125 MB/s. ຕົວແປງແບນວິດໃນຫນ້ານີ້ເຮັດມັນສໍາລັບຫນ່ວຍງານທົ່ວໄປທັງຫມົດໂດຍອັດຕະໂນມັດ.</div></details>
+
+<h2>triage ໂລກ​ທີ່​ແທ້​ຈິງ​ໄວ​</h2>
+<ul class="scenes"><li>ການພິມ ແລະລາກ windows ຊ້າແຕ່ສາມາດໃຊ້ໄດ້: RTT ປົກກະຕິແມ່ນ 100–150ms; ຈຸດສິ້ນສຸດທີ່ໃກ້ກວ່າ ຫຼືການເຊື່ອມຕໍ່ແບບມີສາຍມັກຈະດຶງມັນກັບຄືນພາຍໃຕ້ 100ms.</li><li>ຮູບພາບແມ່ນມົວ ແລະພຽງແຕ່ແຫຼມ ຫຼັງຈາກທີ່ທ່ານຢຸດການເຄື່ອນຍ້າຍ: ແບນວິດທີ່ຈໍາກັດເຮັດໃຫ້ການປັບຂະຫນາດຫຼຸດລົງ; ກວດເບິ່ງຕົວແປງແບນວິດທຽບກັບລະດັບຄຸນນະພາບ ແລະຫຼຸດຄວາມລະອຽດເປົ້າໝາຍຖ້າຕ້ອງການ.</li><li>RTT ບໍ່ສູງແຕ່ມັນມາແລະໄປ: ສຸມໃສ່ການ jitter - jitter ສູງເຈັບປວດຫຼາຍກ່ວາສະເລ່ຍສູງ; ກວດເບິ່ງການລົບກວນ Wi-Fi, ປ່ຽນເປັນ 5GHz ຫຼືມີສາຍ.</li><li>ການຄວບຄຸມຫ່າງໄກສອກຫຼີກຂ້າມຊາຍແດນແມ່ນ laggy ຫຼາຍ: ເສັ້ນທາງຍ່າງທາງສາທາລະນະທໍາມະດາ, ດັ່ງນັ້ນ RTT ແລະການສູນເສຍແພັກເກັດແມ່ນສູງ; relay ທີ່ໃກ້ກວ່າຫຼື nodes ທົ່ວໂລກຂອງຜະລິດຕະພັນຊ່ວຍຫຼາຍ.</li><li>ການຄວບຄຸມໄລຍະໄກ 4K ມີແບນວິດພຽງພໍແຕ່ຫຼຸດລົງເຟຣມ: ອັດຕາ res / ເຟຣມສູງຍັງພາສີ encode / decode compute, ບໍ່ພຽງແຕ່ແບນວິດ; ລອງໃຊ້ 1080p ຫຼືອັດຕາເຟຣມຕໍ່າກວ່າ.</li></ul>
+<div class="related"><h2>ທີ່ກ່ຽວຂ້ອງ</h2><ul><li><a href="https://todeskremote.com/download/">ການຄວບຄຸມໄລຍະໄກ ToDesk · ດາວໂຫລດ</a></li><li><a href="https://learn.microsoft.com/en-us/windows-server/remote/remote-desktop-services/network-guidance" rel="nofollow">Microsoft Remote Desktop · ຂໍ້ແນະນຳເຄືອຂ່າຍ (ແບນວິດ)</a></li><li><a href="https://learn.microsoft.com/en-us/azure/virtual-desktop/rdp-bandwidth" rel="nofollow">ຄວາມຕ້ອງການແບນວິດ Microsoft Azure RDP (ສະຖານະການ/ຕົວແປງສັນຍານ)</a></li><li><a href="https://www.todesk.com/" rel="nofollow">ເວັບໄຊຢ່າງເປັນທາງການຂອງ ToDesk (ລາຍລະອຽດຂອງຜະລິດຕະພັນ)</a></li></ul></div>
+</main>
+<footer>ແບນວິດ / ຄວາມລະອຽດພື້ນຖານຈາກເອກະສານ Remote Desktop ຢ່າງເປັນທາງການຂອງ Microsoft (ຂໍ້ແນະນໍາເຄືອຂ່າຍ / Azure Virtual Desktop RDP bandwidth); ToDesk specs ຈາກເວັບໄຊຢ່າງເປັນທາງການຂອງຕົນ. Latency tiers ແມ່ນແຖບປະສົບການຂອງອຸດສາຫະກໍາທີ່ກວດສອບຜ່ານ RTT≤20ms ຂອງ Microsoft. ເຄື່ອງມືແລະການຄາດຄະເນນີ້ແມ່ນສໍາລັບການອ້າງອີງເທົ່ານັ້ນ, ບໍ່ແມ່ນການວັດແທກຂອງບຸກຄົນທໍາອິດ.<br>整理/Editor：<a href="/about-editor/">罗宇</a> · MIT License · <a href="/about-editor/">about</a></footer>
+</div>
+<script src="/data_lo.js"></script><script src="/app.js"></script></body></html>
