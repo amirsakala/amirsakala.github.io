@@ -1,0 +1,178 @@
+<!DOCTYPE html><html lang="my"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ToDesk Latency Test + Bandwidth Calculator — ကွန်ရက် RTT ကို တိုင်းတာပြီး၊ အဝေးထိန်း အရည်အသွေးကို ခန့်မှန်းပါ။</title>
+<meta name="description" content="အဝေးထိန်းထိန်းချုပ်မှုချောမွေ့မှုဖြင့် အဆင့်သတ်မှတ်ထားသော သင်၏ကွန်ရက်အသွားအပြန်ကြာချိန် (RTT) ကို တိုင်းတာပြီး အများသူငှာ အဆုံးမှတ်များသို့ တုန်လှုပ်စေခြင်း၊ ထို့အပြင် ToDesk အဝေးထိန်းစက်ရှင် လိုအပ်သည့် လှိုင်းနှုန်းနှင့် ကြည်လင်ပြတ်သားမှုကို ခန့်မှန်းသည့် လှိုင်းနှုန်းပြောင်းသည့်ကိရိယာ။ Client-side၊ instant၊ open source။ Microsoft Remote Desktop docs နှင့် ToDesk တို့မှ အခြေခံအချက်များ။">
+<link rel="canonical" href="https://amirsakala.github.io/my/">
+<link rel="alternate" hreflang="zh-Hans" href="https://amirsakala.github.io/">
+<link rel="alternate" hreflang="en" href="https://amirsakala.github.io/en/">
+<link rel="alternate" hreflang="ja" href="https://amirsakala.github.io/ja/">
+<link rel="alternate" hreflang="zh-Hant" href="https://amirsakala.github.io/zh-tw/">
+<link rel="alternate" hreflang="id" href="https://amirsakala.github.io/id/">
+<link rel="alternate" hreflang="th" href="https://amirsakala.github.io/th/">
+<link rel="alternate" hreflang="vi" href="https://amirsakala.github.io/vi/">
+<link rel="alternate" hreflang="ms" href="https://amirsakala.github.io/ms/">
+<link rel="alternate" hreflang="fil" href="https://amirsakala.github.io/fil/">
+<link rel="alternate" hreflang="km" href="https://amirsakala.github.io/km/">
+<link rel="alternate" hreflang="lo" href="https://amirsakala.github.io/lo/">
+<link rel="alternate" hreflang="my" href="https://amirsakala.github.io/my/">
+<link rel="alternate" hreflang="x-default" href="https://amirsakala.github.io/">
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@graph": [
+  {
+   "@type": "WebApplication",
+   "name": "ToDesk Latency Test + Bandwidth Calculator",
+   "url": "https://amirsakala.github.io/my/",
+   "applicationCategory": "UtilitiesApplication",
+   "operatingSystem": "Web browser",
+   "inLanguage": "my",
+   "description": "အဝေးထိန်းထိန်းချုပ်မှုချောမွေ့မှုဖြင့် အဆင့်သတ်မှတ်ထားသော သင်၏ကွန်ရက်အသွားအပြန်ကြာချိန် (RTT) ကို တိုင်းတာပြီး အများသူငှာ အဆုံးမှတ်များသို့ တုန်လှုပ်စေခြင်း၊ ထို့အပြင် ToDesk အဝေးထိန်းစက်ရှင် လိုအပ်သည့် လှိုင်းနှုန်းနှင့် ကြည်လင်ပြတ်သားမှုကို ခန့်မှန်းသည့် လှိုင်းနှုန်းပြောင်းသည့်ကိရိယာ။ Client-side၊ instant၊ open source။ Microsoft Remote Desktop docs နှင့် ToDesk တို့မှ အခြေခံအချက်များ။",
+   "isAccessibleForFree": true,
+   "browserRequirements": "Requires JavaScript",
+   "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+   },
+   "author": {
+    "@type": "Person",
+    "name": "罗宇",
+    "url": "https://amirsakala.github.io/about-editor/"
+   }
+  },
+  {
+   "@type": "FAQPage",
+   "inLanguage": "my",
+   "url": "https://amirsakala.github.io/my/",
+   "mainEntity": [
+    {
+     "@type": "Question",
+     "name": "အဝေးထိန်းစနစ်အတွက် မည်သည့် latency ကို ပုံမှန်အဖြစ်ရေတွက်သနည်း။",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "လက်မ၏စည်းမျဉ်းအတိုင်း- 50ms အောက် RTT သည် ချက်ချင်းနီးပါးခံစားရသည်၊ 100ms အောက်သည် အကြံပြုထားသည့်အကွာအဝေးဖြစ်သည်၊ 100-150ms ကိုအသုံးပြု၍ရနိုင်သော်လည်း၊ နောက်ကျနေသည်ဟုခံစားရသည်၊ 150ms ကျော်သည် ရှင်းလင်းပြတ်သားနေပြီး 200ms သို့မဟုတ် ထို့ထက်ပိုပါက အသုံးမပြုနိုင်လုနီးပါးဖြစ်သည်။ Microsoft သည် အလွန်ကောင်းမွန်သော အပြန်အလှန်တုံ့ပြန်မှု/အကူအညီပေးသည့်အခြေအနေများတွင် RTT ≤20ms ကို အကောင်းဆုံးအတွေ့အကြုံရရှိရန် လိုလားကြောင်းလည်း မှတ်သားထားသည်။"
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "ToDesk အဝေးထိန်းခလုတ်သည် လှိုင်းနှုန်းမည်မျှ လိုအပ်သနည်း။",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Microsoft ၏တရားဝင်အဝေးထိန်းဒက်စ်တော့အကြံပြုချက် (30fps)- 720p အတွက် 3 Mbps ခန့်၊ 1080p အတွက် 5 Mbps နှင့် 4K အတွက် 15 Mbps ခန့်။ ခေတ်မီအဝေးထိန်းထိန်းချုပ်မှုတွင် လိုက်လျောညီထွေ ကုဒ်ပြောင်းခြင်းကို အသုံးပြုသောကြောင့် အမှန်တကယ် လိုအပ်ချက်များမှာ မကြာခဏ နည်းပါးပါသည်။"
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "ဘယ်အရာက ပိုအရေးကြီးလဲ၊ latency သို့မဟုတ် bandwidth",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "အပြန်အလှန်အကျိုးသက်ရောက်သော အဝေးထိန်းခလုတ်အတွက်၊ latency သည် ပို၍အရေးကြီးသည်- လုံလောက်သော bandwidth ရှိသော်လည်း၊ မြင့်မားသော latency/jitter သည် နှောင့်နှေးနေသေးသည်။ Microsoft ၏ ဒိုင်းနမစ်ဘစ်နှုန်းသည် အရာခပ်သိမ်းကို ချောမွေ့စေရန် RTT မြင့်မားနေချိန်တွင် အရည်အသွေးကို အမှန်တကယ် ကျဆင်းစေသည်။"
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "ဤ latency test သည် အဘယ်အရာကို အမှန်တကယ် တိုင်းတာသနည်း။",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "သင့်ဘရောက်ဆာသည် အများသူငှာ အဆုံးအဖြတ်များဆီသို့ ကွန်ရက်အသွားအပြန်ခရီးကို တိုင်းတာသည် — အဝေးထိန်းစနစ်၏ ကွန်ရက်ခြေထောက်အတွက် ပရောက်စီတစ်ခု။ Real remote-control latency သည် ဖမ်းယူမှု၊ ကုဒ်/ကုဒ်နှင့် ဖော်ပြချိန်တို့ကို ပေါင်းထည့်သည်။"
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "ကျွန်ုပ်၏ bandwidth မြင့်မားနေချိန်တွင် အဘယ်ကြောင့် နောက်ကျနေသေးသနည်း။",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "များသောအားဖြင့် ၎င်းသည် latency၊ တုန်လှုပ်ခြင်း သို့မဟုတ် packet ဆုံးရှုံးမှု၊ bandwidth မဟုတ်ပါ။ အဝေးထိန်းခလုတ်သည် RTT နှင့် တည်ငြိမ်မှုအတွက် အထိခိုက်မခံပါ။ တုန်လှုပ်ခြင်းသည် မြင့်မားသောပျမ်းမျှထက် ပိုနာကျင်သည်။"
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "ToDesk သည် အရည်အသွေးအမြင့်မားဆုံးရောက်ရှိနိုင်သည့်အရာများ။",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "၎င်း၏တရားဝင်ဆိုက်မှ 8K၊ 360 FPS နှင့် 4:4:4 စစ်မှန်သောအရောင်ဆုံးရှုံးမှုမရှိသော (AV1 codec / ZeroSync အင်ဂျင်) သည် မှန်ကန်သောအစီအစဉ်နှင့် လုံလောက်သော bandwidth ပေးထားသည့်အထိ တောင်းဆိုထားသည်။"
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "1080p ဗီဒီယိုသည် အဝေးထိန်းခလုတ်ကို လှိုင်းနှုန်းမည်မျှယူသနည်း။",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Microsoft ၏ဥပမာ- မျက်နှာပြင်တစ်ဝက် 30fps ဗီဒီယိုသည် မူရင်းအားဖြင့် 8.5–9.5 Mbps ခန့်ဖြစ်သော်လည်း H.264/AVC-444 နှင့် 2.5–2.8 Mbps ခန့်သာ — codec သည် ကြီးမားသောကွာခြားချက်တစ်ခုဖြစ်သည်။"
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Mbps နှင့် MB/s ကို မည်သို့ပြောင်းရမည်နည်း။",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "1 MB/s = 8 Mbps နှင့် 1 Mbps = 0.125 MB/s ။ ဤစာမျက်နှာရှိ bandwidth converter သည် ဘုံယူနစ်အားလုံးအတွက် ၎င်းကို အလိုအလျောက် ပြုလုပ်ပေးပါသည်။"
+     }
+    }
+   ]
+  }
+ ]
+}
+</script>
+<link rel="stylesheet" href="/style.css"></head>
+<body><div class="wrap"><main>
+<nav class="lang">Language: <a href="/">简体中文</a> · <a href="/en/">English</a> · <a href="/ja/">日本語</a> · <a href="/zh-tw/">繁體中文</a> · <a href="/id/">Bahasa Indonesia</a> · <a href="/th/">ไทย</a> · <a href="/vi/">Tiếng Việt</a> · <a href="/ms/">Bahasa Melayu</a> · <a href="/fil/">Filipino</a> · <a href="/km/">ភាសាខ្មែរ</a> · <a href="/lo/">ພາສາລາວ</a> · <strong>မြန်မာ</strong></nav>
+<h1>ToDesk Latency Test + Bandwidth Calculator</h1>
+<figure class="i4png"><picture><source type="image/webp" srcset="/img/cover_my.webp"><img src="/img/cover_my.png" alt="ToDesk latency test နှင့် bandwidth calculator tool သရုပ်ဖော်ပုံ" fetchpriority="high" width="1120" height="630" style="width:100%;height:auto;border-radius:12px;border:1px solid #eee"></picture><figcaption>ပုံ 1- ToDesk latency test + bandwidth calculator (RTT တိုင်းတာခြင်း · bandwidth နှင့် quality ခန့်မှန်းချက်)</figcaption></figure>
+<p class="intro">အဝေးထိန်းခလုတ်သည် ချောမွေ့သည်ဟု ခံစားရသည်ရှိမရှိ- <strong>ကွန်ရက်အသွားအပြန် latency (RTT)</strong> နှင့် <strong>ရရှိနိုင်သော bandwidth</strong> တို့ဖြစ်သည်။ အောက်ဖော်ပြပါ ကိရိယာ နှစ်ခုစလုံးသည် သင့်ဘရောက်ဆာတွင် ပြည်တွင်း၌ လုပ်ဆောင်သည် — ① RTT ကို တိုင်းတာပြီး အများသူငါ အဆုံးမှတ်များစွာသို့ တုန်လှုပ်စေကာ အဝေးထိန်းခလုတ် ချောမွေ့မှုကို အဆင့်သတ်မှတ်သည်။ ② bandwidth ယူနစ်များကို ပြောင်းပြီး ပေးထားသော bandwidth မောင်းနှင်နိုင်သည့် ကြည်လင်ပြတ်သားမှုကို ခန့်မှန်းပါ။ အခြေခံအချက်များသည် Microsoft ၏တရားဝင် Remote Desktop docs နှင့် ToDesk ၏ specs များမှလာပါသည် (အောက်ခြေရှိရင်းမြစ်များကိုကြည့်ပါ)။</p>
+<section class="tool"><h2>ကိရိယာ 1- ကွန်ရက်အသွားအပြန် (Ping) စမ်းသပ်မှု</h2>
+<p>ခလုတ်ကို နှိပ်လိုက်သည်နှင့် သင့်ဘရောက်ဆာသည် အများသူငှာ အဆုံးမှတ်တစ်ခုစီသို့ တောင်းဆိုချက်အနည်းငယ် ပေးပို့ပြီး အသွားအပြန်ခရီးကို အကြိမ်များစွာ ပို့ပေးပါသည်။ ကျွန်ုပ်တို့သည် အဆုံးမှတ်တစ်ခုလျှင် <strong>အကောင်းဆုံး RTT</strong> ကို ယူသည် (အစစ်အမှန်ကွန်ရက် အသွားအပြန်ခရီးနှင့် အနီးစပ်ဆုံး) နှင့် အောက်ဖော်ပြပါ latency အဆင့်များကို အသုံးပြု၍ အဝေးထိန်းခလုတ်ချောမွေ့မှုကို အဆင့်သတ်မှတ်ပါသည်။</p>
+<button id="lat-go">latency စမ်းသပ်မှုကို စတင်ပါ။</button>
+<div id="lat-out"></div>
+<p class="note">မှတ်ချက်- ဤအရာသည် <strong>ကွန်ရက်အသွားအပြန်</strong>ကို အများသူငှာ အဆုံးမှတ်များဆီသို့ တိုင်းတာသည် — အဝေးထိန်းခလုတ်၏ ကွန်ရက်ခြေထောက်အတွက် ပရောက်စီတစ်ခု။ Real remote-control latency သည် ဖမ်းယူမှု၊ ကုဒ်/ကုဒ်နှင့် ဖော်ပြချိန်တို့ကို ပေါင်းထည့်သည်။ ရလဒ်များသည် သင့်ကွန်ရက်နှင့် အဆုံးမှတ်အကွာအဝေးပေါ်တွင် မူတည်သည်။</p></section>
+<section class="tool"><h2>ကိရိယာ 2- bandwidth converter + အရည်အသွေး ခန့်မှန်းချက်</h2>
+<p>ဘန်းဝဒ်တန်ဖိုးကို ထည့်ပါ၊ ယူနစ်တစ်ခုကို ရွေးပါ၊ ၎င်းသည် ဘုံယူနစ်များအဖြစ်သို့ ပြောင်းလဲကာ — Microsoft ၏ တရားဝင် အဝေးထိန်း ဒက်စ်တော့ အကြံပြုချက်များကို အသုံးပြုကာ — ဤ bandwidth သည် 30fps တွင် မောင်းနှင်နိုင်သည့် ကြည်လင်ပြတ်သားမှုအား အကြမ်းဖျင်း ခန့်မှန်းသည်။</p>
+<div class="bwrow"><input id="bw-in" type="number" min="0" step="any" placeholder="တန်ဖိုးတစ်ခုထည့်ပါ၊ ဥပမာ။ ၂၀" autocomplete="off"><select id="bw-unit"><option>Mbps</option><option>Gbps</option><option>Kbps</option><option>MB/s</option><option>KB/s</option></select><button id="bw-go">ပြောင်းရန် + ခန့်မှန်းချက်</button></div>
+<div id="bw-out"></div></section>
+<h2>အဝေးထိန်းချိန်ညှိမှု (အဆင့်များ) ကိုဖတ်နည်း</h2>
+<p>အပြန်အလှန်အကျိုးသက်ရောက်သော အဝေးထိန်းခလုတ်သည် လှိုင်းနှုန်းထက် latency တွင် ပို၍ အကဲဆတ်သည်။ အကောင်းမွန်ဆုံး အတွေ့အကြုံအတွက် RTT ≤20ms လိုချင်သော အပြန်အလှန်တုံ့ပြန်မှု/အကူအညီပေးသည့် အခြေအနေများကို Microsoft က မှတ်သားထားသည်။ အောက်ပါဇယားသည် ထိုကျောက်ဆူးကို လုပ်ငန်းအတွေ့အကြုံနှင့် ပေါင်းစပ်ထားသည် — သင့်အဆင့်ကို ရှာပါ။</p>
+<figure><svg viewBox="0 0 700 250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="အဝေးထိန်း ချိန်ညှိမှု နှင့် ဘန်းဝဒ် အဆင့်ဇယား ပုံဥပမာ" style="width:100%;height:auto;border:1px solid #eee;border-radius:12px;background:#fff">
+<text x="20" y="30" font-family="system-ui,Arial" font-size="16" font-weight="700" fill="#1d1d1f">အဝေးထိန်းစနစ် latency ဆုံးဖြတ်ချက်စီးဆင်းမှု</text>
+<rect x="20" y="48" width="200" height="48" rx="10" fill="#111"/><text x="120" y="78" text-anchor="middle" font-family="system-ui,Arial" font-size="14" fill="#fff">အသွားအပြန် RTT တိုင်းတာ</text>
+<path d="M220 72 H262" stroke="#999" stroke-width="2" fill="none" marker-end="url(#ar)"/>
+<rect x="262" y="36" width="418" height="46" rx="10" fill="#ecfdf5" stroke="#bbf7e0"/><text x="278" y="64" font-family="system-ui,Arial" font-size="13" fill="#047857">&lt;100ms- ချောမွေ့ပြီး အရည်အသွေးမြင့်သော တွန်းအား</text>
+<rect x="262" y="92" width="418" height="46" rx="10" fill="#eef4ff" stroke="#cfe0ff"/><text x="278" y="120" font-family="system-ui,Arial" font-size="13" fill="#1d4ed8">100–150ms- သုံးနိုင်သည်၊ ပိုနီးသော node ကို ပိုနှစ်သက်သည်။</text>
+<rect x="262" y="148" width="418" height="46" rx="10" fill="#fef2f2" stroke="#fecaca"/><text x="278" y="176" font-family="system-ui,Arial" font-size="13" fill="#b91c1c">&gt;150ms- နှေးကွေးသည်၊ ကွန်ရက်ကို ဦးစွာပြင်ပါ။</text>
+<path d="M120 96 V120 H262" stroke="#10b981" stroke-width="2" fill="none" marker-end="url(#ar)"/>
+<path d="M120 120 V172 H262" stroke="#999" stroke-width="1.5" fill="none" marker-end="url(#ar)"/>
+<defs><marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0 0 L6 3 L0 6 z" fill="#999"/></marker></defs>
+</svg><figcaption>ပုံ 2- နောက်ကျနေသော အဝေးထိန်းခလုတ်။ latency (RTT) နှင့် bandwidth ကို ဦးစွာစစ်ဆေးပြီးနောက် အကြောင်းရင်းကို ပြင်ပါ။</figcaption></figure>
+<table><tr><th>အဆင့်</th><th>အသွားအပြန် RTT</th><th>အဝေးထိန်း အတွေ့အကြုံ</th><th>ဘာလုပ်ရမလဲ</th></tr><tr><td><b>မြတ်သော</b></td><td class="mono">< 50 ms</td><td>လက်ငင်းအနီး၊ အဝေးထိန်းခလုတ်သည် စက်တွင်းကို ခံစားရသည်။</td><td>ကွန်ရက်ခြေထောက်တွင် အားနည်းသောလင့်ခ်မရှိပါ။ သင်သည်မြင့်မားသော resolution / frame rate ကိုတွန်းနိုင်သည်။</td></tr><tr><td><b>ကောင်းတယ်။</b></td><td class="mono">50–100 ms</td><td>အကြံပြုထားသော အတိုင်းအတာအတွင်း၊ နေ့စဉ် ချောမွေ့သည်။</td><td>ရံဖန်ရံခါ အနည်းငယ် လိမ်းကျံပြီး ဘာမှ မပြင်းထန်ပါ။</td></tr><tr><td><b>မျှတတယ်။</b></td><td class="mono">100–150 ms</td><td>စာရိုက်ခြင်း/ဆွဲယူသည့်အခါ သိသာထင်ရှားသော နောက်ကျခြင်း</td><td>အလင်းအလုပ်အတွက်အဆင်ပြေ; ပိုနီးသော အဆုံးမှတ်ကို ကူညီပေးသည်။</td></tr><tr><td><b>ပျင်းရိသည်။</b></td><td class="mono">150–200 ms</td><td>သိသာစွာ ဂယက်ထကာ ခြေရာခံမှု ညံ့ဖျင်းသည်။</td><td>ကြိုးတပ်ထားသော / ပိုနီးသော node သို့ပြောင်းပါ။ jitter နှင့် packet ဆုံးရှုံးမှုကို စစ်ဆေးပါ။</td></tr><tr><td><b>ဆင်းရဲတယ်။</b></td><td class="mono">≥ 200 ms</td><td>အချိန်ကြာလာသည်နှင့်အမျှ အသုံးမဝင်လုနီးပါး ပင်ပန်းသည်။</td><td>ကွန်ရက်ကို ဦးစွာပြင်ပါ- ကြိုးတပ်ထားသော၊ ပိုနီးသော relay သို့မဟုတ် အခပေး ဆုံမှတ်တစ်ခုကို ပြင်ပါ။</td></tr></table>
+<h2>Bandwidth မည်မျှ (ပစ်မှတ်ကြည်လင်ပြတ်သားမှုဖြင့်)</h2>
+<p>အောက်ဖော်ပြပါဇယားသည် Microsoft ၏တရားဝင်တစ်ပုံတစ်ပုံပြတ်သားမှုလှိုင်းနှုန်းအကြံပြုချက် (30fps၊ <0.1% ဆုံးရှုံးမှု) ဖြစ်သည်။ ခေတ်မီအဝေးထိန်းခလုတ် (ToDesk နှင့် အခြားအရာများ) သည် H.264/AVC-444 နှင့် AV1 လိုက်လျောညီထွေရှိသော ဘစ်နှုန်းကိုအသုံးပြုသည်၊ ထို့ကြောင့် စစ်မှန်သောလိုအပ်ချက်များသည် မကြာခဏနည်းပါးသည် (Microsoft ၏ဥပမာ- ဝဘ်ရှာဖွေမှု 6 Mbps မှ 1 Mbps ခန့်သို့ကျဆင်းသွားသည်)။</p>
+<figure><svg viewBox="0 0 700 250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="ToDesk latency test နှင့် bandwidth calculator tool သရုပ်ဖော်ပုံ" style="width:100%;height:auto;border:1px solid #eee;border-radius:12px;background:#fff">
+<text x="20" y="34" font-family="system-ui,Arial" font-size="16" font-weight="700" fill="#1d1d1f">Bandwidth → ပစ်မှတ်ကြည်လင်ပြတ်သားမှု (Microsoft @30fps အခြေခံလိုင်း)</text>
+<text x="20" y="88" font-family="system-ui,Arial" font-size="13" fill="#334155">720p</text><rect x="120" y="70" width="92" height="26" rx="6" fill="#bfdbfe"/><text x="222" y="88" font-family="ui-monospace,monospace" font-size="13" fill="#0f172a">3 Mbps</text>
+<text x="20" y="134" font-family="system-ui,Arial" font-size="13" fill="#334155">1080p</text><rect x="120" y="116" width="153" height="26" rx="6" fill="#93c5fd"/><text x="283" y="134" font-family="ui-monospace,monospace" font-size="13" fill="#0f172a">5 Mbps</text>
+<text x="20" y="180" font-family="system-ui,Arial" font-size="13" fill="#334155">4K</text><rect x="120" y="162" width="460" height="26" rx="6" fill="#1d4ed8"/><text x="590" y="180" font-family="ui-monospace,monospace" font-size="13" fill="#0f172a">15 Mbps</text>
+<text x="20" y="232" font-family="system-ui,Arial" font-size="11" fill="#94a3b8">Microsoft Remote Desktop · @30fps · &lt;0.1% loss</text>
+</svg><figcaption>Bandwidth → ပစ်မှတ်ကြည်လင်ပြတ်သားမှု (Microsoft @30fps အခြေခံလိုင်း)</figcaption></figure>
+<figure class="i4png"><picture><source type="image/webp" srcset="/img/board_my.webp"><img src="/img/board_my.png" alt="အဝေးထိန်း ချိန်ညှိမှု နှင့် ဘန်းဝဒ် အဆင့်ဇယား ပုံဥပမာ" loading="lazy" width="1120" height="630" style="width:100%;height:auto;border-radius:12px;border:1px solid #eee"></picture><figcaption>ပုံ 2- နောက်ကျနေသော အဝေးထိန်းခလုတ်။ latency (RTT) နှင့် bandwidth ကို ဦးစွာစစ်ဆေးပြီးနောက် အကြောင်းရင်းကို ပြင်ပါ။</figcaption></figure>
+<table><tr><th>Bandwidth ကို အကြံပြုထားသည်။</th><th>ပစ်မှတ် resolution (@30fps)</th><th>အမှုတွဲသုံးပါ။</th></tr><tr><td class="mono"><b>≥ 1.5 Mbps</b></td><td>1024×768</td><td>စာသား/အလင်းအဝေးထိန်းအလုပ် (Microsoft Light)</td></tr><tr><td class="mono"><b>≥ 3 Mbps</b></td><td>1280×720 (720p)</td><td>အထွေထွေ အဝေးထိန်း ဒက်စ်တော့</td></tr><tr><td class="mono"><b>≥ 5 Mbps</b></td><td>1920×1080 (1080p)</td><td>ပင်မရေစီးကြောင်း HD အဝေးထိန်းခလုတ်</td></tr><tr><td class="mono"><b>≥ 15 Mbps</b></td><td>3840×2160 (4K)</td><td>မြင့်မားသော res/frame နှုန်း၊ ဗီဒီယို (Microsoft Power)</td></tr></table>
+<section id="data2026" class="i4data"><h2>2026 အဝေးထိန်းစနစ် လှိုင်းနှုန်း ခန့်မှန်းချက် (ပစ်မှတ် အရည်အသွေးအရ)</h2>
+<p>Microsoft ၏တရားဝင်ပုံရိပ်ပြတ်သားမှု → ဘန်းဝဒ်ဇယားကို အခြေခံမျဉ်းအဖြစ် အသုံးပြုကာ 2026 ခုနှစ်အတွက် ပုံမှန်ကမ္ဘာ့ကိန်းဂဏန်းများကို ပေးဆောင်ရန် ခေတ်ပေါ် လိုက်လျောညီထွေသောကုဒ်ဒစ်များဖြင့် ပေါင်းစပ်ထားသော (H.264/AVC-444၊ AV1; ToDesk သည် 30% မှ 50% ပိုမိုကောင်းမွန်သော လှိုင်းနှုန်းများ ထိရောက်မှုရှိသည်ဟု ဆိုသည်)။</p>
+<table><tr><th>ပစ်မှတ်အရည်အသွေး</th><th>Microsoft RDP အခြေခံအချက်</th><th>2026 သပ္ပါယခန့်မှန်း</th><th>မှတ်စုများ</th></tr><tr><td><b>720p (@30fps)</b></td><td class="mono">3 Mbps</td><td class="mono">1.5-2 Mbps ခန့်</td><td>H.264/AV1 သပ္ပာယ်</td></tr><tr><td><b>1080p (@30fps)</b></td><td class="mono">5 Mbps</td><td class="mono">2.5-3.5 Mbps ခန့်</td><td>ပင်မရေစီးကြောင်း HD</td></tr><tr><td><b>1080p60 (high fps)</b></td><td class="mono">8-10 Mbps ခန့်</td><td class="mono">5-7 Mbps ခန့်</td><td>မြင့်မားသောလှုပ်ရှားမှုအကြောင်းအရာ</td></tr><tr><td><b>4K (@30fps)</b></td><td class="mono">15 Mbps</td><td class="mono">8-12 Mbps ခန့်</td><td>4:4:4 / AV1</td></tr></table>
+<p class="note"><em>ခန့်မှန်းချက်၊ ပထမပါတီတိုင်းတာခြင်းမဟုတ်ပါ။ အခြေခံ = Microsoft ၏ တရားဝင် အဝေးထိန်း ဒက်စ်တော့ ဇယား (@30fps); 2026 ခန့်မှန်းချက်သည် ခေတ်မီ လိုက်လျောညီထွေရှိသော ကုဒ်နံပါတ်ဖြင့် အပိုထပ်လောင်းပြီး ပြင်းအား၏ အကြမ်းဖျဉ်း အတိုင်းအတာတစ်ခုသာဖြစ်သည် — တကယ့် bandwidth သည် စခရင်ပေါ်ရှိ ရွေ့လျားမှု၊ ပက်ကက်ဆုံးရှုံးမှုနှင့် codec တို့နှင့် ကွဲပြားသည်။</em></p></section>
+<h2>မေးလေ့ရှိသောမေးခွန်းများ</h2>
+<details class="faq"><summary>အဝေးထိန်းစနစ်အတွက် မည်သည့် latency ကို ပုံမှန်အဖြစ်ရေတွက်သနည်း။</summary><div>လက်မ၏စည်းမျဉ်းအတိုင်း- 50ms အောက် RTT သည် ချက်ချင်းနီးပါးခံစားရသည်၊ 100ms အောက်သည် အကြံပြုထားသည့်အကွာအဝေးဖြစ်သည်၊ 100-150ms ကိုအသုံးပြု၍ရနိုင်သော်လည်း၊ နောက်ကျနေသည်ဟုခံစားရသည်၊ 150ms ကျော်သည် ရှင်းလင်းပြတ်သားနေပြီး 200ms သို့မဟုတ် ထို့ထက်ပိုပါက အသုံးမပြုနိုင်လုနီးပါးဖြစ်သည်။ Microsoft သည် အလွန်ကောင်းမွန်သော အပြန်အလှန်တုံ့ပြန်မှု/အကူအညီပေးသည့်အခြေအနေများတွင် RTT ≤20ms ကို အကောင်းဆုံးအတွေ့အကြုံရရှိရန် လိုလားကြောင်းလည်း မှတ်သားထားသည်။</div></details>
+<details class="faq"><summary>ToDesk အဝေးထိန်းခလုတ်သည် လှိုင်းနှုန်းမည်မျှ လိုအပ်သနည်း။</summary><div>Microsoft ၏တရားဝင်အဝေးထိန်းဒက်စ်တော့အကြံပြုချက် (30fps)- 720p အတွက် 3 Mbps ခန့်၊ 1080p အတွက် 5 Mbps နှင့် 4K အတွက် 15 Mbps ခန့်။ ခေတ်မီအဝေးထိန်းထိန်းချုပ်မှုတွင် လိုက်လျောညီထွေ ကုဒ်ပြောင်းခြင်းကို အသုံးပြုသောကြောင့် အမှန်တကယ် လိုအပ်ချက်များမှာ မကြာခဏ နည်းပါးပါသည်။</div></details>
+<details class="faq"><summary>ဘယ်အရာက ပိုအရေးကြီးလဲ၊ latency သို့မဟုတ် bandwidth</summary><div>အပြန်အလှန်အကျိုးသက်ရောက်သော အဝေးထိန်းခလုတ်အတွက်၊ latency သည် ပို၍အရေးကြီးသည်- လုံလောက်သော bandwidth ရှိသော်လည်း၊ မြင့်မားသော latency/jitter သည် နှောင့်နှေးနေသေးသည်။ Microsoft ၏ ဒိုင်းနမစ်ဘစ်နှုန်းသည် အရာခပ်သိမ်းကို ချောမွေ့စေရန် RTT မြင့်မားနေချိန်တွင် အရည်အသွေးကို အမှန်တကယ် ကျဆင်းစေသည်။</div></details>
+<details class="faq"><summary>ဤ latency test သည် အဘယ်အရာကို အမှန်တကယ် တိုင်းတာသနည်း။</summary><div>သင့်ဘရောက်ဆာသည် အများသူငှာ အဆုံးအဖြတ်များဆီသို့ ကွန်ရက်အသွားအပြန်ခရီးကို တိုင်းတာသည် — အဝေးထိန်းစနစ်၏ ကွန်ရက်ခြေထောက်အတွက် ပရောက်စီတစ်ခု။ Real remote-control latency သည် ဖမ်းယူမှု၊ ကုဒ်/ကုဒ်နှင့် ဖော်ပြချိန်တို့ကို ပေါင်းထည့်သည်။</div></details>
+<details class="faq"><summary>ကျွန်ုပ်၏ bandwidth မြင့်မားနေချိန်တွင် အဘယ်ကြောင့် နောက်ကျနေသေးသနည်း။</summary><div>များသောအားဖြင့် ၎င်းသည် latency၊ တုန်လှုပ်ခြင်း သို့မဟုတ် packet ဆုံးရှုံးမှု၊ bandwidth မဟုတ်ပါ။ အဝေးထိန်းခလုတ်သည် RTT နှင့် တည်ငြိမ်မှုအတွက် အထိခိုက်မခံပါ။ တုန်လှုပ်ခြင်းသည် မြင့်မားသောပျမ်းမျှထက် ပိုနာကျင်သည်။</div></details>
+<details class="faq"><summary>ToDesk သည် အရည်အသွေးအမြင့်မားဆုံးရောက်ရှိနိုင်သည့်အရာများ။</summary><div>၎င်း၏တရားဝင်ဆိုက်မှ 8K၊ 360 FPS နှင့် 4:4:4 စစ်မှန်သောအရောင်ဆုံးရှုံးမှုမရှိသော (AV1 codec / ZeroSync အင်ဂျင်) သည် မှန်ကန်သောအစီအစဉ်နှင့် လုံလောက်သော bandwidth ပေးထားသည့်အထိ တောင်းဆိုထားသည်။</div></details>
+<details class="faq"><summary>1080p ဗီဒီယိုသည် အဝေးထိန်းခလုတ်ကို လှိုင်းနှုန်းမည်မျှယူသနည်း။</summary><div>Microsoft ၏ဥပမာ- မျက်နှာပြင်တစ်ဝက် 30fps ဗီဒီယိုသည် မူရင်းအားဖြင့် 8.5–9.5 Mbps ခန့်ဖြစ်သော်လည်း H.264/AVC-444 နှင့် 2.5–2.8 Mbps ခန့်သာ — codec သည် ကြီးမားသောကွာခြားချက်တစ်ခုဖြစ်သည်။</div></details>
+<details class="faq"><summary>Mbps နှင့် MB/s ကို မည်သို့ပြောင်းရမည်နည်း။</summary><div>1 MB/s = 8 Mbps နှင့် 1 Mbps = 0.125 MB/s ။ ဤစာမျက်နှာရှိ bandwidth converter သည် ဘုံယူနစ်အားလုံးအတွက် ၎င်းကို အလိုအလျောက် ပြုလုပ်ပေးပါသည်။</div></details>
+
+<h2>လျင်မြန်သော လက်တွေ့ကမ္ဘာ စမ်းသပ်မှု</h2>
+<ul class="scenes"><li>စာရိုက်ခြင်းနှင့် ဆွဲယူခြင်း windows နှေးကွေးသော်လည်း အသုံးပြုနိုင်သည်- RTT သည် များသောအားဖြင့် 100-150ms; ပိုနီးသော အဆုံးမှတ် သို့မဟုတ် ကြိုးတပ်ချိတ်ဆက်မှုတစ်ခုသည် ၎င်းကို 100ms အောက်သို့ ပြန်ဆွဲယူလေ့ရှိသည်။</li><li>ရုပ်ပုံသည် မှုန်ဝါးနေပြီး သင်ရွေ့လျားမှုရပ်တန့်ပြီးနောက်မှသာ ထက်မြက်လာသည်- အကန့်အသတ်ရှိသော ဘန်းဝဒ်သည် လိုက်လျောညီထွေဖြစ်စေသော အတိုင်းအတာကို အစပျိုးပေးသည်။ အရည်အသွေးအဆင့်များနှင့်ကိုက်ညီသော bandwidth converter ကိုစစ်ဆေးပြီး လိုအပ်ပါက ပစ်မှတ် resolution ကိုလျှော့ချပါ။</li><li>RTT သည် မမြင့်သော်လည်း ကြွလာ၍ သွားသည်- တုန်လှုပ်ခြင်းကို အာရုံစိုက်ပါ — တုန်လှုပ်ခြင်းသည် မြင့်မားသော ပျမ်းမျှထက် ပိုနာကျင်သည်။ Wi-Fi နှောင့်ယှက်မှုကို စစ်ဆေးပါ၊ 5GHz သို့ပြောင်းပါ သို့မဟုတ် ကြိုးတပ်ပါ။</li><li>နယ်စပ်ဖြတ်ကျော်အဝေးထိန်းစနစ်သည် အလွန်နှေးကွေးသည်- သာမန် အများသူငှာ လမ်းလွှဲလမ်းလွှဲများဖြစ်သောကြောင့် RTT နှင့် ပက်ကက်ပျောက်ဆုံးမှု နှစ်ခုစလုံးသည် မြင့်မားသည်။ ပိုနီးသော relay သို့မဟုတ် ထုတ်ကုန်၏ ကမ္ဘာလုံးဆိုင်ရာ ဆုံမှတ်များက များစွာ အထောက်အကူ ပြုပါသည်။</li><li>4K အဝေးထိန်းထိန်းချုပ်မှုတွင် လုံလောက်သော bandwidth ပါသော်လည်း frames များကို ကျဆင်းစေသည်- မြင့်မားသော res/frame rate သည် bandwidth သာမကဘဲ encode/decode compute ကို အခွန်ပေးဆောင်ပါသည်။ 1080p သို့မဟုတ် အောက်ဖရိမ်နှုန်းကို စမ်းကြည့်ပါ။</li></ul>
+<div class="related"><h2>ဆက်စပ်</h2><ul><li><a href="https://todeskremote.com/download/">ToDesk အဝေးထိန်းခလုတ် · ဒေါင်းလုဒ်လုပ်ပါ။</a></li><li><a href="https://learn.microsoft.com/en-us/windows-server/remote/remote-desktop-services/network-guidance" rel="nofollow">Microsoft Remote Desktop · ကွန်ရက်လမ်းညွှန်ချက်များ (bandwidth)</a></li><li><a href="https://learn.microsoft.com/en-us/azure/virtual-desktop/rdp-bandwidth" rel="nofollow">Microsoft Azure RDP bandwidth လိုအပ်ချက်များ (အခြေအနေများ/ကုဒ်ဖြင့်ဖော်ပြချက်များ)</a></li><li><a href="https://www.todesk.com/" rel="nofollow">ToDesk တရားဝင်ဆိုက် (ထုတ်ကုန်သတ်မှတ်ချက်များ)</a></li></ul></div>
+</main>
+<footer>Microsoft ၏တရားဝင်အဝေးထိန်း ဒက်စ်တော့ဒေါ့စ် (ကွန်ရက်လမ်းညွှန်ချက်များ / Azure Virtual Desktop RDP ၏ လှိုင်းနှုန်း) မှ Bandwidth/resolution အခြေခံများ။ ၎င်း၏တရားဝင်ဆိုက်မှ ToDesk သတ်မှတ်ချက်များ။ Latency အဆင့်များသည် Microsoft ၏ RTT≤20ms anchor ဖြင့် စစ်ဆေးထားသော လုပ်ငန်းအတွေ့အကြုံ တီးဝိုင်းတစ်ခုဖြစ်သည်။ ဤနေရာတွင် ကိရိယာများနှင့် ခန့်မှန်းချက်များသည် ကိုးကားရန်အတွက်သာဖြစ်ပြီး ပထမပါတီတိုင်းတာခြင်းမဟုတ်ပါ။<br>整理/Editor：<a href="/about-editor/">罗宇</a> · MIT License · <a href="/about-editor/">about</a></footer>
+</div>
+<script src="/data_my.js"></script><script src="/app.js"></script></body></html>
