@@ -1,35 +1,178 @@
-<!DOCTYPE html>
-<html lang="zh-CN">
-<head>
-<meta charset="UTF-8">
+<!DOCTYPE html><html lang="zh-Hans"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>ToDesk 远程 电脑版 - 官方资源与在线工具</title>
-<meta name="description" content="ToDesk相关资源导航：官网入口与免费在线小工具。ToDesk 是一款远程桌面控制软件，支持远程办公、远程协助与文件传输。">
+<title>ToDesk 远程控制延迟测试 + 带宽换算器 — 在线测网络往返延迟、估算远控画质</title>
+<meta name="description" content="在线测你到公共节点的网络往返延迟（RTT）与抖动，按远程控制流畅度分档；带宽单位换算器估算 ToDesk 远控所需带宽与可达画质。纯客户端、打开即用、开源。数据基线取自微软远程桌面官方文档与 ToDesk 官网。">
 <link rel="canonical" href="https://amirsakala.github.io/">
-<meta property="og:title" content="ToDesk 远程 电脑版">
-<meta property="og:description" content="ToDesk官网入口与免费在线小工具。">
-<meta property="og:type" content="website">
-<meta property="og:url" content="https://amirsakala.github.io/">
-<style>:root{--b:#1a73e8}*{box-sizing:border-box}body{font-family:system-ui,-apple-system,"Segoe UI",sans-serif;max-width:760px;margin:0 auto;padding:24px;color:#1f2937;line-height:1.7;background:#fff}h1{color:var(--b);font-size:1.6rem;margin:.2em 0}h2{font-size:1.2rem;margin-top:1.6em;border-left:4px solid var(--b);padding-left:10px}.card{border:1px solid #e5e7eb;border-radius:10px;padding:18px;margin:16px 0;background:#fafafa}a{color:var(--b)}footer{margin-top:40px;padding-top:16px;border-top:1px solid #eee;color:#9ca3af;font-size:.85rem}</style>
-</head>
-<body>
-<h1>ToDesk</h1>
-<p>ToDesk 是一款远程桌面控制软件，支持远程办公、远程协助与文件传输。</p>
-<div class="card">
-<h2 style="margin-top:0;border:0;padding:0">官方网站</h2>
-<p>访问 ToDesk 官方网站，了解完整功能与下载方式：<br>
-<a href="https://todeskremote.com/"><strong>todeskremote.com</strong></a></p>
+<link rel="alternate" hreflang="zh-Hans" href="https://amirsakala.github.io/">
+<link rel="alternate" hreflang="en" href="https://amirsakala.github.io/en/">
+<link rel="alternate" hreflang="ja" href="https://amirsakala.github.io/ja/">
+<link rel="alternate" hreflang="zh-Hant" href="https://amirsakala.github.io/zh-tw/">
+<link rel="alternate" hreflang="id" href="https://amirsakala.github.io/id/">
+<link rel="alternate" hreflang="th" href="https://amirsakala.github.io/th/">
+<link rel="alternate" hreflang="vi" href="https://amirsakala.github.io/vi/">
+<link rel="alternate" hreflang="ms" href="https://amirsakala.github.io/ms/">
+<link rel="alternate" hreflang="fil" href="https://amirsakala.github.io/fil/">
+<link rel="alternate" hreflang="km" href="https://amirsakala.github.io/km/">
+<link rel="alternate" hreflang="lo" href="https://amirsakala.github.io/lo/">
+<link rel="alternate" hreflang="my" href="https://amirsakala.github.io/my/">
+<link rel="alternate" hreflang="x-default" href="https://amirsakala.github.io/">
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@graph": [
+  {
+   "@type": "WebApplication",
+   "name": "ToDesk 远程控制延迟测试 + 带宽换算器",
+   "url": "https://amirsakala.github.io/",
+   "applicationCategory": "UtilitiesApplication",
+   "operatingSystem": "Web browser",
+   "inLanguage": "zh-Hans",
+   "description": "在线测你到公共节点的网络往返延迟（RTT）与抖动，按远程控制流畅度分档；带宽单位换算器估算 ToDesk 远控所需带宽与可达画质。纯客户端、打开即用、开源。数据基线取自微软远程桌面官方文档与 ToDesk 官网。",
+   "isAccessibleForFree": true,
+   "browserRequirements": "Requires JavaScript",
+   "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+   },
+   "author": {
+    "@type": "Person",
+    "name": "罗宇",
+    "url": "https://amirsakala.github.io/about-editor/"
+   }
+  },
+  {
+   "@type": "FAQPage",
+   "inLanguage": "zh-Hans",
+   "url": "https://amirsakala.github.io/",
+   "mainEntity": [
+    {
+     "@type": "Question",
+     "name": "远程控制延迟多少算正常？",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "经验上：RTT 低于 50ms 近乎即时，低于 100ms 推荐范围内，100–150ms 可用但能感到迟滞，超过 150ms 明显卡顿，达到或超过 200ms 几乎不可用。微软还指出强交互/辅助场景 RTT ≤20ms 体验最佳。"
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "ToDesk 远控大概需要多大带宽？",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "按微软远程桌面官方推荐（30fps）：720p 约 3 Mbps、1080p 约 5 Mbps、4K 约 15 Mbps。现代远控用自适应编码，实际常更低。"
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "延迟和带宽哪个更重要？",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "交互远控里延迟更关键：带宽够了，延迟/抖动高一样卡。微软的动态码率会在 RTT 高时主动降画质来保流畅。"
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "这个延迟测试测的是什么？",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "浏览器测你到公共节点（Cloudflare、Google 等）的网络往返，是远控「网络腿」的代理量；真实远控延迟还要加设备采集、编解码与显示时延。"
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "为什么我带宽很大还是卡？",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "多半是延迟、抖动或丢包，不是带宽。远控对 RTT 和稳定性很敏感，抖动大比平均高更毁体验。"
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "ToDesk 最高能到什么画质？",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "官网称最高 8K、360 FPS、4:4:4 真彩无损（AV1 编码 / ZeroSync 传输引擎），需相应版本与足够带宽。"
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "1080p 视频在远控里要多少带宽？",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "微软示例：半屏 30fps 视频默认约 8.5–9.5 Mbps，启用 H.264/AVC-444 后仅约 2.5–2.8 Mbps，可见编码影响很大。"
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Mbps 和 MB/s 怎么换算？",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "1 MB/s = 8 Mbps，1 Mbps = 0.125 MB/s。本页带宽换算器会自动换算到各常用单位。"
+     }
+    }
+   ]
+  }
+ ]
+}
+</script>
+<link rel="stylesheet" href="/style.css"></head>
+<body><div class="wrap"><main>
+<nav class="lang">Language: <strong>简体中文</strong> · <a href="/en/">English</a> · <a href="/ja/">日本語</a> · <a href="/zh-tw/">繁體中文</a> · <a href="/id/">Bahasa Indonesia</a> · <a href="/th/">ไทย</a> · <a href="/vi/">Tiếng Việt</a> · <a href="/ms/">Bahasa Melayu</a> · <a href="/fil/">Filipino</a> · <a href="/km/">ភាសាខ្មែរ</a> · <a href="/lo/">ພາສາລາວ</a> · <a href="/my/">မြန်မာ</a></nav>
+<h1>ToDesk 远程控制延迟测试 + 带宽换算器</h1>
+<figure class="i4png"><picture><source type="image/webp" srcset="/img/cover_zh.webp"><img src="/img/cover_zh.png" alt="ToDesk 远程控制延迟测试与带宽换算器工具示意图" fetchpriority="high" width="1120" height="630" style="width:100%;height:auto;border-radius:12px;border:1px solid #eee"></picture><figcaption>图1：ToDesk 远控延迟测试 + 带宽换算器（测 RTT · 估算带宽与画质）</figcaption></figure>
+<p class="intro">远程控制卡不卡，关键看两件事：<strong>网络往返延迟（RTT）</strong> 和 <strong>可用带宽</strong>。下面两个小工具都在你浏览器本地运行——① 测你到多个公共节点的往返延迟与抖动，按远控流畅度分档；② 带宽单位换算并估算给定带宽能跑多高画质。数据基线取自微软远程桌面官方文档与 ToDesk 官网规格（见文末来源）。</p>
+<section class="tool"><h2>工具①：网络往返延迟（Ping）测试</h2>
+<p>点下面按钮，浏览器会向几个公共节点各发若干次请求，测往返时间。取每个端点的<strong>最佳 RTT</strong>（更接近真实网络往返），并按下方时延档给出远控流畅度判断。</p>
+<button id="lat-go">开始测试延迟</button>
+<div id="lat-out"></div>
+<p class="note">说明：测的是你到公共端点的<strong>网络往返</strong>，是远控「网络腿」的代理量；真实远控延迟还要加上设备采集、编码/解码与显示时延。结果受当前网络与端点距离影响。</p></section>
+<section class="tool"><h2>工具②：带宽换算器 + 画质估算</h2>
+<p>输入一个带宽数值、选单位，自动换算到常用单位，并对照微软远程桌面官方推荐，估算这个带宽在 30fps 下大约能跑到什么分辨率。</p>
+<div class="bwrow"><input id="bw-in" type="number" min="0" step="any" placeholder="输入数值，例如 20" autocomplete="off"><select id="bw-unit"><option>Mbps</option><option>Gbps</option><option>Kbps</option><option>MB/s</option><option>KB/s</option></select><button id="bw-go">换算 + 估算</button></div>
+<div id="bw-out"></div></section>
+<h2>远程控制延迟怎么看（时延档）</h2>
+<p>交互式远控对延迟比对带宽更敏感。微软指出强交互/辅助场景 RTT ≤20ms 体验最佳；下表是综合微软锚点与行业经验的远控时延档，照档对号入座。</p>
+<figure><svg viewBox="0 0 700 250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="远控延迟与带宽分档对照示意图" style="width:100%;height:auto;border:1px solid #eee;border-radius:12px;background:#fff">
+<text x="20" y="30" font-family="system-ui,Arial" font-size="16" font-weight="700" fill="#1d1d1f">远控延迟决策流程</text>
+<rect x="20" y="48" width="200" height="48" rx="10" fill="#111"/><text x="120" y="78" text-anchor="middle" font-family="system-ui,Arial" font-size="14" fill="#fff">测往返 RTT</text>
+<path d="M220 72 H262" stroke="#999" stroke-width="2" fill="none" marker-end="url(#ar)"/>
+<rect x="262" y="36" width="418" height="46" rx="10" fill="#ecfdf5" stroke="#bbf7e0"/><text x="278" y="64" font-family="system-ui,Arial" font-size="13" fill="#047857">&lt;100ms：顺滑，可冲高画质</text>
+<rect x="262" y="92" width="418" height="46" rx="10" fill="#eef4ff" stroke="#cfe0ff"/><text x="278" y="120" font-family="system-ui,Arial" font-size="13" fill="#1d4ed8">100–150ms：可用，宜就近节点</text>
+<rect x="262" y="148" width="418" height="46" rx="10" fill="#fef2f2" stroke="#fecaca"/><text x="278" y="176" font-family="system-ui,Arial" font-size="13" fill="#b91c1c">&gt;150ms：卡，先修网络</text>
+<path d="M120 96 V120 H262" stroke="#10b981" stroke-width="2" fill="none" marker-end="url(#ar)"/>
+<path d="M120 120 V172 H262" stroke="#999" stroke-width="1.5" fill="none" marker-end="url(#ar)"/>
+<defs><marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0 0 L6 3 L0 6 z" fill="#999"/></marker></defs>
+</svg><figcaption>图2：远控卡不卡？先看延迟（RTT）与带宽，分档对症下药</figcaption></figure>
+<table><tr><th>档位</th><th>往返 RTT</th><th>远控体验</th><th>建议</th></tr><tr><td><b>极佳</b></td><td class="mono">< 50 ms</td><td>近乎即时，远控如本地</td><td>网络腿无短板，可冲高分高帧。</td></tr><tr><td><b>良好</b></td><td class="mono">50–100 ms</td><td>推荐范围内，日常远控顺滑</td><td>偶有轻微拖影，问题不大。</td></tr><tr><td><b>可用</b></td><td class="mono">100–150 ms</td><td>可感延迟，打字/拖拽有迟滞</td><td>适合轻办公；换就近节点更稳。</td></tr><tr><td><b>偏卡</b></td><td class="mono">150–200 ms</td><td>明显卡顿，跟手差</td><td>换有线/就近节点，排查抖动与丢包。</td></tr><tr><td><b>差</b></td><td class="mono">≥ 200 ms</td><td>几乎不可用，久用疲劳</td><td>优先解决网络：有线、就近中转或付费节点。</td></tr></table>
+<h2>远控带宽要多少（按目标画质）</h2>
+<p>下表是微软远程桌面官方按分辨率给出的推荐带宽（30fps、丢包<0.1%）。现代远控（ToDesk 等）用 H.264/AVC-444、AV1 自适应码率，实际常低于此（微软示例：网页浏览可从 6 Mbps 降到约 1 Mbps）。</p>
+<figure><svg viewBox="0 0 700 250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="ToDesk 远程控制延迟测试与带宽换算器工具示意图" style="width:100%;height:auto;border:1px solid #eee;border-radius:12px;background:#fff">
+<text x="20" y="34" font-family="system-ui,Arial" font-size="16" font-weight="700" fill="#1d1d1f">带宽 → 目标画质（微软 @30fps 基线）</text>
+<text x="20" y="88" font-family="system-ui,Arial" font-size="13" fill="#334155">720p</text><rect x="120" y="70" width="92" height="26" rx="6" fill="#bfdbfe"/><text x="222" y="88" font-family="ui-monospace,monospace" font-size="13" fill="#0f172a">3 Mbps</text>
+<text x="20" y="134" font-family="system-ui,Arial" font-size="13" fill="#334155">1080p</text><rect x="120" y="116" width="153" height="26" rx="6" fill="#93c5fd"/><text x="283" y="134" font-family="ui-monospace,monospace" font-size="13" fill="#0f172a">5 Mbps</text>
+<text x="20" y="180" font-family="system-ui,Arial" font-size="13" fill="#334155">4K</text><rect x="120" y="162" width="460" height="26" rx="6" fill="#1d4ed8"/><text x="590" y="180" font-family="ui-monospace,monospace" font-size="13" fill="#0f172a">15 Mbps</text>
+<text x="20" y="232" font-family="system-ui,Arial" font-size="11" fill="#94a3b8">Microsoft Remote Desktop · @30fps · &lt;0.1% loss</text>
+</svg><figcaption>带宽 → 目标画质（微软 @30fps 基线）</figcaption></figure>
+<figure class="i4png"><picture><source type="image/webp" srcset="/img/board_zh.webp"><img src="/img/board_zh.png" alt="远控延迟与带宽分档对照示意图" loading="lazy" width="1120" height="630" style="width:100%;height:auto;border-radius:12px;border:1px solid #eee"></picture><figcaption>图2：远控卡不卡？先看延迟（RTT）与带宽，分档对症下药</figcaption></figure>
+<table><tr><th>推荐带宽</th><th>目标分辨率（@30fps）</th><th>适用场景</th></tr><tr><td class="mono"><b>≥ 1.5 Mbps</b></td><td>1024×768</td><td>文本/轻办公远控（微软 Light 档）</td></tr><tr><td class="mono"><b>≥ 3 Mbps</b></td><td>1280×720（720p）</td><td>一般远程桌面</td></tr><tr><td class="mono"><b>≥ 5 Mbps</b></td><td>1920×1080（1080p）</td><td>主流高清远控</td></tr><tr><td class="mono"><b>≥ 15 Mbps</b></td><td>3840×2160（4K）</td><td>高分高帧 / 视频（微软 Power 档）</td></tr></table>
+<section id="data2026" class="i4data"><h2>2026 远控带宽估算（按目标画质）</h2>
+<p>以微软官方分辨率→带宽表为基线，叠加现代自适应编码（H.264/AVC-444、AV1；ToDesk 称带宽利用率提升 30%–50%）外推，给出 2026 年常见的实际带宽量级。</p>
+<table><tr><th>目标画质</th><th>微软 RDP 基线</th><th>2026 自适应估算</th><th>说明</th></tr><tr><td><b>720p（@30fps）</b></td><td class="mono">3 Mbps</td><td class="mono">约 1.5–2 Mbps</td><td>H.264/AV1 自适应</td></tr><tr><td><b>1080p（@30fps）</b></td><td class="mono">5 Mbps</td><td class="mono">约 2.5–3.5 Mbps</td><td>主流高清远控</td></tr><tr><td><b>1080p60（高帧）</b></td><td class="mono">约 8–10 Mbps</td><td class="mono">约 5–7 Mbps</td><td>高动态画面</td></tr><tr><td><b>4K（@30fps）</b></td><td class="mono">15 Mbps</td><td class="mono">约 8–12 Mbps</td><td>4:4:4 / AV1</td></tr></table>
+<p class="note"><em>估算·非一手实测。基线 = 微软远程桌面官方表（@30fps）；2026 估算 = 在基线上按现代自适应编码外推，仅供量级参考，实际随画面动态、丢包与编码而变。</em></p></section>
+<h2>常见问题</h2>
+<details class="faq"><summary>远程控制延迟多少算正常？</summary><div>经验上：RTT 低于 50ms 近乎即时，低于 100ms 推荐范围内，100–150ms 可用但能感到迟滞，超过 150ms 明显卡顿，达到或超过 200ms 几乎不可用。微软还指出强交互/辅助场景 RTT ≤20ms 体验最佳。</div></details>
+<details class="faq"><summary>ToDesk 远控大概需要多大带宽？</summary><div>按微软远程桌面官方推荐（30fps）：720p 约 3 Mbps、1080p 约 5 Mbps、4K 约 15 Mbps。现代远控用自适应编码，实际常更低。</div></details>
+<details class="faq"><summary>延迟和带宽哪个更重要？</summary><div>交互远控里延迟更关键：带宽够了，延迟/抖动高一样卡。微软的动态码率会在 RTT 高时主动降画质来保流畅。</div></details>
+<details class="faq"><summary>这个延迟测试测的是什么？</summary><div>浏览器测你到公共节点（Cloudflare、Google 等）的网络往返，是远控「网络腿」的代理量；真实远控延迟还要加设备采集、编解码与显示时延。</div></details>
+<details class="faq"><summary>为什么我带宽很大还是卡？</summary><div>多半是延迟、抖动或丢包，不是带宽。远控对 RTT 和稳定性很敏感，抖动大比平均高更毁体验。</div></details>
+<details class="faq"><summary>ToDesk 最高能到什么画质？</summary><div>官网称最高 8K、360 FPS、4:4:4 真彩无损（AV1 编码 / ZeroSync 传输引擎），需相应版本与足够带宽。</div></details>
+<details class="faq"><summary>1080p 视频在远控里要多少带宽？</summary><div>微软示例：半屏 30fps 视频默认约 8.5–9.5 Mbps，启用 H.264/AVC-444 后仅约 2.5–2.8 Mbps，可见编码影响很大。</div></details>
+<details class="faq"><summary>Mbps 和 MB/s 怎么换算？</summary><div>1 MB/s = 8 Mbps，1 Mbps = 0.125 MB/s。本页带宽换算器会自动换算到各常用单位。</div></details>
+
+<h2>真实场景速判</h2>
+<ul class="scenes"><li>打字、拖窗口有迟滞但还能用：RTT 多在 100–150ms，换就近节点或有线网常能拉回 100ms 内。</li><li>画面糊、动一下才变清晰：带宽受限触发自适应降质；用带宽换算器对照画质档，必要时降目标分辨率。</li><li>RTT 不高但时好时坏：重点看抖动（jitter）——抖动大比平均高更毁体验，查 Wi-Fi 干扰、换 5GHz 或有线。</li><li>跨境远控特别卡：普通公网绕路、RTT 与丢包都高；就近中转或产品的全球节点能显著改善。</li><li>4K 远控带宽够却掉帧：高分高帧对编解码算力也敏感，不只是带宽；试 1080p 或降帧。</li></ul>
+<div class="related"><h2>相关</h2><ul><li><a href="https://todeskremote.com/download/">ToDesk 远程控制 · 下载</a></li><li><a href="https://learn.microsoft.com/en-us/windows-server/remote/remote-desktop-services/network-guidance" rel="nofollow">微软远程桌面 · 网络指南（带宽推荐）</a></li><li><a href="https://learn.microsoft.com/en-us/azure/virtual-desktop/rdp-bandwidth" rel="nofollow">微软 Azure RDP 带宽要求（场景/编码）</a></li><li><a href="https://www.todesk.com/" rel="nofollow">ToDesk 官网（产品规格）</a></li></ul></div>
+</main>
+<footer>带宽/分辨率基线取自微软远程桌面官方文档（Network guidelines / Azure Virtual Desktop RDP bandwidth）；ToDesk 规格取自官网。时延档为行业经验带（含微软 RTT≤20ms 锚点）互证。本页工具与估算仅供参考、非一手实测，硬件/网络问题以实测为准。<br>整理/Editor：<a href="/about-editor/">罗宇</a> · MIT License · <a href="/about-editor/">about</a></footer>
 </div>
-<div class="card">
-<h2 style="margin-top:0;border:0;padding:0">免费在线小工具</h2>
-<p>本站还为 ToDesk 用户提供一个纯本地运行的小工具（数据不上传）：<br>
-<a href="https://amirsakala.github.io/todeskremote-latency-test/">网络延迟测试 →</a></p>
-</div>
-<h2>关于 ToDesk</h2>
-<p>ToDesk 是一款远程桌面控制软件，支持远程办公、远程协助与文件传输。 更多信息与下载请访问 <a href="https://todeskremote.com/">ToDesk官网</a>。</p>
-<footer>
-<p>本页为 ToDesk 相关资源导航页，工具均在本地浏览器处理、不上传服务器。</p>
-<p>官网：<a href="https://todeskremote.com/">todeskremote.com</a> · 最后更新：2026-06</p>
-</footer>
-</body>
-</html>
+<script src="/data_zh.js"></script><script src="/app.js"></script></body></html>
