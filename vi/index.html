@@ -1,0 +1,178 @@
+<!DOCTYPE html><html lang="vi"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Kiểm tra độ trễ ToDesk + Máy tính băng thông - đo RTT mạng, ước tính chất lượng điều khiển từ xa</title>
+<meta name="description" content="Đo độ trễ khứ hồi (RTT) và độ biến động mạng của bạn đối với các điểm cuối công cộng, được xếp hạng theo độ mượt của điều khiển từ xa; cộng với bộ chuyển đổi băng thông ước tính băng thông và độ phân giải mà phiên từ xa ToDesk cần. Phía khách hàng, tức thời, nguồn mở. Đường cơ sở từ tài liệu Microsoft Remote Desktop và ToDesk.">
+<link rel="canonical" href="https://amirsakala.github.io/vi/">
+<link rel="alternate" hreflang="zh-Hans" href="https://amirsakala.github.io/">
+<link rel="alternate" hreflang="en" href="https://amirsakala.github.io/en/">
+<link rel="alternate" hreflang="ja" href="https://amirsakala.github.io/ja/">
+<link rel="alternate" hreflang="zh-Hant" href="https://amirsakala.github.io/zh-tw/">
+<link rel="alternate" hreflang="id" href="https://amirsakala.github.io/id/">
+<link rel="alternate" hreflang="th" href="https://amirsakala.github.io/th/">
+<link rel="alternate" hreflang="vi" href="https://amirsakala.github.io/vi/">
+<link rel="alternate" hreflang="ms" href="https://amirsakala.github.io/ms/">
+<link rel="alternate" hreflang="fil" href="https://amirsakala.github.io/fil/">
+<link rel="alternate" hreflang="km" href="https://amirsakala.github.io/km/">
+<link rel="alternate" hreflang="lo" href="https://amirsakala.github.io/lo/">
+<link rel="alternate" hreflang="my" href="https://amirsakala.github.io/my/">
+<link rel="alternate" hreflang="x-default" href="https://amirsakala.github.io/">
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@graph": [
+  {
+   "@type": "WebApplication",
+   "name": "Kiểm tra độ trễ ToDesk + Công cụ tính băng thông",
+   "url": "https://amirsakala.github.io/vi/",
+   "applicationCategory": "UtilitiesApplication",
+   "operatingSystem": "Web browser",
+   "inLanguage": "vi",
+   "description": "Đo độ trễ khứ hồi (RTT) và độ biến động mạng của bạn đối với các điểm cuối công cộng, được xếp hạng theo độ mượt của điều khiển từ xa; cộng với bộ chuyển đổi băng thông ước tính băng thông và độ phân giải mà phiên từ xa ToDesk cần. Phía khách hàng, tức thời, nguồn mở. Đường cơ sở từ tài liệu Microsoft Remote Desktop và ToDesk.",
+   "isAccessibleForFree": true,
+   "browserRequirements": "Requires JavaScript",
+   "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+   },
+   "author": {
+    "@type": "Person",
+    "name": "罗宇",
+    "url": "https://amirsakala.github.io/about-editor/"
+   }
+  },
+  {
+   "@type": "FAQPage",
+   "inLanguage": "vi",
+   "url": "https://amirsakala.github.io/vi/",
+   "mainEntity": [
+    {
+     "@type": "Question",
+     "name": "Độ trễ nào được coi là bình thường đối với điều khiển từ xa?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Theo nguyên tắc chung: RTT dưới 50 mili giây cho cảm giác gần như ngay lập tức, dưới 100 mili giây là phạm vi khuyến nghị, 100–150 mili giây là có thể sử dụng được nhưng bạn cảm thấy độ trễ, trên 150 mili giây rõ ràng là bị giật và 200 mili giây trở lên gần như không thể sử dụng được. Microsoft cũng lưu ý rằng các tình huống hỗ trợ/tương tác cao cần RTT 20ms để có trải nghiệm tốt nhất."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Điều khiển từ xa ToDesk cần bao nhiêu băng thông?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Theo khuyến nghị Remote Desktop chính thức của Microsoft (30 khung hình / giây): khoảng 3 Mbps cho 720p, 5 Mbps cho 1080p và 15 Mbps cho 4K. Điều khiển từ xa hiện đại sử dụng mã hóa thích ứng nên nhu cầu thực tế thường thấp hơn."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Điều nào quan trọng hơn, độ trễ hay băng thông?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Đối với điều khiển từ xa tương tác, độ trễ quan trọng hơn: ngay cả khi có đủ băng thông, độ trễ/độ giật cao vẫn có cảm giác giật. Tốc độ bit động của Microsoft thực sự làm giảm chất lượng khi RTT ở mức cao để giúp mọi thứ diễn ra suôn sẻ."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Bài kiểm tra độ trễ này thực sự đo lường được điều gì?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Trình duyệt của bạn đo lường hành trình khứ hồi của mạng tới các điểm cuối công cộng (Cloudflare, Google, v.v.) — một proxy cho nhánh mạng của điều khiển từ xa. Độ trễ thực của điều khiển từ xa cũng bổ sung thêm thời gian chụp, mã hóa/giải mã và hiển thị."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Tại sao nó vẫn bị lag khi băng thông của tôi cao?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Thông thường đó là độ trễ, jitter hoặc mất gói chứ không phải băng thông. Điều khiển từ xa rất nhạy cảm với RTT và độ ổn định; jitter cao gây tổn hại nhiều hơn mức trung bình cao."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Chất lượng cao nhất mà ToDesk có thể đạt được là gì?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Trang web chính thức của nó tuyên bố chất lượng lên tới 8K, 360 FPS và không mất màu thực 4:4:4 (codec AV1 / công cụ ZeroSync), với kế hoạch phù hợp và đủ băng thông."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Video 1080p chiếm bao nhiêu băng thông trên điều khiển từ xa?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Ví dụ của Microsoft: video 30 khung hình/giây nửa màn hình có tốc độ mặc định là khoảng 8,5–9,5 Mbps nhưng chỉ khoảng 2,5–2,8 Mbps với H.264/AVC-444 — codec tạo ra sự khác biệt lớn."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Làm cách nào để chuyển đổi Mbps và MB/s?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "1 MB/s = 8 Mbps và 1 Mbps = 0,125 MB/s. Bộ chuyển đổi băng thông trên trang này tự động thực hiện việc đó cho tất cả các đơn vị phổ biến."
+     }
+    }
+   ]
+  }
+ ]
+}
+</script>
+<link rel="stylesheet" href="/style.css"></head>
+<body><div class="wrap"><main>
+<nav class="lang">Language: <a href="/">简体中文</a> · <a href="/en/">English</a> · <a href="/ja/">日本語</a> · <a href="/zh-tw/">繁體中文</a> · <a href="/id/">Bahasa Indonesia</a> · <a href="/th/">ไทย</a> · <strong>Tiếng Việt</strong> · <a href="/ms/">Bahasa Melayu</a> · <a href="/fil/">Filipino</a> · <a href="/km/">ភាសាខ្មែរ</a> · <a href="/lo/">ພາສາລາວ</a> · <a href="/my/">မြန်မာ</a></nav>
+<h1>Kiểm tra độ trễ ToDesk + Công cụ tính băng thông</h1>
+<figure class="i4png"><picture><source type="image/webp" srcset="/img/cover_vi.webp"><img src="/img/cover_vi.png" alt="Minh họa công cụ tính toán băng thông và kiểm tra độ trễ ToDesk" fetchpriority="high" width="1120" height="630" style="width:100%;height:auto;border-radius:12px;border:1px solid #eee"></picture><figcaption>Hình 1: Kiểm tra độ trễ ToDesk + máy tính băng thông (đo RTT · ước tính băng thông &amp; chất lượng)</figcaption></figure>
+<p class="intro">Điều khiển từ xa có hoạt động trơn tru hay không phụ thuộc vào hai yếu tố: <strong>độ trễ khứ hồi mạng (RTT)</strong> và <strong>băng thông khả dụng</strong>. Cả hai công cụ bên dưới đều chạy cục bộ trong trình duyệt của bạn — ① đo RTT và jitter ở một số điểm cuối công cộng và xếp hạng độ mượt của điều khiển từ xa; ② chuyển đổi đơn vị băng thông và ước tính độ phân giải mà băng thông nhất định có thể mang lại. Đường cơ sở đến từ tài liệu Remote Desktop chính thức của Microsoft và thông số kỹ thuật của ToDesk (xem nguồn ở phía dưới).</p>
+<section class="tool"><h2>Công cụ 1: kiểm tra khứ hồi mạng (Ping)</h2>
+<p>Nhấn nút và trình duyệt của bạn sẽ gửi một số yêu cầu đến từng điểm cuối công cộng và thời gian khứ hồi. Chúng tôi lấy <strong>RTT tốt nhất</strong> cho mỗi điểm cuối (gần với tốc độ truyền khứ hồi của mạng thực nhất) và đánh giá độ mượt mà của điều khiển từ xa bằng cách sử dụng các mức độ trễ bên dưới.</p>
+<button id="lat-go">Bắt đầu kiểm tra độ trễ</button>
+<div id="lat-out"></div>
+<p class="note">Lưu ý: điều này đo lường <strong>chuyến đi khứ hồi của mạng</strong> tới các điểm cuối công cộng — proxy cho nhánh mạng của điều khiển từ xa. Độ trễ thực của điều khiển từ xa cũng bổ sung thêm thời gian chụp, mã hóa/giải mã và hiển thị. Kết quả phụ thuộc vào mạng và khoảng cách điểm cuối của bạn.</p></section>
+<section class="tool"><h2>Công cụ 2: chuyển đổi băng thông + ước tính chất lượng</h2>
+<p>Nhập giá trị băng thông, chọn một đơn vị và nó sẽ chuyển đổi thành các đơn vị phổ biến và - sử dụng đề xuất Remote Desktop chính thức của Microsoft - ước tính gần đúng độ phân giải mà băng thông này có thể đạt được ở tốc độ 30 khung hình / giây.</p>
+<div class="bwrow"><input id="bw-in" type="number" min="0" step="any" placeholder="Nhập một giá trị, ví dụ: 20" autocomplete="off"><select id="bw-unit"><option>Mbps</option><option>Gbps</option><option>Kbps</option><option>MB/s</option><option>KB/s</option></select><button id="bw-go">Chuyển đổi + ước tính</button></div>
+<div id="bw-out"></div></section>
+<h2>Cách đọc độ trễ của điều khiển từ xa (bậc)</h2>
+<p>Điều khiển từ xa tương tác nhạy cảm hơn với độ trễ hơn là băng thông. Microsoft lưu ý rằng các tình huống có tính tương tác/hỗ trợ cao cần RTT 20ms để có trải nghiệm tốt nhất. Bảng bên dưới kết hợp điểm neo đó với kinh nghiệm trong ngành - hãy tìm cấp độ của bạn.</p>
+<figure><svg viewBox="0 0 700 250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Minh họa biểu đồ cấp băng thông và độ trễ điều khiển từ xa" style="width:100%;height:auto;border:1px solid #eee;border-radius:12px;background:#fff">
+<text x="20" y="30" font-family="system-ui,Arial" font-size="16" font-weight="700" fill="#1d1d1f">Luồng quyết định độ trễ điều khiển từ xa</text>
+<rect x="20" y="48" width="200" height="48" rx="10" fill="#111"/><text x="120" y="78" text-anchor="middle" font-family="system-ui,Arial" font-size="14" fill="#fff">Đo RTT khứ hồi</text>
+<path d="M220 72 H262" stroke="#999" stroke-width="2" fill="none" marker-end="url(#ar)"/>
+<rect x="262" y="36" width="418" height="46" rx="10" fill="#ecfdf5" stroke="#bbf7e0"/><text x="278" y="64" font-family="system-ui,Arial" font-size="13" fill="#047857">&lt;100ms: mượt mà, đẩy chất lượng cao</text>
+<rect x="262" y="92" width="418" height="46" rx="10" fill="#eef4ff" stroke="#cfe0ff"/><text x="278" y="120" font-family="system-ui,Arial" font-size="13" fill="#1d4ed8">100–150 mili giây: có thể sử dụng được, thích nút gần hơn</text>
+<rect x="262" y="148" width="418" height="46" rx="10" fill="#fef2f2" stroke="#fecaca"/><text x="278" y="176" font-family="system-ui,Arial" font-size="13" fill="#b91c1c">&gt;150ms: lag, sửa mạng trước</text>
+<path d="M120 96 V120 H262" stroke="#10b981" stroke-width="2" fill="none" marker-end="url(#ar)"/>
+<path d="M120 120 V172 H262" stroke="#999" stroke-width="1.5" fill="none" marker-end="url(#ar)"/>
+<defs><marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0 0 L6 3 L0 6 z" fill="#999"/></marker></defs>
+</svg><figcaption>Hình 2: Điều khiển từ xa bị lag? Kiểm tra độ trễ (RTT) và băng thông trước, sau đó khắc phục nguyên nhân</figcaption></figure>
+<table><tr><th>cấp</th><th>RTT khứ hồi</th><th>Trải nghiệm điều khiển từ xa</th><th>phải làm gì</th></tr><tr><td><b>Tuyệt vời</b></td><td class="mono">< 50 ms</td><td>Điều khiển từ xa gần như tức thời mang lại cảm giác cục bộ</td><td>Không có liên kết yếu trên nhánh mạng; bạn có thể đẩy độ phân giải/tốc độ khung hình cao.</td></tr><tr><td><b>Tốt</b></td><td class="mono">50–100 ms</td><td>Trong phạm vi khuyến nghị, mượt mà hàng ngày</td><td>Thỉnh thoảng bị lem nhẹ, không có gì nghiêm trọng.</td></tr><tr><td><b>Công bằng</b></td><td class="mono">100–150 ms</td><td>Độ trễ đáng chú ý khi gõ/kéo</td><td>Tốt cho công việc nhẹ nhàng; một điểm cuối gần hơn sẽ giúp ích.</td></tr><tr><td><b>Lag</b></td><td class="mono">150–200 ms</td><td>Rõ ràng là bị giật, theo dõi kém</td><td>Chuyển sang có dây/nút gần hơn; kiểm tra jitter và mất gói.</td></tr><tr><td><b>Nghèo</b></td><td class="mono">≥ 200 ms</td><td>Gần như không sử dụng được, mệt mỏi theo thời gian</td><td>Trước tiên hãy sửa mạng: có dây, rơle gần hơn hoặc nút trả phí.</td></tr></table>
+<h2>Bao nhiêu băng thông (theo độ phân giải mục tiêu)</h2>
+<p>Bảng bên dưới là đề xuất băng thông cho mỗi độ phân giải chính thức của Microsoft (30 khung hình/giây, mất <0,1%). Điều khiển từ xa hiện đại (ToDesk và các loại khác) sử dụng tốc độ bit thích ứng H.264/AVC-444 và AV1, do đó nhu cầu thực tế thường thấp hơn (ví dụ của Microsoft: duyệt web giảm từ 6 Mbps xuống còn khoảng 1 Mbps).</p>
+<figure><svg viewBox="0 0 700 250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Minh họa công cụ tính toán băng thông và kiểm tra độ trễ ToDesk" style="width:100%;height:auto;border:1px solid #eee;border-radius:12px;background:#fff">
+<text x="20" y="34" font-family="system-ui,Arial" font-size="16" font-weight="700" fill="#1d1d1f">Băng thông → độ phân giải mục tiêu (đường cơ sở Microsoft @30fps)</text>
+<text x="20" y="88" font-family="system-ui,Arial" font-size="13" fill="#334155">720p</text><rect x="120" y="70" width="92" height="26" rx="6" fill="#bfdbfe"/><text x="222" y="88" font-family="ui-monospace,monospace" font-size="13" fill="#0f172a">3 Mbps</text>
+<text x="20" y="134" font-family="system-ui,Arial" font-size="13" fill="#334155">1080p</text><rect x="120" y="116" width="153" height="26" rx="6" fill="#93c5fd"/><text x="283" y="134" font-family="ui-monospace,monospace" font-size="13" fill="#0f172a">5 Mbps</text>
+<text x="20" y="180" font-family="system-ui,Arial" font-size="13" fill="#334155">4K</text><rect x="120" y="162" width="460" height="26" rx="6" fill="#1d4ed8"/><text x="590" y="180" font-family="ui-monospace,monospace" font-size="13" fill="#0f172a">15 Mbps</text>
+<text x="20" y="232" font-family="system-ui,Arial" font-size="11" fill="#94a3b8">Microsoft Remote Desktop · @30fps · &lt;0.1% loss</text>
+</svg><figcaption>Băng thông → độ phân giải mục tiêu (đường cơ sở Microsoft @30fps)</figcaption></figure>
+<figure class="i4png"><picture><source type="image/webp" srcset="/img/board_vi.webp"><img src="/img/board_vi.png" alt="Minh họa biểu đồ cấp băng thông và độ trễ điều khiển từ xa" loading="lazy" width="1120" height="630" style="width:100%;height:auto;border-radius:12px;border:1px solid #eee"></picture><figcaption>Hình 2: Điều khiển từ xa bị lag? Kiểm tra độ trễ (RTT) và băng thông trước, sau đó khắc phục nguyên nhân</figcaption></figure>
+<table><tr><th>Băng thông được đề xuất</th><th>Độ phân giải mục tiêu (@30fps)</th><th>Trường hợp sử dụng</th></tr><tr><td class="mono"><b>≥ 1.5 Mbps</b></td><td>1024×768</td><td>Làm việc từ xa bằng văn bản/ánh sáng (Microsoft Light)</td></tr><tr><td class="mono"><b>≥ 3 Mbps</b></td><td>1280×720 (720p)</td><td>Máy tính để bàn từ xa chung</td></tr><tr><td class="mono"><b>≥ 5 Mbps</b></td><td>1920×1080 (1080p)</td><td>Điều khiển từ xa HD chính thống</td></tr><tr><td class="mono"><b>≥ 15 Mbps</b></td><td>3840×2160 (4K)</td><td>Tốc độ khung hình/độ phân giải cao, video (Microsoft Power)</td></tr></table>
+<section id="data2026" class="i4data"><h2>Ước tính băng thông điều khiển từ xa năm 2026 (theo chất lượng mục tiêu)</h2>
+<p>Sử dụng bảng băng thông→độ phân giải chính thức của Microsoft làm đường cơ sở, được ngoại suy bằng các codec thích ứng hiện đại (H.264/AVC-444, AV1; ToDesk tuyên bố hiệu suất băng thông tốt hơn 30%–50%) để đưa ra các số liệu thực tế điển hình cho năm 2026.</p>
+<table><tr><th>Chất lượng mục tiêu</th><th>Đường cơ sở Microsoft RDP</th><th>Ước tính thích ứng năm 2026</th><th>Ghi chú</th></tr><tr><td><b>720p (@30 khung hình/giây)</b></td><td class="mono">3 Mb/giây</td><td class="mono">khoảng 1,5–2 Mb/giây</td><td>Thích ứng H.264/AV1</td></tr><tr><td><b>1080p (@30 khung hình/giây)</b></td><td class="mono">5 Mb/giây</td><td class="mono">khoảng 2,5–3,5 Mb/giây</td><td>HD chính thống</td></tr><tr><td><b>1080p60 (khung hình / giây cao)</b></td><td class="mono">khoảng 8–10 Mb/giây</td><td class="mono">khoảng 5–7 Mb/giây</td><td>Nội dung chuyển động cao</td></tr><tr><td><b>4K (@30 khung hình/giây)</b></td><td class="mono">15 Mb/giây</td><td class="mono">khoảng 8–12 Mb/giây</td><td>4:4:4 / AV1</td></tr></table>
+<p class="note"><em>Ước tính chứ không phải đo lường của bên thứ nhất. Đường cơ sở = bảng Remote Desktop chính thức của Microsoft (@30fps); ước tính năm 2026 ngoại suy với mã hóa thích ứng hiện đại và chỉ ở mức độ đại khái — băng thông thực thay đổi theo chuyển động trên màn hình, mất gói và codec.</em></p></section>
+<h2>Câu hỏi thường gặp</h2>
+<details class="faq"><summary>Độ trễ nào được coi là bình thường đối với điều khiển từ xa?</summary><div>Theo nguyên tắc chung: RTT dưới 50 mili giây cho cảm giác gần như ngay lập tức, dưới 100 mili giây là phạm vi khuyến nghị, 100–150 mili giây là có thể sử dụng được nhưng bạn cảm thấy độ trễ, trên 150 mili giây rõ ràng là bị giật và 200 mili giây trở lên gần như không thể sử dụng được. Microsoft cũng lưu ý rằng các tình huống hỗ trợ/tương tác cao cần RTT 20ms để có trải nghiệm tốt nhất.</div></details>
+<details class="faq"><summary>Điều khiển từ xa ToDesk cần bao nhiêu băng thông?</summary><div>Theo khuyến nghị Remote Desktop chính thức của Microsoft (30 khung hình / giây): khoảng 3 Mbps cho 720p, 5 Mbps cho 1080p và 15 Mbps cho 4K. Điều khiển từ xa hiện đại sử dụng mã hóa thích ứng nên nhu cầu thực tế thường thấp hơn.</div></details>
+<details class="faq"><summary>Điều nào quan trọng hơn, độ trễ hay băng thông?</summary><div>Đối với điều khiển từ xa tương tác, độ trễ quan trọng hơn: ngay cả khi có đủ băng thông, độ trễ/độ giật cao vẫn có cảm giác giật. Tốc độ bit động của Microsoft thực sự làm giảm chất lượng khi RTT ở mức cao để giúp mọi thứ diễn ra suôn sẻ.</div></details>
+<details class="faq"><summary>Bài kiểm tra độ trễ này thực sự đo lường được điều gì?</summary><div>Trình duyệt của bạn đo lường hành trình khứ hồi của mạng tới các điểm cuối công cộng (Cloudflare, Google, v.v.) — một proxy cho nhánh mạng của điều khiển từ xa. Độ trễ thực của điều khiển từ xa cũng bổ sung thêm thời gian chụp, mã hóa/giải mã và hiển thị.</div></details>
+<details class="faq"><summary>Tại sao nó vẫn bị lag khi băng thông của tôi cao?</summary><div>Thông thường đó là độ trễ, jitter hoặc mất gói chứ không phải băng thông. Điều khiển từ xa rất nhạy cảm với RTT và độ ổn định; jitter cao gây tổn hại nhiều hơn mức trung bình cao.</div></details>
+<details class="faq"><summary>Chất lượng cao nhất mà ToDesk có thể đạt được là gì?</summary><div>Trang web chính thức của nó tuyên bố chất lượng lên tới 8K, 360 FPS và không mất màu thực 4:4:4 (codec AV1 / công cụ ZeroSync), với kế hoạch phù hợp và đủ băng thông.</div></details>
+<details class="faq"><summary>Video 1080p chiếm bao nhiêu băng thông trên điều khiển từ xa?</summary><div>Ví dụ của Microsoft: video 30 khung hình/giây nửa màn hình có tốc độ mặc định là khoảng 8,5–9,5 Mbps nhưng chỉ khoảng 2,5–2,8 Mbps với H.264/AVC-444 — codec tạo ra sự khác biệt lớn.</div></details>
+<details class="faq"><summary>Làm cách nào để chuyển đổi Mbps và MB/s?</summary><div>1 MB/s = 8 Mbps và 1 Mbps = 0,125 MB/s. Bộ chuyển đổi băng thông trên trang này tự động thực hiện việc đó cho tất cả các đơn vị phổ biến.</div></details>
+
+<h2>Phân loại nhanh trong thế giới thực</h2>
+<ul class="scenes"><li>Việc gõ và kéo các cửa sổ bị chậm nhưng vẫn có thể sử dụng được: RTT thường là 100–150 mili giây; điểm cuối gần hơn hoặc kết nối có dây thường kéo tốc độ xuống dưới 100 mili giây.</li><li>Hình ảnh bị mờ và chỉ sắc nét sau khi bạn ngừng di chuyển: băng thông hạn chế kích hoạt thu nhỏ thích ứng; kiểm tra bộ chuyển đổi băng thông theo các bậc chất lượng và giảm độ phân giải mục tiêu nếu cần.</li><li>RTT không cao nhưng nó đến rồi đi: tập trung vào jitter - jitter cao gây tổn hại nhiều hơn mức trung bình cao; kiểm tra nhiễu Wi-Fi, chuyển sang 5GHz hoặc có dây.</li><li>Điều khiển từ xa xuyên biên giới rất chậm: các đường vòng định tuyến công cộng thông thường, do đó RTT và mất gói đều cao; một rơle gần hơn hoặc các nút toàn cầu của sản phẩm sẽ giúp ích rất nhiều.</li><li>Điều khiển từ xa 4K có đủ băng thông nhưng giảm khung hình: tốc độ khung hình/độ phân giải cao cũng ảnh hưởng đến tính toán mã hóa/giải mã chứ không chỉ băng thông; thử 1080p hoặc tốc độ khung hình thấp hơn.</li></ul>
+<div class="related"><h2>Liên quan</h2><ul><li><a href="https://todeskremote.com/download/">Điều khiển từ xa ToDesk · Tải xuống</a></li><li><a href="https://learn.microsoft.com/en-us/windows-server/remote/remote-desktop-services/network-guidance" rel="nofollow">Microsoft Remote Desktop · nguyên tắc mạng (băng thông)</a></li><li><a href="https://learn.microsoft.com/en-us/azure/virtual-desktop/rdp-bandwidth" rel="nofollow">Yêu cầu về băng thông của Microsoft Azure RDP (kịch bản/codec)</a></li><li><a href="https://www.todesk.com/" rel="nofollow">Trang web chính thức của ToDesk (thông số sản phẩm)</a></li></ul></div>
+</main>
+<footer>Đường cơ sở về băng thông/độ phân giải từ tài liệu Remote Desktop chính thức của Microsoft (Hướng dẫn mạng/Băng thông RDP của Azure Virtual Desktop); Thông số kỹ thuật ToDesk từ trang web chính thức của nó. Các bậc độ trễ là một dải trải nghiệm trong ngành được kiểm tra chéo bằng neo RTT&lt;20ms của Microsoft. Các công cụ và ước tính ở đây chỉ mang tính tham khảo, không phải phép đo của bên thứ nhất.<br>整理/Editor：<a href="/about-editor/">罗宇</a> · MIT License · <a href="/about-editor/">about</a></footer>
+</div>
+<script src="/data_vi.js"></script><script src="/app.js"></script></body></html>
