@@ -1,0 +1,29 @@
+*{box-sizing:border-box}body{font-family:system-ui,-apple-system,"Segoe UI",Arial;line-height:1.75;color:#1d1d1f;background:#f5f5f7;margin:0}
+.wrap{max-width:860px;margin:0 auto;padding:26px 18px}
+main{background:#fff;border-radius:16px;padding:24px 26px}
+h1{margin-top:0;font-size:26px}h2{font-size:19px;margin-top:30px;border-top:1px solid #eee;padding-top:18px}
+p.intro{font-size:16px}
+.lang{font-size:13px;color:#888;margin-bottom:10px;line-height:2}.lang a{text-decoration:none;color:#0071e3}
+.tool{background:#f8fbff;border:1px solid #e6f0ff;border-radius:14px;padding:16px 18px;margin-top:16px}
+.tool h2{border-top:0;margin-top:0;padding-top:0}
+button{font-size:16px;padding:10px 18px;border:0;border-radius:10px;background:#0071e3;color:#fff;cursor:pointer}
+button:disabled{opacity:.6;cursor:default}
+.bwrow{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+input,select{font-size:16px;padding:10px 12px;border:1px solid #cfcfd4;border-radius:10px}
+input#bw-in{flex:1 1 160px}
+#lat-out,#bw-out{margin-top:14px}
+.note{color:#888;font-size:12.5px}
+table{border-collapse:collapse;width:100%;margin-top:10px;font-size:13.5px}
+td,th{border-bottom:1px solid #eee;padding:8px;text-align:left;vertical-align:top}
+th{background:#fafafa}
+.mono{font-family:ui-monospace,Consolas,monospace;color:#0071e3}
+.scenes li{margin:8px 0}
+details.faq{border:1px solid #eee;border-radius:10px;padding:8px 12px;margin-top:8px}
+details.faq summary{cursor:pointer;font-weight:600}
+details.faq div{margin-top:8px;color:#333}
+.i4data{margin-top:26px;background:#fffdf5;border:1px solid #f3ead0;border-radius:14px;padding:16px 18px}
+.i4data h2{border-top:0;margin-top:0;padding-top:0}
+.related{margin-top:26px;border-top:2px solid #eee;padding-top:14px}
+.verdict{display:inline-block;padding:2px 10px;border-radius:20px;color:#fff;font-weight:600;font-size:13px}
+figure{margin:18px 0}figcaption{color:#888;font-size:12.5px;text-align:center;margin-top:6px}
+a{color:#0071e3}footer{color:#888;font-size:12.5px;margin-top:26px;text-align:center;line-height:1.7}
