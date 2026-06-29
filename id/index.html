@@ -1,0 +1,178 @@
+<!DOCTYPE html><html lang="id"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Tes Latensi ToDesk + Kalkulator Bandwidth — mengukur RTT jaringan, memperkirakan kualitas kendali jarak jauh</title>
+<meta name="description" content="Ukur latensi bolak-balik (RTT) jaringan Anda dan jitter ke titik akhir publik, yang diberi peringkat berdasarkan kelancaran kendali jarak jauh; ditambah konverter bandwidth yang memperkirakan bandwidth dan resolusi yang dibutuhkan sesi jarak jauh ToDesk. Sisi klien, instan, sumber terbuka. Garis dasar dari dokumen Microsoft Remote Desktop dan ToDesk.">
+<link rel="canonical" href="https://amirsakala.github.io/id/">
+<link rel="alternate" hreflang="zh-Hans" href="https://amirsakala.github.io/">
+<link rel="alternate" hreflang="en" href="https://amirsakala.github.io/en/">
+<link rel="alternate" hreflang="ja" href="https://amirsakala.github.io/ja/">
+<link rel="alternate" hreflang="zh-Hant" href="https://amirsakala.github.io/zh-tw/">
+<link rel="alternate" hreflang="id" href="https://amirsakala.github.io/id/">
+<link rel="alternate" hreflang="th" href="https://amirsakala.github.io/th/">
+<link rel="alternate" hreflang="vi" href="https://amirsakala.github.io/vi/">
+<link rel="alternate" hreflang="ms" href="https://amirsakala.github.io/ms/">
+<link rel="alternate" hreflang="fil" href="https://amirsakala.github.io/fil/">
+<link rel="alternate" hreflang="km" href="https://amirsakala.github.io/km/">
+<link rel="alternate" hreflang="lo" href="https://amirsakala.github.io/lo/">
+<link rel="alternate" hreflang="my" href="https://amirsakala.github.io/my/">
+<link rel="alternate" hreflang="x-default" href="https://amirsakala.github.io/">
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@graph": [
+  {
+   "@type": "WebApplication",
+   "name": "Tes Latensi ToDesk + Kalkulator Bandwidth",
+   "url": "https://amirsakala.github.io/id/",
+   "applicationCategory": "UtilitiesApplication",
+   "operatingSystem": "Web browser",
+   "inLanguage": "id",
+   "description": "Ukur latensi bolak-balik (RTT) jaringan Anda dan jitter ke titik akhir publik, yang diberi peringkat berdasarkan kelancaran kendali jarak jauh; ditambah konverter bandwidth yang memperkirakan bandwidth dan resolusi yang dibutuhkan sesi jarak jauh ToDesk. Sisi klien, instan, sumber terbuka. Garis dasar dari dokumen Microsoft Remote Desktop dan ToDesk.",
+   "isAccessibleForFree": true,
+   "browserRequirements": "Requires JavaScript",
+   "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+   },
+   "author": {
+    "@type": "Person",
+    "name": "罗宇",
+    "url": "https://amirsakala.github.io/about-editor/"
+   }
+  },
+  {
+   "@type": "FAQPage",
+   "inLanguage": "id",
+   "url": "https://amirsakala.github.io/id/",
+   "mainEntity": [
+    {
+     "@type": "Question",
+     "name": "Latensi apa yang dianggap normal untuk kendali jarak jauh?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Sebagai aturan praktis: RTT di bawah 50 md terasa hampir seketika, di bawah 100 md adalah rentang yang disarankan, 100–150 md dapat digunakan tetapi Anda merasakan kelambatan, di atas 150 md jelas terputus-putus, dan 200 md atau lebih hampir tidak dapat digunakan. Microsoft juga mencatat bahwa skenario yang sangat interaktif/asistif menginginkan RTT ≤20ms untuk pengalaman terbaik."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Kira-kira berapa banyak bandwidth yang dibutuhkan remote control ToDesk?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Sesuai rekomendasi Remote Desktop resmi Microsoft (30fps): sekitar 3 Mbps untuk 720p, 5 Mbps untuk 1080p, dan 15 Mbps untuk 4K. Kendali jarak jauh modern menggunakan pengkodean adaptif, sehingga kebutuhan sebenarnya seringkali lebih rendah."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Mana yang lebih penting, latensi atau bandwidth?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Untuk kendali jarak jauh interaktif, latensi lebih penting: bahkan dengan bandwidth yang cukup, latensi/jitter yang tinggi masih terasa lamban. Bitrate dinamis Microsoft sebenarnya menurunkan kualitas ketika RTT tinggi untuk menjaga kelancaran."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Apa sebenarnya yang diukur oleh tes latensi ini?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Browser Anda mengukur perjalanan jaringan ke titik akhir publik (Cloudflare, Google, dll.) — proksi untuk bagian jaringan kendali jarak jauh. Latensi kendali jarak jauh yang sebenarnya juga menambah waktu pengambilan, penyandian/dekode, dan waktu tampilan."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Mengapa masih lag padahal bandwidth saya tinggi?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Biasanya latensi, jitter, atau kehilangan paket, bukan bandwidth. Remote control sensitif terhadap RTT dan stabilitas; jitter tinggi lebih menyakitkan daripada rata-rata tinggi."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Berapa kualitas tertinggi yang dapat dicapai ToDesk?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Situs resminya mengklaim hingga 8K, 360 FPS dan 4:4:4 true-color lossless (codec AV1 / mesin ZeroSync), mengingat paket yang tepat dan bandwidth yang cukup."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Berapa banyak bandwidth yang diambil video 1080p dari kendali jarak jauh?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Contoh Microsoft: video setengah layar dengan kecepatan 30fps adalah sekitar 8,5–9,5 Mbps secara default, namun hanya sekitar 2,5–2,8 Mbps dengan H.264/AVC-444 — codec membuat perbedaan besar."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Bagaimana cara mengonversi Mbps dan MB/s?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "1 MB/dtk = 8 Mbps, dan 1 Mbps = 0,125 MB/dtk. Konverter bandwidth di halaman ini melakukannya untuk semua unit umum secara otomatis."
+     }
+    }
+   ]
+  }
+ ]
+}
+</script>
+<link rel="stylesheet" href="/style.css"></head>
+<body><div class="wrap"><main>
+<nav class="lang">Language: <a href="/">简体中文</a> · <a href="/en/">English</a> · <a href="/ja/">日本語</a> · <a href="/zh-tw/">繁體中文</a> · <strong>Bahasa Indonesia</strong> · <a href="/th/">ไทย</a> · <a href="/vi/">Tiếng Việt</a> · <a href="/ms/">Bahasa Melayu</a> · <a href="/fil/">Filipino</a> · <a href="/km/">ភាសាខ្មែរ</a> · <a href="/lo/">ພາສາລາວ</a> · <a href="/my/">မြန်မာ</a></nav>
+<h1>Tes Latensi ToDesk + Kalkulator Bandwidth</h1>
+<figure class="i4png"><picture><source type="image/webp" srcset="/img/cover_id.webp"><img src="/img/cover_id.png" alt="Tes latensi ToDesk dan ilustrasi alat kalkulator bandwidth" fetchpriority="high" width="1120" height="630" style="width:100%;height:auto;border-radius:12px;border:1px solid #eee"></picture><figcaption>Gambar 1: Uji latensi ToDesk + kalkulator bandwidth (mengukur RTT · memperkirakan bandwidth &amp; kualitas)</figcaption></figure>
+<p class="intro">Apakah kendali jarak jauh terasa mulus tergantung pada dua hal: <strong>latensi bolak-balik jaringan (RTT)</strong> dan <strong>bandwidth yang tersedia</strong>. Kedua alat di bawah ini berjalan secara lokal di browser Anda — ① mengukur RTT dan jitter ke beberapa titik akhir publik dan menentukan peringkat kelancaran kendali jarak jauh; ② mengonversi satuan bandwidth dan memperkirakan resolusi yang dapat dihasilkan oleh bandwidth tertentu. Garis dasar berasal dari dokumen Remote Desktop resmi Microsoft dan spesifikasi ToDesk (lihat sumber di bagian bawah).</p>
+<section class="tool"><h2>Alat 1: tes jaringan bolak-balik (Ping).</h2>
+<p>Tekan tombol dan browser Anda mengirimkan beberapa permintaan ke setiap titik akhir publik dan menghitung waktu perjalanan pulang pergi. Kami mengambil <strong>RTT terbaik</strong> per titik akhir (paling dekat dengan perjalanan jaringan sebenarnya) dan menilai kelancaran kendali jarak jauh menggunakan tingkat latensi di bawah.</p>
+<button id="lat-go">Mulai uji latensi</button>
+<div id="lat-out"></div>
+<p class="note">Catatan: ini mengukur <strong>perjalanan bolak-balik jaringan</strong> ke titik akhir publik — proksi untuk bagian jaringan kendali jarak jauh. Latensi kendali jarak jauh yang sebenarnya juga menambah waktu pengambilan, penyandian/dekode, dan waktu tampilan. Hasil bergantung pada jaringan dan jarak titik akhir Anda.</p></section>
+<section class="tool"><h2>Alat 2: konverter bandwidth + perkiraan kualitas</h2>
+<p>Masukkan nilai bandwidth, pilih satuan, dan nilai tersebut akan dikonversi ke satuan umum dan — menggunakan rekomendasi Remote Desktop resmi Microsoft — memperkirakan secara kasar resolusi yang dapat dihasilkan bandwidth ini pada 30fps.</p>
+<div class="bwrow"><input id="bw-in" type="number" min="0" step="any" placeholder="Masukkan nilai, mis. 20" autocomplete="off"><select id="bw-unit"><option>Mbps</option><option>Gbps</option><option>Kbps</option><option>MB/s</option><option>KB/s</option></select><button id="bw-go">Konversi + perkiraan</button></div>
+<div id="bw-out"></div></section>
+<h2>Cara membaca latensi kendali jarak jauh (tingkatan)</h2>
+<p>Kendali jarak jauh interaktif lebih sensitif terhadap latensi dibandingkan bandwidth. Microsoft mencatat bahwa skenario yang sangat interaktif/asistif menginginkan RTT ≤20ms untuk pengalaman terbaik. Tabel di bawah menggabungkan jangkar tersebut dengan pengalaman industri — temukan tingkatan Anda.</p>
+<figure><svg viewBox="0 0 700 250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Ilustrasi latensi kendali jarak jauh dan bagan tingkat bandwidth" style="width:100%;height:auto;border:1px solid #eee;border-radius:12px;background:#fff">
+<text x="20" y="30" font-family="system-ui,Arial" font-size="16" font-weight="700" fill="#1d1d1f">Alur keputusan latensi kendali jarak jauh</text>
+<rect x="20" y="48" width="200" height="48" rx="10" fill="#111"/><text x="120" y="78" text-anchor="middle" font-family="system-ui,Arial" font-size="14" fill="#fff">Ukur RTT pulang pergi</text>
+<path d="M220 72 H262" stroke="#999" stroke-width="2" fill="none" marker-end="url(#ar)"/>
+<rect x="262" y="36" width="418" height="46" rx="10" fill="#ecfdf5" stroke="#bbf7e0"/><text x="278" y="64" font-family="system-ui,Arial" font-size="13" fill="#047857">&lt;100ms: halus, dorong kualitas tinggi</text>
+<rect x="262" y="92" width="418" height="46" rx="10" fill="#eef4ff" stroke="#cfe0ff"/><text x="278" y="120" font-family="system-ui,Arial" font-size="13" fill="#1d4ed8">100–150ms: dapat digunakan, lebih memilih node yang lebih dekat</text>
+<rect x="262" y="148" width="418" height="46" rx="10" fill="#fef2f2" stroke="#fecaca"/><text x="278" y="176" font-family="system-ui,Arial" font-size="13" fill="#b91c1c">&gt;150ms : lag, perbaiki dulu jaringannya</text>
+<path d="M120 96 V120 H262" stroke="#10b981" stroke-width="2" fill="none" marker-end="url(#ar)"/>
+<path d="M120 120 V172 H262" stroke="#999" stroke-width="1.5" fill="none" marker-end="url(#ar)"/>
+<defs><marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0 0 L6 3 L0 6 z" fill="#999"/></marker></defs>
+</svg><figcaption>Gambar 2: Remote control yang lamban? Periksa latensi (RTT) dan bandwidth terlebih dahulu, lalu perbaiki penyebabnya</figcaption></figure>
+<table><tr><th>Tingkat</th><th>RTT pulang pergi</th><th>Pengalaman kendali jarak jauh</th><th>Apa yang harus dilakukan</th></tr><tr><td><b>Luar biasa</b></td><td class="mono">< 50 ms</td><td>Hampir seketika, kendali jarak jauh terasa lokal</td><td>Tidak ada tautan lemah pada kaki jaringan; Anda dapat mendorong resolusi/kecepatan bingkai tinggi.</td></tr><tr><td><b>Bagus</b></td><td class="mono">50–100 ms</td><td>Dalam kisaran yang disarankan, lancar sehari-hari</td><td>Kadang-kadang ada sedikit noda, tidak ada yang serius.</td></tr><tr><td><b>Adil</b></td><td class="mono">100–150 ms</td><td>Keterlambatan yang terlihat saat mengetik/menyeret</td><td>Baik untuk pekerjaan ringan; titik akhir yang lebih dekat akan membantu.</td></tr><tr><td><b>Lambat</b></td><td class="mono">150–200 ms</td><td>Jelas berombak, pelacakan buruk</td><td>Beralih ke kabel/simpul yang lebih dekat; periksa jitter dan packet loss.</td></tr><tr><td><b>Buruk</b></td><td class="mono">≥ 200 ms</td><td>Hampir tidak dapat digunakan, melelahkan seiring berjalannya waktu</td><td>Perbaiki jaringannya terlebih dahulu: kabel, relai yang lebih dekat, atau node berbayar.</td></tr></table>
+<h2>Berapa banyak bandwidth (berdasarkan resolusi target)</h2>
+<p>Tabel di bawah ini adalah rekomendasi bandwidth per resolusi resmi dari Microsoft (30fps, kehilangan <0,1%). Remote control modern (ToDesk dan lainnya) menggunakan bitrate adaptif H.264/AVC-444 dan AV1, sehingga kebutuhan sebenarnya sering kali lebih rendah (contoh Microsoft: penelusuran web turun dari 6 Mbps menjadi sekitar 1 Mbps).</p>
+<figure><svg viewBox="0 0 700 250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Tes latensi ToDesk dan ilustrasi alat kalkulator bandwidth" style="width:100%;height:auto;border:1px solid #eee;border-radius:12px;background:#fff">
+<text x="20" y="34" font-family="system-ui,Arial" font-size="16" font-weight="700" fill="#1d1d1f">Bandwidth → resolusi target (dasar Microsoft @30fps)</text>
+<text x="20" y="88" font-family="system-ui,Arial" font-size="13" fill="#334155">720p</text><rect x="120" y="70" width="92" height="26" rx="6" fill="#bfdbfe"/><text x="222" y="88" font-family="ui-monospace,monospace" font-size="13" fill="#0f172a">3 Mbps</text>
+<text x="20" y="134" font-family="system-ui,Arial" font-size="13" fill="#334155">1080p</text><rect x="120" y="116" width="153" height="26" rx="6" fill="#93c5fd"/><text x="283" y="134" font-family="ui-monospace,monospace" font-size="13" fill="#0f172a">5 Mbps</text>
+<text x="20" y="180" font-family="system-ui,Arial" font-size="13" fill="#334155">4K</text><rect x="120" y="162" width="460" height="26" rx="6" fill="#1d4ed8"/><text x="590" y="180" font-family="ui-monospace,monospace" font-size="13" fill="#0f172a">15 Mbps</text>
+<text x="20" y="232" font-family="system-ui,Arial" font-size="11" fill="#94a3b8">Microsoft Remote Desktop · @30fps · &lt;0.1% loss</text>
+</svg><figcaption>Bandwidth → resolusi target (dasar Microsoft @30fps)</figcaption></figure>
+<figure class="i4png"><picture><source type="image/webp" srcset="/img/board_id.webp"><img src="/img/board_id.png" alt="Ilustrasi latensi kendali jarak jauh dan bagan tingkat bandwidth" loading="lazy" width="1120" height="630" style="width:100%;height:auto;border-radius:12px;border:1px solid #eee"></picture><figcaption>Gambar 2: Remote control yang lamban? Periksa latensi (RTT) dan bandwidth terlebih dahulu, lalu perbaiki penyebabnya</figcaption></figure>
+<table><tr><th>Bandwidth yang disarankan</th><th>Resolusi target (@30fps)</th><th>Kasus penggunaan</th></tr><tr><td class="mono"><b>≥ 1.5 Mbps</b></td><td>1024×768</td><td>Teks / pekerjaan jarak jauh ringan (Microsoft Light)</td></tr><tr><td class="mono"><b>≥ 3 Mbps</b></td><td>1280×720 (720p)</td><td>Desktop jarak jauh umum</td></tr><tr><td class="mono"><b>≥ 5 Mbps</b></td><td>1920×1080 (1080p)</td><td>Kendali jarak jauh HD arus utama</td></tr><tr><td class="mono"><b>≥ 15 Mbps</b></td><td>3840×2160 (4K)</td><td>Resolusi tinggi/kecepatan bingkai, video (Microsoft Power)</td></tr></table>
+<section id="data2026" class="i4data"><h2>Perkiraan bandwidth kendali jarak jauh tahun 2026 (berdasarkan kualitas target)</h2>
+<p>Menggunakan tabel resolusi→bandwidth resmi Microsoft sebagai dasar, diekstrapolasi dengan codec adaptif modern (H.264/AVC-444, AV1; ToDesk mengklaim efisiensi bandwidth 30%–50% lebih baik) untuk memberikan angka umum di dunia nyata untuk tahun 2026.</p>
+<table><tr><th>Kualitas sasaran</th><th>Dasar Microsoft RDP</th><th>Perkiraan adaptif tahun 2026</th><th>Catatan</th></tr><tr><td><b>720p (@30fps)</b></td><td class="mono">3Mbps</td><td class="mono">sekitar 1,5–2 Mbps</td><td>H.264/AV1 adaptif</td></tr><tr><td><b>1080p (@30fps)</b></td><td class="mono">5Mbps</td><td class="mono">sekitar 2,5–3,5 Mbps</td><td>HD arus utama</td></tr><tr><td><b>1080p60 (fps tinggi)</b></td><td class="mono">sekitar 8–10 Mbps</td><td class="mono">sekitar 5–7 Mbps</td><td>Konten gerak tinggi</td></tr><tr><td><b>4K (@30fps)</b></td><td class="mono">15Mbps</td><td class="mono">sekitar 8–12 Mbps</td><td>4:4:4 / AV1</td></tr></table>
+<p class="note"><em>Estimasi, bukan pengukuran pihak pertama. Baseline = Tabel Remote Desktop resmi Microsoft (@30fps); perkiraan tahun 2026 diekstrapolasi dengan pengkodean adaptif modern dan hanya merupakan urutan besaran kasar — ​​bandwidth nyata bervariasi berdasarkan gerakan di layar, kehilangan paket, dan codec.</em></p></section>
+<h2>Pertanyaan yang sering diajukan</h2>
+<details class="faq"><summary>Latensi apa yang dianggap normal untuk kendali jarak jauh?</summary><div>Sebagai aturan praktis: RTT di bawah 50 md terasa hampir seketika, di bawah 100 md adalah rentang yang disarankan, 100–150 md dapat digunakan tetapi Anda merasakan kelambatan, di atas 150 md jelas terputus-putus, dan 200 md atau lebih hampir tidak dapat digunakan. Microsoft juga mencatat bahwa skenario yang sangat interaktif/asistif menginginkan RTT ≤20ms untuk pengalaman terbaik.</div></details>
+<details class="faq"><summary>Kira-kira berapa banyak bandwidth yang dibutuhkan remote control ToDesk?</summary><div>Sesuai rekomendasi Remote Desktop resmi Microsoft (30fps): sekitar 3 Mbps untuk 720p, 5 Mbps untuk 1080p, dan 15 Mbps untuk 4K. Kendali jarak jauh modern menggunakan pengkodean adaptif, sehingga kebutuhan sebenarnya seringkali lebih rendah.</div></details>
+<details class="faq"><summary>Mana yang lebih penting, latensi atau bandwidth?</summary><div>Untuk kendali jarak jauh interaktif, latensi lebih penting: bahkan dengan bandwidth yang cukup, latensi/jitter yang tinggi masih terasa lamban. Bitrate dinamis Microsoft sebenarnya menurunkan kualitas ketika RTT tinggi untuk menjaga kelancaran.</div></details>
+<details class="faq"><summary>Apa sebenarnya yang diukur oleh tes latensi ini?</summary><div>Browser Anda mengukur perjalanan jaringan ke titik akhir publik (Cloudflare, Google, dll.) — proksi untuk bagian jaringan kendali jarak jauh. Latensi kendali jarak jauh yang sebenarnya juga menambah waktu pengambilan, penyandian/dekode, dan waktu tampilan.</div></details>
+<details class="faq"><summary>Mengapa masih lag padahal bandwidth saya tinggi?</summary><div>Biasanya latensi, jitter, atau kehilangan paket, bukan bandwidth. Remote control sensitif terhadap RTT dan stabilitas; jitter tinggi lebih menyakitkan daripada rata-rata tinggi.</div></details>
+<details class="faq"><summary>Berapa kualitas tertinggi yang dapat dicapai ToDesk?</summary><div>Situs resminya mengklaim hingga 8K, 360 FPS dan 4:4:4 true-color lossless (codec AV1 / mesin ZeroSync), mengingat paket yang tepat dan bandwidth yang cukup.</div></details>
+<details class="faq"><summary>Berapa banyak bandwidth yang diambil video 1080p dari kendali jarak jauh?</summary><div>Contoh Microsoft: video setengah layar dengan kecepatan 30fps adalah sekitar 8,5–9,5 Mbps secara default, namun hanya sekitar 2,5–2,8 Mbps dengan H.264/AVC-444 — codec membuat perbedaan besar.</div></details>
+<details class="faq"><summary>Bagaimana cara mengonversi Mbps dan MB/s?</summary><div>1 MB/dtk = 8 Mbps, dan 1 Mbps = 0,125 MB/dtk. Konverter bandwidth di halaman ini melakukannya untuk semua unit umum secara otomatis.</div></details>
+
+<h2>Triase dunia nyata yang cepat</h2>
+<ul class="scenes"><li>Mengetik dan menyeret jendela terasa lambat tetapi dapat digunakan: RTT biasanya 100–150 md; titik akhir yang lebih dekat atau koneksi kabel sering kali menariknya kembali di bawah 100 md.</li><li>Gambar buram dan hanya dipertajam setelah Anda berhenti bergerak: bandwidth terbatas memicu penurunan skala adaptif; periksa konverter bandwidth terhadap tingkat kualitas dan turunkan resolusi target jika diperlukan.</li><li>RTT tidak tinggi tetapi datang dan pergi: fokus pada jitter — jitter yang tinggi lebih menyakitkan daripada rata-rata yang tinggi; periksa gangguan Wi-Fi, alihkan ke 5GHz atau kabel.</li><li>Kendali jarak jauh lintas batas sangat lamban: jalur memutar rute publik biasa, sehingga RTT dan kehilangan paket sama-sama tinggi; relai yang lebih dekat atau node global produk sangat membantu.</li><li>Kendali jarak jauh 4K memiliki bandwidth yang cukup namun menurunkan frame: resolusi/frame rate yang tinggi juga mengenakan pajak pada komputasi encode/decode, bukan hanya bandwidth; coba 1080p atau kecepatan bingkai yang lebih rendah.</li></ul>
+<div class="related"><h2>Terkait</h2><ul><li><a href="https://todeskremote.com/download/">Kendali jarak jauh ToDesk · Unduh</a></li><li><a href="https://learn.microsoft.com/en-us/windows-server/remote/remote-desktop-services/network-guidance" rel="nofollow">Microsoft Remote Desktop · pedoman jaringan (bandwidth)</a></li><li><a href="https://learn.microsoft.com/en-us/azure/virtual-desktop/rdp-bandwidth" rel="nofollow">Persyaratan bandwidth Microsoft Azure RDP (skenario/codec)</a></li><li><a href="https://www.todesk.com/" rel="nofollow">Situs resmi ToDesk (spesifikasi produk)</a></li></ul></div>
+</main>
+<footer>Garis dasar bandwidth/resolusi dari dokumen Remote Desktop resmi Microsoft (Pedoman jaringan / bandwidth Azure Virtual Desktop RDP); Spesifikasi ToDesk dari situs resminya. Tingkat latensi adalah rentang pengalaman industri yang diperiksa silang dengan jangkar RTT≤20ms Microsoft. Alat dan perkiraan di sini hanya untuk referensi, bukan pengukuran pihak pertama.<br>整理/Editor：<a href="/about-editor/">罗宇</a> · MIT License · <a href="/about-editor/">about</a></footer>
+</div>
+<script src="/data_id.js"></script><script src="/app.js"></script></body></html>
