@@ -1,0 +1,178 @@
+<!DOCTYPE html><html lang="th"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ToDesk Latency Test + เครื่องคำนวณแบนด์วิธ — วัดเครือข่าย RTT, ประมาณคุณภาพการควบคุมระยะไกล</title>
+<meta name="description" content="วัดเวลาแฝงไปกลับของเครือข่าย (RTT) และความกระวนกระวายใจไปยังจุดสิ้นสุดสาธารณะ จัดอันดับตามความราบรื่นของการควบคุมระยะไกล พร้อมตัวแปลงแบนด์วิดท์ที่ประมาณการแบนด์วิดท์และความละเอียดที่เซสชันระยะไกลของ ToDesk ต้องการ ฝั่งไคลเอ็นต์ ทันที โอเพ่นซอร์ส ข้อมูลพื้นฐานจากเอกสาร Microsoft Remote Desktop และ ToDesk">
+<link rel="canonical" href="https://amirsakala.github.io/th/">
+<link rel="alternate" hreflang="zh-Hans" href="https://amirsakala.github.io/">
+<link rel="alternate" hreflang="en" href="https://amirsakala.github.io/en/">
+<link rel="alternate" hreflang="ja" href="https://amirsakala.github.io/ja/">
+<link rel="alternate" hreflang="zh-Hant" href="https://amirsakala.github.io/zh-tw/">
+<link rel="alternate" hreflang="id" href="https://amirsakala.github.io/id/">
+<link rel="alternate" hreflang="th" href="https://amirsakala.github.io/th/">
+<link rel="alternate" hreflang="vi" href="https://amirsakala.github.io/vi/">
+<link rel="alternate" hreflang="ms" href="https://amirsakala.github.io/ms/">
+<link rel="alternate" hreflang="fil" href="https://amirsakala.github.io/fil/">
+<link rel="alternate" hreflang="km" href="https://amirsakala.github.io/km/">
+<link rel="alternate" hreflang="lo" href="https://amirsakala.github.io/lo/">
+<link rel="alternate" hreflang="my" href="https://amirsakala.github.io/my/">
+<link rel="alternate" hreflang="x-default" href="https://amirsakala.github.io/">
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@graph": [
+  {
+   "@type": "WebApplication",
+   "name": "การทดสอบเวลาแฝงของ ToDesk + เครื่องคำนวณแบนด์วิธ",
+   "url": "https://amirsakala.github.io/th/",
+   "applicationCategory": "UtilitiesApplication",
+   "operatingSystem": "Web browser",
+   "inLanguage": "th",
+   "description": "วัดเวลาแฝงไปกลับของเครือข่าย (RTT) และความกระวนกระวายใจไปยังจุดสิ้นสุดสาธารณะ จัดอันดับตามความราบรื่นของการควบคุมระยะไกล พร้อมตัวแปลงแบนด์วิดท์ที่ประมาณการแบนด์วิดท์และความละเอียดที่เซสชันระยะไกลของ ToDesk ต้องการ ฝั่งไคลเอ็นต์ ทันที โอเพ่นซอร์ส ข้อมูลพื้นฐานจากเอกสาร Microsoft Remote Desktop และ ToDesk",
+   "isAccessibleForFree": true,
+   "browserRequirements": "Requires JavaScript",
+   "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+   },
+   "author": {
+    "@type": "Person",
+    "name": "罗宇",
+    "url": "https://amirsakala.github.io/about-editor/"
+   }
+  },
+  {
+   "@type": "FAQPage",
+   "inLanguage": "th",
+   "url": "https://amirsakala.github.io/th/",
+   "mainEntity": [
+    {
+     "@type": "Question",
+     "name": "เวลาแฝงใดที่นับเป็นเรื่องปกติสำหรับการควบคุมระยะไกล?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "ตามหลักการทั่วไป: RTT ที่ต่ำกว่า 50 มิลลิวินาทีให้ความรู้สึกเกือบจะทันที ต่ำกว่า 100 มิลลิวินาทีเป็นช่วงที่แนะนำ 100–150 มิลลิวินาทีถือว่าใช้ได้ แต่คุณรู้สึกว่าเกิดความล่าช้า มากกว่า 150 มิลลิวินาทีจะขาดๆ หายๆ อย่างเห็นได้ชัด และ 200 มิลลิวินาทีขึ้นไปถือว่าเกือบจะใช้ไม่ได้ Microsoft ยังตั้งข้อสังเกตอีกว่าสถานการณ์ที่มีการโต้ตอบ/ช่วยเหลือในระดับสูงต้องการ RTT ≤20ms เพื่อประสบการณ์ที่ดีที่สุด"
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "ToDesk รีโมทคอนโทรลต้องการแบนด์วิธประมาณเท่าใด",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "ตามคำแนะนำเดสก์ท็อประยะไกลอย่างเป็นทางการของ Microsoft (30fps): ประมาณ 3 Mbps สำหรับ 720p, 5 Mbps สำหรับ 1080p และ 15 Mbps สำหรับ 4K รีโมทคอนโทรลสมัยใหม่ใช้การเข้ารหัสแบบปรับได้ ดังนั้นความต้องการที่แท้จริงจึงมักจะต่ำกว่า"
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "อะไรสำคัญกว่ากัน เวลาแฝงหรือแบนด์วิธ?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "สำหรับการควบคุมระยะไกลแบบโต้ตอบ เวลาแฝงมีความสำคัญมากกว่า: แม้ว่าจะมีแบนด์วิธเพียงพอ แต่เวลาแฝง/การกระวนกระวายใจที่สูงยังคงรู้สึกล่าช้า บิตเรตแบบไดนามิกของ Microsoft จะลดคุณภาพลงจริง ๆ เมื่อ RTT สูงเพื่อให้ทุกอย่างราบรื่น"
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "การทดสอบเวลาในการตอบสนองนี้วัดอะไรจริงๆ",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "เบราว์เซอร์ของคุณวัดการเดินทางไปกลับของเครือข่ายไปยังจุดสิ้นสุดสาธารณะ (Cloudflare, Google ฯลฯ) — พร็อกซีสำหรับขาเครือข่ายของรีโมทคอนโทรล เวลาแฝงในการควบคุมระยะไกลที่แท้จริงยังเพิ่มเวลาในการจับภาพ เข้ารหัส/ถอดรหัส และแสดงผลอีกด้วย"
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "ทำไมมันถึงยังกระตุกเมื่อแบนด์วิธของฉันสูง?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "โดยปกติแล้วจะเป็นเวลาแฝง ความกระวนกระวายใจ หรือการสูญเสียแพ็กเก็ต ไม่ใช่แบนด์วิดท์ การควบคุมระยะไกลมีความไวต่อ RTT และความเสถียร ความกระวนกระวายใจสูงทำให้เกิดความเจ็บปวดมากกว่าค่าเฉลี่ยที่สูง"
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "ToDesk คุณภาพสูงสุดที่สามารถเข้าถึงได้คืออะไร?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "เว็บไซต์อย่างเป็นทางการอ้างสิทธิ์ได้ถึง 8K, 360 FPS และ 4:4:4 true-color lossless (ตัวแปลงสัญญาณ AV1 / โปรแกรม ZeroSync) โดยมีแผนบริการที่เหมาะสมและแบนด์วิธที่เพียงพอ"
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "วิดีโอ 1080p จะใช้แบนด์วิดท์เท่าใดในการควบคุมระยะไกล",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "ตัวอย่างของ Microsoft: วิดีโอครึ่งหน้าจอ 30fps จะมีความเร็วประมาณ 8.5–9.5 Mbps ตามค่าเริ่มต้น แต่จะอยู่ที่ประมาณ 2.5–2.8 Mbps สำหรับ H.264/AVC-444 เท่านั้น ตัวแปลงสัญญาณสร้างความแตกต่างอย่างมาก"
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "ฉันจะแปลง Mbps และ MB/s ได้อย่างไร",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "1 MB/s = 8 Mbps และ 1 Mbps = 0.125 MB/s ตัวแปลงแบนด์วิธในหน้านี้จะทำกับหน่วยทั่วไปทั้งหมดโดยอัตโนมัติ"
+     }
+    }
+   ]
+  }
+ ]
+}
+</script>
+<link rel="stylesheet" href="/style.css"></head>
+<body><div class="wrap"><main>
+<nav class="lang">Language: <a href="/">简体中文</a> · <a href="/en/">English</a> · <a href="/ja/">日本語</a> · <a href="/zh-tw/">繁體中文</a> · <a href="/id/">Bahasa Indonesia</a> · <strong>ไทย</strong> · <a href="/vi/">Tiếng Việt</a> · <a href="/ms/">Bahasa Melayu</a> · <a href="/fil/">Filipino</a> · <a href="/km/">ភាសាខ្មែរ</a> · <a href="/lo/">ພາສາລາວ</a> · <a href="/my/">မြန်မာ</a></nav>
+<h1>การทดสอบเวลาแฝงของ ToDesk + เครื่องคำนวณแบนด์วิธ</h1>
+<figure class="i4png"><picture><source type="image/webp" srcset="/img/cover_th.webp"><img src="/img/cover_th.png" alt="ภาพประกอบเครื่องมือทดสอบเวลาแฝงของ ToDesk และเครื่องมือคำนวณแบนด์วิธ" fetchpriority="high" width="1120" height="630" style="width:100%;height:auto;border-radius:12px;border:1px solid #eee"></picture><figcaption>รูปที่ 1: การทดสอบเวลาแฝงของ ToDesk + เครื่องคำนวณแบนด์วิธ (วัด RTT · ประมาณการแบนด์วิดท์และคุณภาพ)</figcaption></figure>
+<p class="intro">การที่การควบคุมระยะไกลจะราบรื่นหรือไม่นั้นขึ้นอยู่กับสองปัจจัย: <strong>เวลาแฝงไปกลับของเครือข่าย (RTT)</strong> และ <strong>แบนด์วิดท์ที่ใช้งานได้</strong> เครื่องมือทั้งสองด้านล่างนี้ทำงานภายในเบราว์เซอร์ของคุณ — 1 วัด RTT และความกระวนกระวายใจไปยังจุดสิ้นสุดสาธารณะหลายแห่ง และจัดอันดับความราบรื่นของการควบคุมระยะไกล 2 แปลงหน่วยแบนด์วิธและประมาณความละเอียดที่แบนด์วิธที่กำหนดสามารถขับเคลื่อนได้ ข้อมูลพื้นฐานมาจากเอกสาร Remote Desktop อย่างเป็นทางการของ Microsoft และข้อกำหนดของ ToDesk (ดูแหล่งข้อมูลที่ด้านล่าง)</p>
+<section class="tool"><h2>เครื่องมือที่ 1: การทดสอบเครือข่ายไปกลับ (Ping)</h2>
+<p>กดปุ่ม จากนั้นเบราว์เซอร์ของคุณจะส่งคำขอสองสามรายการไปยังปลายทางสาธารณะแต่ละจุดและกำหนดเวลาการเดินทางไปกลับ เราใช้ <strong>RTT ที่ดีที่สุด</strong> ต่อปลายทาง (ใกล้กับเครือข่ายไปกลับจริงที่สุด) และให้คะแนนความราบรื่นในการควบคุมระยะไกลโดยใช้ระดับเวลาในการตอบสนองด้านล่าง</p>
+<button id="lat-go">เริ่มการทดสอบเวลาในการตอบสนอง</button>
+<div id="lat-out"></div>
+<p class="note">หมายเหตุ: นี่เป็นการวัด <strong>การเดินทางไปกลับของเครือข่าย</strong> ไปยังจุดสิ้นสุดสาธารณะ — พร็อกซีสำหรับขาเครือข่ายของรีโมทคอนโทรล เวลาแฝงในการควบคุมระยะไกลที่แท้จริงยังเพิ่มเวลาในการจับภาพ เข้ารหัส/ถอดรหัส และแสดงผลอีกด้วย ผลลัพธ์ขึ้นอยู่กับเครือข่ายและระยะทางปลายทางของคุณ</p></section>
+<section class="tool"><h2>เครื่องมือ 2: ตัวแปลงแบนด์วิธ + การประมาณคุณภาพ</h2>
+<p>ป้อนค่าแบนด์วิดท์ เลือกหน่วย จากนั้นจะแปลงเป็นหน่วยทั่วไป และใช้คำแนะนำเดสก์ท็อประยะไกลอย่างเป็นทางการของ Microsoft เพื่อประมาณค่าคร่าวๆ ว่าแบนด์วิดท์นี้สามารถขับเคลื่อนได้ที่ 30fps</p>
+<div class="bwrow"><input id="bw-in" type="number" min="0" step="any" placeholder="ป้อนค่า เช่น 20" autocomplete="off"><select id="bw-unit"><option>Mbps</option><option>Gbps</option><option>Kbps</option><option>MB/s</option><option>KB/s</option></select><button id="bw-go">แปลง + ประมาณ</button></div>
+<div id="bw-out"></div></section>
+<h2>วิธีอ่านเวลาแฝงของการควบคุมระยะไกล (ระดับ)</h2>
+<p>การควบคุมระยะไกลแบบโต้ตอบมีความไวต่อเวลาแฝงมากกว่าแบนด์วิธ Microsoft ตั้งข้อสังเกตว่าสถานการณ์ที่มีการโต้ตอบ/ให้ความช่วยเหลือสูงต้องการ RTT ≤20ms เพื่อประสบการณ์ที่ดีที่สุด ตารางด้านล่างนี้จะรวมจุดยึดดังกล่าวเข้ากับประสบการณ์ในอุตสาหกรรม ค้นหาระดับของคุณ</p>
+<figure><svg viewBox="0 0 700 250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="ภาพประกอบแผนภูมิเวลาแฝงและแบนด์วิดท์การควบคุมระยะไกล" style="width:100%;height:auto;border:1px solid #eee;border-radius:12px;background:#fff">
+<text x="20" y="30" font-family="system-ui,Arial" font-size="16" font-weight="700" fill="#1d1d1f">ขั้นตอนการตัดสินใจเกี่ยวกับเวลาแฝงในการควบคุมจากระยะไกล</text>
+<rect x="20" y="48" width="200" height="48" rx="10" fill="#111"/><text x="120" y="78" text-anchor="middle" font-family="system-ui,Arial" font-size="14" fill="#fff">วัด RTT ไป-กลับ</text>
+<path d="M220 72 H262" stroke="#999" stroke-width="2" fill="none" marker-end="url(#ar)"/>
+<rect x="262" y="36" width="418" height="46" rx="10" fill="#ecfdf5" stroke="#bbf7e0"/><text x="278" y="64" font-family="system-ui,Arial" font-size="13" fill="#047857">&lt;100ms: ราบรื่น ดันคุณภาพสูง</text>
+<rect x="262" y="92" width="418" height="46" rx="10" fill="#eef4ff" stroke="#cfe0ff"/><text x="278" y="120" font-family="system-ui,Arial" font-size="13" fill="#1d4ed8">100–150ms: ใช้งานได้ ต้องการโหนดที่ใกล้กว่า</text>
+<rect x="262" y="148" width="418" height="46" rx="10" fill="#fef2f2" stroke="#fecaca"/><text x="278" y="176" font-family="system-ui,Arial" font-size="13" fill="#b91c1c">&gt;150ms: กระตุก แก้ไขเครือข่ายก่อน</text>
+<path d="M120 96 V120 H262" stroke="#10b981" stroke-width="2" fill="none" marker-end="url(#ar)"/>
+<path d="M120 120 V172 H262" stroke="#999" stroke-width="1.5" fill="none" marker-end="url(#ar)"/>
+<defs><marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0 0 L6 3 L0 6 z" fill="#999"/></marker></defs>
+</svg><figcaption>รูปที่ 2: การควบคุมระยะไกลที่ล่าช้า? ตรวจสอบเวลาแฝง (RTT) และแบนด์วิดท์ก่อน จากนั้นจึงแก้ไขสาเหตุ</figcaption></figure>
+<table><tr><th>ชั้น</th><th>RTT ไป-กลับ</th><th>ประสบการณ์การควบคุมระยะไกล</th><th>จะทำอย่างไร</th></tr><tr><td><b>ยอดเยี่ยม</b></td><td class="mono">< 50 ms</td><td>การควบคุมระยะไกลที่เกือบจะทันทีให้ความรู้สึกถึงท้องถิ่น</td><td>ไม่มีจุดอ่อนบนขาเครือข่าย คุณสามารถผลักดันความละเอียดสูง/อัตราเฟรมได้</td></tr><tr><td><b>ดี</b></td><td class="mono">50–100 ms</td><td>ภายในช่วงที่แนะนำ เนียนๆ ในแต่ละวัน</td><td>มีรอยเปื้อนเล็กน้อยเป็นครั้งคราว ไม่มีอะไรร้ายแรง</td></tr><tr><td><b>ยุติธรรม</b></td><td class="mono">100–150 ms</td><td>ความล่าช้าที่เห็นได้ชัดเจนเมื่อพิมพ์/ลาก</td><td>เหมาะสำหรับงานเบา จุดสิ้นสุดที่ใกล้เข้ามาช่วยได้</td></tr><tr><td><b>ล้าหลัง</b></td><td class="mono">150–200 ms</td><td>ขาด ๆ หาย ๆ อย่างเห็นได้ชัด การติดตามไม่ดี</td><td>สลับไปใช้แบบใช้สาย / โหนดที่ใกล้กว่า ตรวจสอบความกระวนกระวายใจและการสูญเสียแพ็กเก็ต</td></tr><tr><td><b>แย่</b></td><td class="mono">≥ 200 ms</td><td>ใช้งานแทบไม่ได้เลย เหนื่อยตามกาลเวลา</td><td>แก้ไขเครือข่ายก่อน: ใช้สาย รีเลย์ใกล้กว่า หรือโหนดที่ต้องชำระเงิน</td></tr></table>
+<h2>แบนด์วิธเท่าไร (ตามความละเอียดเป้าหมาย)</h2>
+<p>ตารางด้านล่างนี้คือคำแนะนำแบนด์วิดท์ต่อความละเอียดอย่างเป็นทางการของ Microsoft (30fps, สูญเสีย <0.1%) รีโมทคอนโทรลสมัยใหม่ (ToDesk และอื่นๆ) ใช้บิตเรตที่ปรับได้ของ H.264/AVC-444 และ AV1 ดังนั้นความต้องการที่แท้จริงจึงมักจะต่ำกว่า (ตัวอย่างของ Microsoft: การท่องเว็บลดลงจาก 6 Mbps เหลือประมาณ 1 Mbps)</p>
+<figure><svg viewBox="0 0 700 250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="ภาพประกอบเครื่องมือทดสอบเวลาแฝงของ ToDesk และเครื่องมือคำนวณแบนด์วิธ" style="width:100%;height:auto;border:1px solid #eee;border-radius:12px;background:#fff">
+<text x="20" y="34" font-family="system-ui,Arial" font-size="16" font-weight="700" fill="#1d1d1f">แบนด์วิดท์ → ความละเอียดเป้าหมาย (พื้นฐาน Microsoft @30fps)</text>
+<text x="20" y="88" font-family="system-ui,Arial" font-size="13" fill="#334155">720p</text><rect x="120" y="70" width="92" height="26" rx="6" fill="#bfdbfe"/><text x="222" y="88" font-family="ui-monospace,monospace" font-size="13" fill="#0f172a">3 Mbps</text>
+<text x="20" y="134" font-family="system-ui,Arial" font-size="13" fill="#334155">1080p</text><rect x="120" y="116" width="153" height="26" rx="6" fill="#93c5fd"/><text x="283" y="134" font-family="ui-monospace,monospace" font-size="13" fill="#0f172a">5 Mbps</text>
+<text x="20" y="180" font-family="system-ui,Arial" font-size="13" fill="#334155">4K</text><rect x="120" y="162" width="460" height="26" rx="6" fill="#1d4ed8"/><text x="590" y="180" font-family="ui-monospace,monospace" font-size="13" fill="#0f172a">15 Mbps</text>
+<text x="20" y="232" font-family="system-ui,Arial" font-size="11" fill="#94a3b8">Microsoft Remote Desktop · @30fps · &lt;0.1% loss</text>
+</svg><figcaption>แบนด์วิดท์ → ความละเอียดเป้าหมาย (พื้นฐาน Microsoft @30fps)</figcaption></figure>
+<figure class="i4png"><picture><source type="image/webp" srcset="/img/board_th.webp"><img src="/img/board_th.png" alt="ภาพประกอบแผนภูมิเวลาแฝงและแบนด์วิดท์การควบคุมระยะไกล" loading="lazy" width="1120" height="630" style="width:100%;height:auto;border-radius:12px;border:1px solid #eee"></picture><figcaption>รูปที่ 2: การควบคุมระยะไกลที่ล่าช้า? ตรวจสอบเวลาแฝง (RTT) และแบนด์วิดท์ก่อน จากนั้นจึงแก้ไขสาเหตุ</figcaption></figure>
+<table><tr><th>แบนด์วิธที่แนะนำ</th><th>ความละเอียดเป้าหมาย (@30fps)</th><th>กรณีการใช้งาน</th></tr><tr><td class="mono"><b>≥ 1.5 Mbps</b></td><td>1024×768</td><td>ข้อความ/แสงทำงานระยะไกล (Microsoft Light)</td></tr><tr><td class="mono"><b>≥ 3 Mbps</b></td><td>1280×720 (720p)</td><td>เดสก์ท็อประยะไกลทั่วไป</td></tr><tr><td class="mono"><b>≥ 5 Mbps</b></td><td>1920×1080 (1080p)</td><td>การควบคุมระยะไกล HD หลัก</td></tr><tr><td class="mono"><b>≥ 15 Mbps</b></td><td>3840×2160 (4K)</td><td>ความละเอียดสูง/อัตราเฟรม วิดีโอ (Microsoft Power)</td></tr></table>
+<section id="data2026" class="i4data"><h2>การประมาณการแบนด์วิดท์การควบคุมระยะไกลปี 2026 (ตามคุณภาพเป้าหมาย)</h2>
+<p>การใช้ความละเอียดอย่างเป็นทางการของ Microsoft → ตารางแบนด์วิธเป็นข้อมูลพื้นฐาน คาดการณ์ด้วยตัวแปลงสัญญาณที่ปรับเปลี่ยนได้สมัยใหม่ (H.264/AVC-444, AV1; ToDesk อ้างว่าประสิทธิภาพแบนด์วิดท์ดีขึ้น 30%–50%) เพื่อให้ตัวเลขในโลกแห่งความเป็นจริงโดยทั่วไปในปี 2569</p>
+<table><tr><th>คุณภาพเป้าหมาย</th><th>ข้อมูลพื้นฐาน Microsoft RDP</th><th>ประมาณการแบบปรับเปลี่ยนได้ในปี 2026</th><th>หมายเหตุ</th></tr><tr><td><b>720p (@30fps)</b></td><td class="mono">3Mbps</td><td class="mono">ประมาณ 1.5–2 Mbps</td><td>H.264/AV1 แบบปรับได้</td></tr><tr><td><b>1080p (@30fps)</b></td><td class="mono">5Mbps</td><td class="mono">ประมาณ 2.5–3.5 Mbps</td><td>กระแสหลัก HD</td></tr><tr><td><b>1080p60 (เฟรมต่อวินาทีสูง)</b></td><td class="mono">ประมาณ 8–10 Mbps</td><td class="mono">ประมาณ 5–7 Mbps</td><td>เนื้อหาที่มีการเคลื่อนไหวสูง</td></tr><tr><td><b>4K (@30fps)</b></td><td class="mono">15 Mbps</td><td class="mono">ประมาณ 8–12 Mbps</td><td>4:4:4 / AV1</td></tr></table>
+<p class="note"><em>การประมาณการ ไม่ใช่การวัดผลจากบุคคลที่หนึ่ง Baseline = ตารางเดสก์ท็อประยะไกลอย่างเป็นทางการของ Microsoft (@30fps); การประมาณการปี 2026 คาดการณ์ด้วยการเข้ารหัสแบบปรับได้สมัยใหม่และเป็นลำดับความสำคัญคร่าวๆ เท่านั้น แบนด์วิดท์จริงจะแตกต่างกันไปตามการเคลื่อนไหวบนหน้าจอ การสูญเสียแพ็กเก็ต และตัวแปลงสัญญาณ</em></p></section>
+<h2>คำถามที่พบบ่อย</h2>
+<details class="faq"><summary>เวลาแฝงใดที่นับเป็นเรื่องปกติสำหรับการควบคุมระยะไกล?</summary><div>ตามหลักการทั่วไป: RTT ที่ต่ำกว่า 50 มิลลิวินาทีให้ความรู้สึกเกือบจะทันที ต่ำกว่า 100 มิลลิวินาทีเป็นช่วงที่แนะนำ 100–150 มิลลิวินาทีถือว่าใช้ได้ แต่คุณรู้สึกว่าเกิดความล่าช้า มากกว่า 150 มิลลิวินาทีจะขาดๆ หายๆ อย่างเห็นได้ชัด และ 200 มิลลิวินาทีขึ้นไปถือว่าเกือบจะใช้ไม่ได้ Microsoft ยังตั้งข้อสังเกตอีกว่าสถานการณ์ที่มีการโต้ตอบ/ช่วยเหลือในระดับสูงต้องการ RTT ≤20ms เพื่อประสบการณ์ที่ดีที่สุด</div></details>
+<details class="faq"><summary>ToDesk รีโมทคอนโทรลต้องการแบนด์วิธประมาณเท่าใด</summary><div>ตามคำแนะนำเดสก์ท็อประยะไกลอย่างเป็นทางการของ Microsoft (30fps): ประมาณ 3 Mbps สำหรับ 720p, 5 Mbps สำหรับ 1080p และ 15 Mbps สำหรับ 4K รีโมทคอนโทรลสมัยใหม่ใช้การเข้ารหัสแบบปรับได้ ดังนั้นความต้องการที่แท้จริงจึงมักจะต่ำกว่า</div></details>
+<details class="faq"><summary>อะไรสำคัญกว่ากัน เวลาแฝงหรือแบนด์วิธ?</summary><div>สำหรับการควบคุมระยะไกลแบบโต้ตอบ เวลาแฝงมีความสำคัญมากกว่า: แม้ว่าจะมีแบนด์วิธเพียงพอ แต่เวลาแฝง/การกระวนกระวายใจที่สูงยังคงรู้สึกล่าช้า บิตเรตแบบไดนามิกของ Microsoft จะลดคุณภาพลงจริง ๆ เมื่อ RTT สูงเพื่อให้ทุกอย่างราบรื่น</div></details>
+<details class="faq"><summary>การทดสอบเวลาในการตอบสนองนี้วัดอะไรจริงๆ</summary><div>เบราว์เซอร์ของคุณวัดการเดินทางไปกลับของเครือข่ายไปยังจุดสิ้นสุดสาธารณะ (Cloudflare, Google ฯลฯ) — พร็อกซีสำหรับขาเครือข่ายของรีโมทคอนโทรล เวลาแฝงในการควบคุมระยะไกลที่แท้จริงยังเพิ่มเวลาในการจับภาพ เข้ารหัส/ถอดรหัส และแสดงผลอีกด้วย</div></details>
+<details class="faq"><summary>ทำไมมันถึงยังกระตุกเมื่อแบนด์วิธของฉันสูง?</summary><div>โดยปกติแล้วจะเป็นเวลาแฝง ความกระวนกระวายใจ หรือการสูญเสียแพ็กเก็ต ไม่ใช่แบนด์วิดท์ การควบคุมระยะไกลมีความไวต่อ RTT และความเสถียร ความกระวนกระวายใจสูงทำให้เกิดความเจ็บปวดมากกว่าค่าเฉลี่ยที่สูง</div></details>
+<details class="faq"><summary>ToDesk คุณภาพสูงสุดที่สามารถเข้าถึงได้คืออะไร?</summary><div>เว็บไซต์อย่างเป็นทางการอ้างสิทธิ์ได้ถึง 8K, 360 FPS และ 4:4:4 true-color lossless (ตัวแปลงสัญญาณ AV1 / โปรแกรม ZeroSync) โดยมีแผนบริการที่เหมาะสมและแบนด์วิธที่เพียงพอ</div></details>
+<details class="faq"><summary>วิดีโอ 1080p จะใช้แบนด์วิดท์เท่าใดในการควบคุมระยะไกล</summary><div>ตัวอย่างของ Microsoft: วิดีโอครึ่งหน้าจอ 30fps จะมีความเร็วประมาณ 8.5–9.5 Mbps ตามค่าเริ่มต้น แต่จะอยู่ที่ประมาณ 2.5–2.8 Mbps สำหรับ H.264/AVC-444 เท่านั้น ตัวแปลงสัญญาณสร้างความแตกต่างอย่างมาก</div></details>
+<details class="faq"><summary>ฉันจะแปลง Mbps และ MB/s ได้อย่างไร</summary><div>1 MB/s = 8 Mbps และ 1 Mbps = 0.125 MB/s ตัวแปลงแบนด์วิธในหน้านี้จะทำกับหน่วยทั่วไปทั้งหมดโดยอัตโนมัติ</div></details>
+
+<h2>Triage ในโลกแห่งความเป็นจริงอย่างรวดเร็ว</h2>
+<ul class="scenes"><li>การพิมพ์และการลากหน้าต่างล่าช้าแต่ใช้งานได้: ปกติ RTT จะอยู่ที่ 100–150ms; จุดสิ้นสุดที่ใกล้กว่าหรือการเชื่อมต่อแบบใช้สายมักจะดึงกลับมาต่ำกว่า 100 มิลลิวินาที</li><li>รูปภาพไม่ชัดและจะคมชัดขึ้นหลังจากที่คุณหยุดการเคลื่อนไหวเท่านั้น: แบนด์วิดท์ที่จำกัดทำให้เกิดการลดขนาดแบบปรับตัวได้ ตรวจสอบตัวแปลงแบนด์วิธเทียบกับระดับคุณภาพ และลดความละเอียดเป้าหมายหากจำเป็น</li><li>RTT ไม่ได้สูงแต่เกิดขึ้นแล้วดับไป: มุ่งเน้นไปที่ความกระวนกระวายใจ — ความกระวนกระวายใจที่สูงจะเจ็บปวดมากกว่าค่าเฉลี่ยที่สูง ตรวจสอบการรบกวน Wi-Fi เปลี่ยนเป็น 5GHz หรือใช้สาย</li><li>การควบคุมระยะไกลข้ามพรมแดนล่าช้ามาก: การออกนอกเส้นทางสาธารณะทั่วไป ดังนั้น RTT และการสูญเสียแพ็กเก็ตจึงสูงทั้งคู่ รีเลย์ที่ใกล้กว่าหรือโหนดส่วนกลางของผลิตภัณฑ์ช่วยได้มาก</li><li>รีโมทคอนโทรล 4K มีแบนด์วิธเพียงพอแต่ลดเฟรมลง: ความละเอียด/อัตราเฟรมสูงยังต้องเสียภาษีในการเข้ารหัส/ถอดรหัส ไม่ใช่แค่แบนด์วิธเท่านั้น ลองใช้ 1080p หรืออัตราเฟรมที่ต่ำกว่า</li></ul>
+<div class="related"><h2>ที่เกี่ยวข้อง</h2><ul><li><a href="https://todeskremote.com/download/">รีโมทคอนโทรล ToDesk · ดาวน์โหลด</a></li><li><a href="https://learn.microsoft.com/en-us/windows-server/remote/remote-desktop-services/network-guidance" rel="nofollow">Microsoft Remote Desktop · แนวทางเครือข่าย (แบนด์วิธ)</a></li><li><a href="https://learn.microsoft.com/en-us/azure/virtual-desktop/rdp-bandwidth" rel="nofollow">ข้อกำหนดแบนด์วิดท์ Microsoft Azure RDP (สถานการณ์/ตัวแปลงสัญญาณ)</a></li><li><a href="https://www.todesk.com/" rel="nofollow">เว็บไซต์อย่างเป็นทางการของ ToDesk (ข้อมูลจำเพาะผลิตภัณฑ์)</a></li></ul></div>
+</main>
+<footer>พื้นฐานแบนด์วิดท์ / ความละเอียดจากเอกสารเดสก์ท็อประยะไกลอย่างเป็นทางการของ Microsoft (แนวทางเครือข่าย / แบนด์วิดท์ Azure Virtual Desktop RDP) ข้อมูลจำเพาะของ ToDesk จากเว็บไซต์อย่างเป็นทางการ ระดับความหน่วงคือกลุ่มประสบการณ์ในอุตสาหกรรมที่ได้รับการตรวจสอบร่วมกับจุดยึด RTT≤20ms ของ Microsoft เครื่องมือและการประมาณการที่นี่มีไว้เพื่อใช้อ้างอิงเท่านั้น ไม่ใช่การวัดผลจากบุคคลที่หนึ่ง<br>整理/Editor：<a href="/about-editor/">罗宇</a> · MIT License · <a href="/about-editor/">about</a></footer>
+</div>
+<script src="/data_th.js"></script><script src="/app.js"></script></body></html>
